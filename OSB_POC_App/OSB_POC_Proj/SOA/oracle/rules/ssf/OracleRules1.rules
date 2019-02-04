@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<RuleDictionary id="G}-7b530c1:168b89e34e5:-7ffe" xmlns="http://xmlns.oracle.com/rules/dictionary">
+  <Name>OracleRules1</Name>
+  <Alias>OracleRules1</Alias>
+  <Package>ssf</Package>
+  <Version>12.1.1.0.0</Version>
+  <DataModel id="L}1">
+    <CreationUpdateNumber>2</CreationUpdateNumber>
+    <QualifierPattern>{member} of {fact}</QualifierPattern>
+    <SupportsXPathEnabled>false</SupportsXPathEnabled>
+    <UpdateNumber>1</UpdateNumber>
+    <ValidationUpdateNumber>1</ValidationUpdateNumber>
+    <UpdateTime>0</UpdateTime>
+  </DataModel>
+  <RuleSet id="G}-7b530c1:168b89e34e5:-7bef">
+    <Name>Ruleset1</Name>
+    <Alias>Ruleset1</Alias>
+    <ValidationUpdateNumber>3</ValidationUpdateNumber>
+    <Active>true</Active>
+    <CalendarForm>DateTime</CalendarForm>
+    <VisibilityFilterEnabled>false</VisibilityFilterEnabled>
+    <CreationUpdateNumber>3</CreationUpdateNumber>
+  </RuleSet>
+  <ValidationUpdateNumber>3</ValidationUpdateNumber>
+  <UpdateNumber>3</UpdateNumber>
+  <ResourceBundle>OracleRules1Translations</ResourceBundle>
+  <TestModel id="L}3">
+    <ValidationUpdateNumber>1</ValidationUpdateNumber>
+    <UpdateNumber>1</UpdateNumber>
+    <Validation>true</Validation>
+    <AutoSync>true</AutoSync>
+  </TestModel>
+  <Preferences id="G}-7b530c1:168b89e34e5:-7ffd">
+    <RulesExecutionAlgorithm>RETE</RulesExecutionAlgorithm>
+    <DisallowErrorSuppression>false</DisallowErrorSuppression>
+    <PhraseSuggestions>All</PhraseSuggestions>
+    <RestrictAutoSuggestions>true</RestrictAutoSuggestions>
+    <IncludeChainedExpressions>true</IncludeChainedExpressions>
+  </Preferences>
+  <decisionModel id="L}4">
+    <CreationUpdateNumber>2</CreationUpdateNumber>
+  </decisionModel>
+</RuleDictionary>

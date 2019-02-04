@@ -1,0 +1,1357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+    <con:coreEntry>
+        <con:description/>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="CustomerAgreement/WSDL/GetAgreementWsdl"/>
+            <con:binding>
+                <con:name>CustomerAgreementServicesSoapBindinghttp</con:name>
+                <con:namespace>http://dk/tdc/bss/crm/customeragreement</con:namespace>
+            </con:binding>
+        </con:binding>
+        <oper:operations>
+            <oper:monitoring enabled="true" aggregationInterval="10" level="pipeline"/>
+            <oper:tracingEnabled>true</oper:tracingEnabled>
+            <oper:reporting>false</oper:reporting>
+            <oper:logging enabled="false" level="debug"/>
+            <oper:sla-alerting enabled="true" level="normal"/>
+            <oper:pipeline-alerting enabled="true" level="normal"/>
+        </oper:operations>
+        <con:transactions isRequired="false" sameTxForResponse="false"/>
+    </con:coreEntry>
+    <con:router errorHandler="_onErrorHandler-3993726136537753842-1b28e27d.139252399bf.-6698" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+        <con:pipeline name="EnrichNabsResponse_request" type="request">
+            <con:stage name="StoreInputParams">
+                <con:comment/>
+                <con:context>
+                    <con2:userNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                </con:context>
+                <con:actions>
+                    <con3:assign varName="currentUsrId">
+                        <con2:comment>Store userid for later use</con2:comment>
+                        <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6f82</con2:id>
+                        <con3:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$body/cus:getAgreement/cus:request/cus:UserId/text()</con:xqueryText>
+                        </con3:expr>
+                    </con3:assign>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline name="_onErrorHandler-1615438491781052770--e7f0e46.139b03cf04c.-6bb3" type="error">
+            <con:stage name="handleGetLinkitInfoErrors">
+                <con:context>
+                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                    <con2:userNsDecl prefix="con" namespace="http://www.bea.com/wli/sb/stages/transform/config"/>
+                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                </con:context>
+                <con:actions>
+                    <con:assign varName="errorCodRep_2" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6bb2</con4:id>
+                        <con:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$fault/ctx:errorCode/text()</con:xqueryText>
+                        </con:expr>
+                    </con:assign>
+                    <con:assign varName="errorCode_2" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6bb1</con4:id>
+                        <con:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"20999"</con:xqueryText>
+                        </con:expr>
+                    </con:assign>
+                    <con:assign varName="errorMesage_2" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6bb0</con4:id>
+                        <con:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"Internal error"</con:xqueryText>
+                        </con:expr>
+                    </con:assign>
+                    <con:assign varName="severityLevel_2" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6baf</con4:id>
+                        <con:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"1"</con:xqueryText>
+                        </con:expr>
+                    </con:assign>
+                    <con:assign varName="reportedExternalFaultCode" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6ac3</con4:id>
+                        <con:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$fault//ctx:details/con:ReceivedFaultDetail/con:faultcode/text()</con:xqueryText>
+                        </con:expr>
+                    </con:assign>
+                    <con:assign varName="reportedExternalFaultMessage" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6ac2</con4:id>
+                        <con:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$fault//ctx:details/con:ReceivedFaultDetail/con:faultstring/text()</con:xqueryText>
+                        </con:expr>
+                    </con:assign>
+                    <con3:ifThenElse>
+                        <con2:comment>Check fault reported and map to appropriate errors:
+- BEA-382510: actually means error in updating variable, and will occure if service callout results in emty document. First time response documet is accessed in assign action, the error BEA-382510 is raised (If the empty response document is part of "if" statement, another similar exception is raised). 
+
+- BEA-382032 / BEA-382033 indicates invalid xml/missing soap envelope or body
+- BEA-382500 occurs when soap fault is retutned as reply in service call out
+- BEA-380002 communication error in service callout
+- all other faults are reported as internal errors</con2:comment>
+                        <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6bae</con2:id>
+                        <con3:case>
+                            <con3:condition>
+                                <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$errorCodRep_2="BEA-382510"</con:xqueryText>
+                            </con3:condition>
+                            <con3:actions>
+                                <con:assign varName="errorCode_2" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6bac</con4:id>
+                                    <con:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"30111"</con:xqueryText>
+                                    </con:expr>
+                                </con:assign>
+                                <con:assign varName="errorMessage_2" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6bab</con4:id>
+                                    <con:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"Empty response xml message received from Customer Hub"</con:xqueryText>
+                                    </con:expr>
+                                </con:assign>
+                            </con3:actions>
+                        </con3:case>
+                        <con3:case>
+                            <con3:condition>
+                                <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">($errorCodRep_2="BEA-382032") or ($errorCodRep_2="BEA-382033")</con:xqueryText>
+                            </con3:condition>
+                            <con3:actions>
+                                <con:assign varName="errorCode_2" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6ac4</con4:id>
+                                    <con:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"30111"</con:xqueryText>
+                                    </con:expr>
+                                </con:assign>
+                                <con:assign varName="errorMessage_2" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6ac1</con4:id>
+                                    <con:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"Invalid response message received from Customer Hub"</con:xqueryText>
+                                    </con:expr>
+                                </con:assign>
+                            </con3:actions>
+                        </con3:case>
+                        <con3:case>
+                            <con3:condition>
+                                <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$errorCodRep_2="BEA-382500"</con:xqueryText>
+                            </con3:condition>
+                            <con3:actions>
+                                <con:assign varName="errorCode_2" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6ba7</con4:id>
+                                    <con:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"30112"</con:xqueryText>
+                                    </con:expr>
+                                </con:assign>
+                                <con:assign varName="errorMessage_2" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6ba6</con4:id>
+                                    <con:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">fn:concat("Customer hub reported error as soap fault (operation getLinkitInfo) . Reported fault: ", $reportedExternalFaultCode, " , reported fault message: ",  $reportedExternalFaultMessage)</con:xqueryText>
+                                    </con:expr>
+                                </con:assign>
+                            </con3:actions>
+                        </con3:case>
+                        <con3:case>
+                            <con3:condition>
+                                <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$errorCodRep_2="BEA-380002"</con:xqueryText>
+                            </con3:condition>
+                            <con3:actions>
+                                <con:assign varName="errorCode_2" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6ba5</con4:id>
+                                    <con:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"30113"</con:xqueryText>
+                                    </con:expr>
+                                </con:assign>
+                                <con:assign varName="errorMessage_2" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6ba4</con4:id>
+                                    <con:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">fn:concat("Communication error while getting Linkit info from Customer Hub  (", $fault/ctx:errorCode/text(), ")")</con:xqueryText>
+                                    </con:expr>
+                                </con:assign>
+                            </con3:actions>
+                        </con3:case>
+                        <con3:default>
+                            <con:assign varName="errorMessage_2" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6ba1</con4:id>
+                                <con:expr>
+                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">fn:concat("Internal error while calling customerhub. getLinkitinfo, error ", $errorCodRep_2 ," message: ",  $fault/ctx:errorCode/text())</con:xqueryText>
+                                </con:expr>
+                            </con:assign>
+                        </con3:default>
+                    </con3:ifThenElse>
+                    <con3:replace varName="body" contents-only="true">
+                        <con2:comment>if error code is reprored, generate error reply ..</con2:comment>
+                        <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6ba0</con2:id>
+                        <con3:location>
+                            <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                        </con3:location>
+                        <con3:expr>
+                            <con:xsltTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                                <con:resource ref="CustomerAgreement/XSLT/GenErrorReply"/>
+                                <con:input>$inbound</con:input>
+                                <con:param name="errorMessage">
+                                    <con:path>fn:concat("",$errorMessage_2)</con:path>
+                                </con:param>
+                                <con:param name="errorCode">
+                                    <con:path>fn:concat("",$errorCode_2)</con:path>
+                                </con:param>
+                                <con:param name="severityLevel">
+                                    <con:path>fn:concat("",$severityLevel_2)</con:path>
+                                </con:param>
+                            </con:xsltTransform>
+                        </con3:expr>
+                    </con3:replace>
+                    <con2:reply isError="false">
+                        <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6b9f</con2:id>
+                    </con2:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline name="ReturnAlreadyFetchedAgreement_response" type="response">
+            <con:stage name="returnFetchedAgreementAsResponse">
+                <con:comment>The agreement is already fetched in some previuos step. In stead of making new call, just return it</con:comment>
+                <con:context>
+                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                </con:context>
+                <con:actions>
+                    <con3:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-3993726136537753842-1b28e27d.139252399bf.-6c7b</con2:id>
+                        <con3:location>
+                            <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                        </con3:location>
+                        <con3:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$agreementResponse/*</con:xqueryText>
+                        </con3:expr>
+                    </con3:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline name="PipelinePairNode1_response" type="response"/>
+        <con:pipeline name="_onErrorHandler-3993726136537753842-1b28e27d.139252399bf.-6698" type="error">
+            <con:stage name="Generate error reply">
+                <con:context>
+                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                </con:context>
+                <con:actions>
+                    <con:assign varName="errorCodeReported" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-3993726136537753842-1b28e27d.139252399bf.-668e</con4:id>
+                        <con:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$fault/ctx:errorCode/text()</con:xqueryText>
+                        </con:expr>
+                    </con:assign>
+                    <con:assign varName="errorMessageReported" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-3993726136537753842-1b28e27d.139252399bf.-668d</con4:id>
+                        <con:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$fault/ctx:reason/text()</con:xqueryText>
+                        </con:expr>
+                    </con:assign>
+                    <con:assign varName="locationNode" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-3993726136537753842-1b28e27d.139252399bf.-6618</con4:id>
+                        <con:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$fault/ctx:location/ctx:node/text()</con:xqueryText>
+                        </con:expr>
+                    </con:assign>
+                    <con3:assign varName="errCode">
+                        <con2:id>_ActionId-3993726136537753842-1b28e27d.139252399bf.-6697</con2:id>
+                        <con3:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"20999"</con:xqueryText>
+                        </con3:expr>
+                    </con3:assign>
+                    <con:assign varName="errMessage" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con1:id xmlns:con1="http://www.bea.com/wli/sb/stages/config">_ActionId-3993726136537753842-1b28e27d.139252399bf.-6693</con1:id>
+                        <con:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">fn:concat("Unknown application error, fault details: ",fn-bea:serialize($fault))</con:xqueryText>
+                        </con:expr>
+                    </con:assign>
+                    <con:assign varName="sevLev" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con1:id xmlns:con1="http://www.bea.com/wli/sb/stages/config">_ActionId-3993726136537753842-1b28e27d.139252399bf.-6692</con1:id>
+                        <con:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"1"</con:xqueryText>
+                        </con:expr>
+                    </con:assign>
+                    <con:ifThenElse xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-3993726136537753842-1b28e27d.139252399bf.-668c</con4:id>
+                        <con:case>
+                            <con:condition>
+                                <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$errorCodeReported="BEA-380002"</con:xqueryText>
+                            </con:condition>
+                            <con:actions>
+                                <con:assign varName="errCode">
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-3993726136537753842-1b28e27d.139252399bf.-668b</con4:id>
+                                    <con:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">10004</con:xqueryText>
+                                    </con:expr>
+                                </con:assign>
+                                <con:assign varName="errMessage">
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-3993726136537753842-1b28e27d.139252399bf.-668a</con4:id>
+                                    <con:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">concat('Communication error, Backend system not available', $internalMessage," (", $locationNode, ") " ,$errorMessageReported)</con:xqueryText>
+                                    </con:expr>
+                                </con:assign>
+                                <con:assign varName="sevLev">
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-3993726136537753842-1b28e27d.139252399bf.-6689</con4:id>
+                                    <con:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"1"</con:xqueryText>
+                                    </con:expr>
+                                </con:assign>
+                            </con:actions>
+                        </con:case>
+                    </con:ifThenElse>
+                    <con3:replace varName="body" contents-only="true">
+                        <con2:comment>if error code is reprored, generate error reply ..</con2:comment>
+                        <con2:id>_ActionId-3993726136537753842-1b28e27d.139252399bf.-6691</con2:id>
+                        <con3:location>
+                            <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                        </con3:location>
+                        <con3:expr>
+                            <con:xsltTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                                <con:resource ref="CustomerAgreement/XSLT/GenErrorReply"/>
+                                <con:input>$inbound</con:input>
+                                <con:param name="errorMessage">
+                                    <con:path>$errMessage</con:path>
+                                </con:param>
+                                <con:param name="errorCode">
+                                    <con:path>$errCode</con:path>
+                                </con:param>
+                                <con:param name="severityLevel">
+                                    <con:path>$sevLev</con:path>
+                                </con:param>
+                            </con:xsltTransform>
+                        </con3:expr>
+                    </con3:replace>
+                    <con2:reply isError="false">
+                        <con2:comment>... and then return generated error reply</con2:comment>
+                        <con2:id>_ActionId-3993726136537753842-1b28e27d.139252399bf.-6690</con2:id>
+                    </con2:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline name="EnrichNabsResponse_response" type="response">
+            <con:stage name="mergeInformation">
+                <con:comment/>
+                <con:context>
+                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                    <con2:userNsDecl prefix="java" namespace="java:dk.tdc.nabs.adaptor.external.datatypes"/>
+                    <con2:userNsDecl prefix="nabsadapt" namespace="http://dk/tdc/nabs/adaptor"/>
+                    <con2:userNsDecl prefix="myXsi" namespace="http://www.w3.org/2001/XMLSchema-instance"/>
+                    <con2:userNsDecl prefix="adaptNew" namespace="java:dk.tdc.nabs.adaptor.external.datatypes.newSSA"/>
+                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                </con:context>
+                <con:actions>
+                    <con3:insert varName="body">
+                        <con2:comment>Next step is workaround for bug in defalut osb xslt processor: Bind variables can only be passed as text, so it is not posible to pass xml element nodes. In order to overcome this bug cpmpose two xml into one by injecting the second xml at some appropriate place, pass composed xml as document that shall be transformed, and remove the injected xml at the end if needed. Alternativly use another xslt engine ....</con2:comment>
+                        <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6efd</con2:id>
+                        <con3:location>
+                            <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">./.</con:xpathText>
+                        </con3:location>
+                        <con3:where>last-child</con3:where>
+                        <con3:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$getLinkitInfoResponse/././/cus:getLinkitInfoResponse</con:xqueryText>
+                        </con3:expr>
+                    </con3:insert>
+                    <con2:replace varName="body" contents-only="false" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:env="http://www.bea.com/wli/config/env" xmlns:jms="http://www.bea.com/wli/sb/transports/jms">
+                        <con4:comment xmlns:con4="http://www.bea.com/wli/sb/stages/config">And finaly replace the response body with merged xml</con4:comment>
+                        <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6efb</con3:id>
+                        <con2:location>
+                            <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                            <con:xsltTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                                <con:resource ref="CustomerAgreement/XSLT/InjectLinkitIdInGetAgrReply"/>
+                                <con:input>$body</con:input>
+                            </con:xsltTransform>
+                        </con2:expr>
+                    </con2:replace>
+                </con:actions>
+            </con:stage>
+            <con:stage name="GetLinkitInfo" errorHandler="_onErrorHandler-1615438491781052770--e7f0e46.139b03cf04c.-6bb3">
+                <con:comment/>
+                <con:context>
+                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                    <con2:userNsDecl prefix="java" namespace="java:dk.tdc.nabs.adaptor.external.datatypes"/>
+                    <con2:userNsDecl prefix="nabsadapt" namespace="http://dk/tdc/nabs/adaptor"/>
+                    <con2:userNsDecl prefix="myXsi" namespace="http://www.w3.org/2001/XMLSchema-instance"/>
+                    <con2:userNsDecl prefix="adaptNew" namespace="java:dk.tdc.nabs.adaptor.external.datatypes.newSSA"/>
+                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                </con:context>
+                <con:actions>
+                    <con3:ifThenElse>
+                        <con2:comment>If no accounts are returned , no need to fetch linkit information</con2:comment>
+                        <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6f35</con2:id>
+                        <con3:case>
+                            <con3:condition>
+                                <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">fn:count($body/cus:getAgreementResponse/cus:return/cus:AccountInfo)>0</con:xqueryText>
+                            </con3:condition>
+                            <con3:actions>
+                                <con3:assign varName="getLinkitInfoRequest">
+                                    <con2:comment>Start building linkitInfo request. As current body variable is allready of soapenv:Body type, we can reuse it as base for building linkitInfo request.</con2:comment>
+                                    <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6eeb</con2:id>
+                                    <con3:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$body</con:xqueryText>
+                                    </con3:expr>
+                                </con3:assign>
+                                <con3:replace varName="getLinkitInfoRequest" contents-only="true">
+                                    <con2:comment>Replace content of the body with appropriate request xml including accountnumbers
+returned in previous step (nabs agrement)</con2:comment>
+                                    <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6eea</con2:id>
+                                    <con3:location>
+                                        <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">./.[1]</con:xpathText>
+                                    </con3:location>
+                                    <con3:expr>
+                                        <con:xsltTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                                            <con:resource ref="CustomerAgreement/XSLT/NabsRespToLinkitInfoReq"/>
+                                            <con:input>$body</con:input>
+                                            <con:param name="userId">
+                                                <con:path>fn:concat("",$currentUsrId)</con:path>
+                                            </con:param>
+                                        </con:xsltTransform>
+                                    </con3:expr>
+                                </con3:replace>
+                                <con3:wsCallout>
+                                    <con2:comment>And finally call the Customer hub service in order to obtain LinkitInfo</con2:comment>
+                                    <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6ee9</con2:id>
+                                    <con3:service ref="CustomerHub/BusinessServices/CustomerHubBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                    <con3:operation>getLinkitInfo</con3:operation>
+                                    <con3:request>
+                                        <con3:body wrapped="true">getLinkitInfoRequest</con3:body>
+                                        <con3:header/>
+                                    </con3:request>
+                                    <con3:response>
+                                        <con3:body wrapped="true">getLinkitInfoResponse</con3:body>
+                                        <con3:header/>
+                                    </con3:response>
+                                    <con3:requestTransform>
+                                        <con4:log>
+                                            <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6650</con2:id>
+                                            <con4:logLevel>debug</con4:logLevel>
+                                            <con4:expr>
+                                                <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$body</con:xqueryText>
+                                            </con4:expr>
+                                            <con4:message>customeragreement_call_customer_getLinkitInfo_request</con4:message>
+                                        </con4:log>
+                                    </con3:requestTransform>
+                                    <con3:responseTransform/>
+                                </con3:wsCallout>
+                                <con3:assign varName="lastReturnedStatusCodeLinkit">
+                                    <con2:comment>Get error code from reply to see if any error is reported</con2:comment>
+                                    <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6ee8</con2:id>
+                                    <con3:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$getLinkitInfoResponse/ser:getLinkitInfoResponse/ser:return/ser:ReplyInfo/ser:StatusCode/text()</con:xqueryText>
+                                    </con3:expr>
+                                </con3:assign>
+                                <con4:log>
+                                    <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-664f</con2:id>
+                                    <con4:logLevel>debug</con4:logLevel>
+                                    <con4:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$getLinkitInfoResponse</con:xqueryText>
+                                    </con4:expr>
+                                    <con4:message>customeragreement_call_customer_getLinkitInfo_response</con4:message>
+                                </con4:log>
+                                <con3:ifThenElse>
+                                    <con2:comment>If the error is reported return error response with appropriate code and message</con2:comment>
+                                    <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6ee7</con2:id>
+                                    <con3:case>
+                                        <con3:condition>
+                                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$lastReturnedStatusCodeLinkit!="0"</con:xqueryText>
+                                        </con3:condition>
+                                        <con3:actions>
+                                            <con3:replace varName="body" contents-only="true">
+                                                <con2:comment>Generate error response</con2:comment>
+                                                <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6ee6</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con3:location>
+                                                <con3:expr>
+                                                    <con:xsltTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                                                        <con:resource ref="CustomerAgreement/XSLT/GenErrorReply"/>
+                                                        <con:input>$outbound</con:input>
+                                                        <con:param name="errorMessage">
+                                                            <con:path>fn:concat("Customer hub reported error while getting linkit info : ",$getLinkitInfoResponse/ser:getLinlitInfoResponse/ser:return/ser:ReplyInfo/ser:StatusMessage/text())</con:path>
+                                                        </con:param>
+                                                        <con:param name="errorCode">
+                                                            <con:path>fn:concat("",$lastReturnedStatusCodeLinkit)</con:path>
+                                                        </con:param>
+                                                        <con:param name="severityLevel">
+                                                            <con:path>fn:concat("",$getLinkitInfoResponse/ser:getLinlitInfoResponse/ser:return/ser:ReplyInfo/ser:SeverityLevel/text())</con:path>
+                                                        </con:param>
+                                                    </con:xsltTransform>
+                                                </con3:expr>
+                                            </con3:replace>
+                                            <con2:reply isError="false">
+                                                <con2:comment>... and return generated response.</con2:comment>
+                                                <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6ee5</con2:id>
+                                            </con2:reply>
+                                        </con3:actions>
+                                    </con3:case>
+                                </con3:ifThenElse>
+                                <con3:rename varName="getLinkitInfoResponse">
+                                    <con2:comment>Transform response from customerhub containing linkit-info to CustomerAgreement format. Currently the only difference is in namespaces, so just rename the namespace</con2:comment>
+                                    <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6ee4</con2:id>
+                                    <con3:location>
+                                        <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//ser:*</con:xpathText>
+                                    </con3:location>
+                                    <con3:namespace>http://dk/tdc/bss/crm/customeragreement</con3:namespace>
+                                </con3:rename>
+                            </con3:actions>
+                        </con3:case>
+                    </con3:ifThenElse>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline name="PipelinePairNode1_request" type="request">
+            <con:stage name="raiseError">
+                <con:comment/>
+                <con:actions>
+                    <con3:Error>
+                        <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6b6c</con2:id>
+                        <con3:errCode>INTERNAL_ERROR_UKNOWN_TARGET_CRM</con3:errCode>
+                        <con3:message>Unable to determine the system where to find agreement ( the error should never occure)</con3:message>
+                    </con3:Error>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline name="_onErrorHandler-1615438491781052770--e7f0e46.139b03cf04c.-6f81" type="error">
+            <con:stage name="handleGetAgrFromNabsErrors">
+                <con:context>
+                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                    <con2:userNsDecl prefix="con" namespace="http://www.bea.com/wli/sb/stages/transform/config"/>
+                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                </con:context>
+                <con:actions>
+                    <con:assign varName="errorCodRep_3" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6b9e</con4:id>
+                        <con:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$fault/ctx:errorCode/text()</con:xqueryText>
+                        </con:expr>
+                    </con:assign>
+                    <con:assign varName="errorCode_3" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6b9d</con4:id>
+                        <con:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"20999"</con:xqueryText>
+                        </con:expr>
+                    </con:assign>
+                    <con:assign varName="errorMesage_3" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6b9c</con4:id>
+                        <con:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"Internal error"</con:xqueryText>
+                        </con:expr>
+                    </con:assign>
+                    <con:assign varName="severityLevel_3" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6b9b</con4:id>
+                        <con:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"1"</con:xqueryText>
+                        </con:expr>
+                    </con:assign>
+                    <con3:ifThenElse>
+                        <con2:comment>Check fault reported and map to appropriate errors:
+- BEA-382032 / BEA-382033 indicates invalid xml/missing soap envelope or body
+- BEA-380000 occurs when soap fault is retutned as reply in  route-to call
+- BEA-380001 communication error in route-to call
+- all other faults are reported as internal errors</con2:comment>
+                        <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6b9a</con2:id>
+                        <con3:case>
+                            <con3:condition>
+                                <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">($errorCodRep_3= "BEA-382032") or   ($errorCodRep_3= "BEA-382033")</con:xqueryText>
+                            </con3:condition>
+                            <con3:actions>
+                                <con:assign varName="errorCode_3" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6b98</con4:id>
+                                    <con:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"40111"</con:xqueryText>
+                                    </con:expr>
+                                </con:assign>
+                                <con:assign varName="errorMessage_3" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6b97</con4:id>
+                                    <con:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"Empty or invalid response message received from Nabsadapter"</con:xqueryText>
+                                    </con:expr>
+                                </con:assign>
+                                <con:assign varName="severityLevel_3" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6b96</con4:id>
+                                    <con:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"1"</con:xqueryText>
+                                    </con:expr>
+                                </con:assign>
+                            </con3:actions>
+                        </con3:case>
+                        <con3:case>
+                            <con3:condition>
+                                <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$errorCodRep_3="BEA-380000"</con:xqueryText>
+                            </con3:condition>
+                            <con3:actions>
+                                <con:assign varName="reportedExternalFaultCode" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6b95</con4:id>
+                                    <con:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$fault//ctx:details/con:ReceivedFaultDetail/con:faultcode/text()</con:xqueryText>
+                                    </con:expr>
+                                </con:assign>
+                                <con:assign varName="reportedExternalFaultMessage" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6b94</con4:id>
+                                    <con:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$fault//ctx:details/con:ReceivedFaultDetail/con:faultstring/text()</con:xqueryText>
+                                    </con:expr>
+                                </con:assign>
+                                <con:assign varName="errorCode_3" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6b93</con4:id>
+                                    <con:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"40112"</con:xqueryText>
+                                    </con:expr>
+                                </con:assign>
+                                <con:assign varName="errorMessage_3" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6b92</con4:id>
+                                    <con:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">fn:concat("Nabsadapter reported error as soap fault. Reported fault: ", $reportedExternalFaultCode, " , reported fault message: ",  $reportedExternalFaultMessage)</con:xqueryText>
+                                    </con:expr>
+                                </con:assign>
+                            </con3:actions>
+                        </con3:case>
+                        <con3:case>
+                            <con3:condition>
+                                <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$errorCodRep_3="BEA-380001"</con:xqueryText>
+                            </con3:condition>
+                            <con3:actions>
+                                <con:assign varName="errorCode_3" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6b91</con4:id>
+                                    <con:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"30113"</con:xqueryText>
+                                    </con:expr>
+                                </con:assign>
+                                <con:assign varName="errorMessage_3" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6b90</con4:id>
+                                    <con:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">fn:concat("Communication error while calling Nabsadapter (", $fault/ctx:errorCode/text(), ")")</con:xqueryText>
+                                    </con:expr>
+                                </con:assign>
+                            </con3:actions>
+                        </con3:case>
+                        <con3:default>
+                            <con:assign varName="errorMessage_3" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6b8d</con4:id>
+                                <con:expr>
+                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">fn:concat("Internal error while calling nabsadapter.getAgreement, error code: ", $errorCodRep_3 ," message: ",  $fault/ctx:errorCode/text())</con:xqueryText>
+                                </con:expr>
+                            </con:assign>
+                        </con3:default>
+                    </con3:ifThenElse>
+                    <con3:replace varName="body" contents-only="true">
+                        <con2:comment>if error code is reprored, generate error reply ..</con2:comment>
+                        <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6b8c</con2:id>
+                        <con3:location>
+                            <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                        </con3:location>
+                        <con3:expr>
+                            <con:xsltTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                                <con:resource ref="CustomerAgreement/XSLT/GenErrorReply"/>
+                                <con:input>$inbound</con:input>
+                                <con:param name="errorMessage">
+                                    <con:path>fn:concat("",$errorMessage_3)</con:path>
+                                </con:param>
+                                <con:param name="errorCode">
+                                    <con:path>fn:concat("",$errorCode_3)</con:path>
+                                </con:param>
+                                <con:param name="severityLevel">
+                                    <con:path>fn:concat("",$severityLevel_3)</con:path>
+                                </con:param>
+                            </con:xsltTransform>
+                        </con3:expr>
+                    </con3:replace>
+                    <con2:reply isError="false">
+                        <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6b8b</con2:id>
+                    </con2:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline name="ReturnAlreadyFetchedAgreement_request" type="request"/>
+        <con:pipeline name="DetermineTargetSystem_response" type="response">
+            <con:stage name="AddItsbReplyInfo">
+                <con:comment/>
+                <con:context>
+                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                    <con2:varNsDecl prefix="cab" namespace="http://service.chub.tdc.dk/domain/cableunit"/>
+                    <con2:varNsDecl prefix="add" namespace="http://service.chub.tdc.dk/domain/address"/>
+                    <con2:varNsDecl prefix="head" namespace="http://header.cu.tdc.dk"/>
+                    <con2:varNsDecl prefix="sty" namespace="http://service.chub.tdc.dk/domain/styretafsaetning"/>
+                </con:context>
+                <con:actions>
+                    <con3:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-7ba2</con2:id>
+                        <con3:location>
+                            <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">./cus:getAgreementResponse/cus:return/cus:ReplyInfo/cus:ServerId</con:xpathText>
+                        </con3:location>
+                        <con3:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"itsb"</con:xqueryText>
+                        </con3:expr>
+                    </con3:replace>
+                    <con:replace varName="body" contents-only="true" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con1:id xmlns:con1="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-7ba1</con1:id>
+                        <con:location>
+                            <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">./cus:getAgreementResponse/cus:return/cus:ReplyInfo/cus:ReplyTimestamp</con:xpathText>
+                        </con:location>
+                        <con:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">fn:current-dateTime()</con:xqueryText>
+                        </con:expr>
+                    </con:replace>
+                    <con:replace varName="body" contents-only="true" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6ed4</con2:id>
+                        <con:location>
+                            <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">./cus:getAgreementResponse/cus:return/cus:ReplyInfo/cus:TransactionDuration</con:xpathText>
+                        </con:location>
+                        <con:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">fn:seconds-from-duration(op:subtract-times(xs:time(fn:current-time()),xs:time($timeAtStart)))*1000
++fn:minutes-from-duration(op:subtract-times(xs:time(fn:current-time()),xs:time($timeAtStart)))*60*1000</con:xqueryText>
+                        </con:expr>
+                    </con:replace>
+                    <con3:replace varName="header" contents-only="true">
+                        <con2:id>_ActionId-2788188054244887934-7a409944.162be86c58d.-7f16</con2:id>
+                        <con3:location>
+                            <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                        </con3:location>
+                        <con3:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">''</con:xqueryText>
+                        </con3:expr>
+                    </con3:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline name="_onErrorHandler-1615438491781052770--e7f0e46.139b03cf04c.-6cef" type="error">
+            <con:stage name="handleGetAgrFromCHubErrors">
+                <con:context>
+                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                    <con2:userNsDecl prefix="con" namespace="http://www.bea.com/wli/sb/stages/transform/config"/>
+                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                </con:context>
+                <con:actions>
+                    <con:assign varName="errorCodRep_1" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6ced</con4:id>
+                        <con:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$fault/ctx:errorCode/text()</con:xqueryText>
+                        </con:expr>
+                    </con:assign>
+                    <con:assign varName="errorCode_1" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6c8b</con4:id>
+                        <con:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"20999"</con:xqueryText>
+                        </con:expr>
+                    </con:assign>
+                    <con:assign varName="errorMesage_1" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6c79</con4:id>
+                        <con:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"Internal error"</con:xqueryText>
+                        </con:expr>
+                    </con:assign>
+                    <con:assign varName="severityLevel_1" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6c78</con4:id>
+                        <con:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"1"</con:xqueryText>
+                        </con:expr>
+                    </con:assign>
+                    <con:assign varName="reportedExternalFaultCode" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6b62</con4:id>
+                        <con:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$fault//ctx:details/con:ReceivedFaultDetail/con:faultcode/text()</con:xqueryText>
+                        </con:expr>
+                    </con:assign>
+                    <con:assign varName="reportedExternalFaultMessage" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6b61</con4:id>
+                        <con:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$fault//ctx:details/con:ReceivedFaultDetail/con:faultstring/text()</con:xqueryText>
+                        </con:expr>
+                    </con:assign>
+                    <con3:ifThenElse>
+                        <con2:comment>Check fault reported and map to appropriate errors:
+- BEA-382510: actually means error in updating variable, and will occure if service callout results in emty document. First time response documet is accessed in assign action, the error BEA-382510 is raised (If the empty response document is part of "if" statement, another similar exception is raised). 
+
+- BEA-382032 / BEA-382033 indicates invalid xml/missing soap envelope or body
+- BEA-382500 occurs when soap fault is retutned as reply in service call out
+- BEA-380002 communication error in service callout
+- all other faults are reported as internal errors</con2:comment>
+                        <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6ce4</con2:id>
+                        <con3:case>
+                            <con3:condition>
+                                <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$errorCodRep_1="BEA-382510"</con:xqueryText>
+                            </con3:condition>
+                            <con3:actions>
+                                <con:assign varName="errorCode_1" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6c76</con4:id>
+                                    <con:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"30111"</con:xqueryText>
+                                    </con:expr>
+                                </con:assign>
+                                <con:assign varName="errorMessage_1" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6c75</con4:id>
+                                    <con:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"Empty or invalid response message received from Customer Hub"</con:xqueryText>
+                                    </con:expr>
+                                </con:assign>
+                            </con3:actions>
+                        </con3:case>
+                        <con3:case>
+                            <con3:condition>
+                                <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">($errorCodRep_1="BEA-382032") or ($errorCodRep_1="BEA-382033")</con:xqueryText>
+                            </con3:condition>
+                            <con3:actions>
+                                <con:assign varName="errorCode_1" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6b64</con4:id>
+                                    <con:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"30111"</con:xqueryText>
+                                    </con:expr>
+                                </con:assign>
+                                <con:assign varName="errorMessage_1" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6b63</con4:id>
+                                    <con:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">fn:concat("Invalid response message received from Customer Hub,  Error details ", $errorCodRep_1 ," message: ",  $fault/ctx:errorCode/text())</con:xqueryText>
+                                    </con:expr>
+                                </con:assign>
+                            </con3:actions>
+                        </con3:case>
+                        <con3:case>
+                            <con3:condition>
+                                <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$errorCodRep_1="BEA-382500"</con:xqueryText>
+                            </con3:condition>
+                            <con3:actions>
+                                <con:assign varName="errorCode_1" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6c72</con4:id>
+                                    <con:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"30112"</con:xqueryText>
+                                    </con:expr>
+                                </con:assign>
+                                <con:assign varName="errorMessage_1" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6c71</con4:id>
+                                    <con:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">fn:concat("Customer hub reported error as soap fault. Reported fault: ", $reportedExternalFaultCode, " , reported fault message: ",  $reportedExternalFaultMessage)</con:xqueryText>
+                                    </con:expr>
+                                </con:assign>
+                            </con3:actions>
+                        </con3:case>
+                        <con3:case>
+                            <con3:condition>
+                                <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$errorCodRep_1="BEA-380002"</con:xqueryText>
+                            </con3:condition>
+                            <con3:actions>
+                                <con:assign varName="errorCode_1" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6c5d</con4:id>
+                                    <con:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"30113"</con:xqueryText>
+                                    </con:expr>
+                                </con:assign>
+                                <con:assign varName="errorMessage_1" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6c5c</con4:id>
+                                    <con:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">fn:concat("Communication error while calling Customer Hub (", $fault/ctx:errorCode/text(), ")")</con:xqueryText>
+                                    </con:expr>
+                                </con:assign>
+                            </con3:actions>
+                        </con3:case>
+                        <con3:default>
+                            <con:assign varName="errorMessage_1" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config">
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6c6e</con4:id>
+                                <con:expr>
+                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">fn:concat("Internal error while calling customerhub. getAgreement, error ", $errorCodRep_1 ," message: ",  $fault/ctx:errorCode/text())</con:xqueryText>
+                                </con:expr>
+                            </con:assign>
+                        </con3:default>
+                    </con3:ifThenElse>
+                    <con3:replace varName="body" contents-only="true">
+                        <con2:comment>if error code is reprored, generate error reply ..</con2:comment>
+                        <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6c73</con2:id>
+                        <con3:location>
+                            <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                        </con3:location>
+                        <con3:expr>
+                            <con:xsltTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                                <con:resource ref="CustomerAgreement/XSLT/GenErrorReply"/>
+                                <con:input>$inbound</con:input>
+                                <con:param name="errorMessage">
+                                    <con:path>fn:concat("",$errorMessage_1)</con:path>
+                                </con:param>
+                                <con:param name="errorCode">
+                                    <con:path>fn:concat("",$errorCode_1)</con:path>
+                                </con:param>
+                                <con:param name="severityLevel">
+                                    <con:path>fn:concat("",$severityLevel_1)</con:path>
+                                </con:param>
+                            </con:xsltTransform>
+                        </con3:expr>
+                    </con3:replace>
+                    <con2:reply isError="false">
+                        <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6c70</con2:id>
+                    </con2:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline name="DetermineTargetSystem_request" type="request">
+            <con:stage name="ConvertICCNumberToMSISDN">
+                <con:comment/>
+                <con:context>
+                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                </con:context>
+                <con:actions>
+                    <con3:assign varName="OperationName">
+                        <con2:id>_ActionId-7122012815634688410-40c1708f.1409b0c62ee.-7ec4</con2:id>
+                        <con3:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$inbound/ctx:service/ctx:operation/text()</con:xqueryText>
+                        </con3:expr>
+                    </con3:assign>
+                    <con3:ifThenElse>
+                        <con2:id>_ActionId-7122012815634688410-40c1708f.1409b0c62ee.-7ec5</con2:id>
+                        <con3:case>
+                            <con3:condition>
+                                <con:xqueryConditionExpr xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                                    <con:compExpr operator="=">
+                                        <con:leftPath>$OperationName</con:leftPath>
+                                        <con:rightPath>"getAgreementByICC"</con:rightPath>
+                                    </con:compExpr>
+                                </con:xqueryConditionExpr>
+                            </con3:condition>
+                            <con3:actions>
+                                <con4:log>
+                                    <con2:id>_ActionId-7122012815634688410-40c1708f.1409b0c62ee.-7ec3</con2:id>
+                                    <con4:logLevel>error</con4:logLevel>
+                                    <con4:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">"This is ICC Reuqest"</con:xqueryText>
+                                    </con4:expr>
+                                    <con4:message>This is the ICC operation....</con4:message>
+                                </con4:log>
+                                <con4:log>
+                                    <con2:id>_ActionId-7122012815634688410-40c1708f.1409b0c62ee.-7eb2</con2:id>
+                                    <con4:logLevel>error</con4:logLevel>
+                                    <con4:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$body/*</con:xqueryText>
+                                    </con4:expr>
+                                    <con4:message>before assigning request to Chub Format</con4:message>
+                                </con4:log>
+                                <con3:replace varName="body" contents-only="true">
+                                    <con2:id>_ActionId-7122012815634688410-40c1708f.1409b0c62ee.-7eb3</con2:id>
+                                    <con3:location>
+                                        <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                    </con3:location>
+                                    <con3:expr>
+                                        <con:xsltTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                                            <con:resource ref="CustomerAgreement/XSLT/GetICCtoGetAgreementConverter"/>
+                                            <con:input>$body/*</con:input>
+                                        </con:xsltTransform>
+                                    </con3:expr>
+                                </con3:replace>
+                                <con4:log>
+                                    <con2:id>_ActionId-7122012815634688410-40c1708f.1409b0c62ee.-7ead</con2:id>
+                                    <con4:logLevel>error</con4:logLevel>
+                                    <con4:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$body/*</con:xqueryText>
+                                    </con4:expr>
+                                    <con4:message>after assigning request to Chub Format</con4:message>
+                                </con4:log>
+                                <con3:assign varName="ICCNumber">
+                                    <con2:id>_ActionId-7122012815634688410-40c1708f.1409b0c62ee.-677c</con2:id>
+                                    <con3:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$body/cus:getAgreement/cus:request/cus:SubscriptionNo/text()</con:xqueryText>
+                                    </con3:expr>
+                                </con3:assign>
+                                <con3:assign varName="ApilinkRequest">
+                                    <con2:id>_ActionId-7122012815634688410-40c1708f.1409b0c62ee.-6799</con2:id>
+                                    <con3:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config"><![CDATA[<getPairedCtnBySimRequest xmlns:java="java:dk.tdc.apilink.logic.datatypes">
+    <java:applicationId>DEAL</java:applicationId>
+    <java:userId></java:userId>
+    <java:serialNo>{$ICCNumber}</java:serialNo>
+</getPairedCtnBySimRequest>]]></con:xqueryText>
+                                    </con3:expr>
+                                </con3:assign>
+                                <con3:wsCallout>
+                                    <con2:id>_ActionId-7122012815634688410-40c1708f.1409b0c62ee.-679a</con2:id>
+                                    <con3:service ref="CustomerAgreement/BusinessService/GetMSISDNforICC" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                    <con3:operation>getPairedCtnBySim</con3:operation>
+                                    <con3:request>
+                                        <con3:param>
+                                            <con3:name>getPairedCtnBySimRequest</con3:name>
+                                            <con3:variable>ApilinkRequest</con3:variable>
+                                        </con3:param>
+                                        <con3:header/>
+                                    </con3:request>
+                                    <con3:response>
+                                        <con3:param>
+                                            <con3:name>result</con3:name>
+                                            <con3:variable>ApilinkResponse</con3:variable>
+                                        </con3:param>
+                                        <con3:header/>
+                                    </con3:response>
+                                    <con3:requestTransform/>
+                                    <con3:responseTransform/>
+                                </con3:wsCallout>
+                                <con3:assign varName="SubscriptionNumber">
+                                    <con2:id>_ActionId-7122012815634688410-40c1708f.1409b0c62ee.-676e</con2:id>
+                                    <con3:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$ApilinkResponse/primaryCtn/text()</con:xqueryText>
+                                    </con3:expr>
+                                </con3:assign>
+                                <con4:log>
+                                    <con2:id>_ActionId-7122012815634688410-40c1708f.1409b0c62ee.-6734</con2:id>
+                                    <con4:logLevel>error</con4:logLevel>
+                                    <con4:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$SubscriptionNumber</con:xqueryText>
+                                    </con4:expr>
+                                    <con4:message>Subscription Number found from Apilink</con4:message>
+                                </con4:log>
+                                <con3:replace varName="body" contents-only="true">
+                                    <con2:id>_ActionId-7122012815634688410-40c1708f.1409b0c62ee.-675f</con2:id>
+                                    <con3:location>
+                                        <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">./cus:getAgreement/cus:request/cus:SubscriptionNo</con:xpathText>
+                                    </con3:location>
+                                    <con3:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$SubscriptionNumber</con:xqueryText>
+                                    </con3:expr>
+                                </con3:replace>
+                            </con3:actions>
+                        </con3:case>
+                    </con3:ifThenElse>
+                </con:actions>
+            </con:stage>
+            <con:stage name="CheckTargetInRequest">
+                <con:comment/>
+                <con:context>
+                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                </con:context>
+                <con:actions>
+                    <con3:assign varName="timeAtStart">
+                        <con2:id>_ActionId-1034414749076247224--6f766e9d.13a8802772a.-6836</con2:id>
+                        <con3:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">fn:current-time()</con:xqueryText>
+                        </con3:expr>
+                    </con3:assign>
+                    <con3:assign varName="requestSupportedByNabs">
+                        <con2:id>_ActionId-1034414749076247224--6f766e9d.13a8802772a.-6835</con2:id>
+                        <con3:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">fn:not(fn:count($body/cus:getAgreement/cus:request/cus:SubscriptionNo/text())=0)</con:xqueryText>
+                        </con3:expr>
+                    </con3:assign>
+                    <con:assign varName="restrictSearchToTargetSystem" xmlns:con="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con1:id xmlns:con1="http://www.bea.com/wli/sb/stages/config">_ActionId-1034414749076247224--6f766e9d.13a8802772a.-6837</con1:id>
+                        <con:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">fn:upper-case($body/cus:getAgreement/cus:request/cus:TargetSystem/text())</con:xqueryText>
+                        </con:expr>
+                    </con:assign>
+                    <con3:delete varName="body">
+                        <con2:id>_ActionId-1034414749076247224--6f766e9d.13a8802772a.-678f</con2:id>
+                        <con3:location>
+                            <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">./cus:getAgreement/cus:request/cus:TargetSystem</con:xpathText>
+                        </con3:location>
+                    </con3:delete>
+                </con:actions>
+            </con:stage>
+            <con:stage name="CheckAgreementExistsInCustomerHub" errorHandler="_onErrorHandler-1615438491781052770--e7f0e46.139b03cf04c.-6cef">
+                <con:comment/>
+                <con:context>
+                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                </con:context>
+                <con:actions>
+                    <con3:ifThenElse>
+                        <con2:id>_ActionId-1034414749076247224--6f766e9d.13a8802772a.-682d</con2:id>
+                        <con3:case>
+                            <con3:condition>
+                                <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$restrictSearchToTargetSystem="NABS"</con:xqueryText>
+                            </con3:condition>
+                            <con3:actions>
+                                <con2:skip>
+                                    <con2:id>_ActionId-1034414749076247224--6f766e9d.13a8802772a.-682c</con2:id>
+                                </con2:skip>
+                            </con3:actions>
+                        </con3:case>
+                    </con3:ifThenElse>
+                    <con3:assign varName="bodyContent">
+                        <con2:id>_ActionId-3993726136537753842-1b28e27d.139252399bf.-7ae7</con2:id>
+                        <con3:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$body</con:xqueryText>
+                        </con3:expr>
+                    </con3:assign>
+                    <con3:wsCallout>
+                        <con2:id>_ActionId-3993726136537753842-1b28e27d.139252399bf.-7fd5</con2:id>
+                        <con3:service ref="CustomerHub/BusinessServices/CustomerHubBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con3:operation>getAgreement</con3:operation>
+                        <con3:request>
+                            <con3:body wrapped="true">bodyContent</con3:body>
+                            <con3:header>header</con3:header>
+                        </con3:request>
+                        <con3:response>
+                            <con3:body wrapped="true">agreementResponse</con3:body>
+                            <con3:header/>
+                        </con3:response>
+                        <con3:requestTransform>
+                            <con3:rename varName="bodyContent">
+                                <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6e0b</con2:id>
+                                <con3:location>
+                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cus:*</con:xpathText>
+                                </con3:location>
+                                <con3:namespace>http://service.chub.tdc.dk</con3:namespace>
+                            </con3:rename>
+                            <con4:log>
+                                <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6656</con2:id>
+                                <con4:logLevel>debug</con4:logLevel>
+                                <con4:expr>
+                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$bodyContent</con:xqueryText>
+                                </con4:expr>
+                                <con4:message>customeragreement_call_customerhub_getAgreement_request</con4:message>
+                            </con4:log>
+                        </con3:requestTransform>
+                        <con3:responseTransform>
+                            <con3:rename varName="agreementResponse">
+                                <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6e09</con2:id>
+                                <con3:location>
+                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cuhub:*</con:xpathText>
+                                </con3:location>
+                                <con3:namespace>http://dk/tdc/bss/crm/customeragreement</con3:namespace>
+                            </con3:rename>
+                        </con3:responseTransform>
+                    </con3:wsCallout>
+                    <con3:assign varName="lastReturnedStatusCode">
+                        <con2:id>_ActionId-3993726136537753842-1b28e27d.139252399bf.-6c1b</con2:id>
+                        <con3:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$agreementResponse/cus:return/cus:ReplyInfo/cus:StatusCode/text()</con:xqueryText>
+                        </con3:expr>
+                    </con3:assign>
+                    <con4:log>
+                        <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6654</con2:id>
+                        <con4:logLevel>debug</con4:logLevel>
+                        <con4:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$agreementResponse</con:xqueryText>
+                        </con4:expr>
+                        <con4:message>customeragreement_call_customerhub_getAgreement_response</con4:message>
+                    </con4:log>
+                    <con3:ifThenElse>
+                        <con2:comment>Check that no errors are reported , errorcode shold be &lt;>0</con2:comment>
+                        <con2:id>_ActionId-3993726136537753842-1b28e27d.139252399bf.-669b</con2:id>
+                        <con3:case>
+                            <con3:condition>
+                                <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$lastReturnedStatusCode!="0"</con:xqueryText>
+                            </con3:condition>
+                            <con3:actions>
+                                <con3:replace varName="body" contents-only="true">
+                                    <con2:comment>if error code is reprored, generate error reply ..</con2:comment>
+                                    <con2:id>_ActionId-3993726136537753842-1b28e27d.139252399bf.-669a</con2:id>
+                                    <con3:location>
+                                        <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                    </con3:location>
+                                    <con3:expr>
+                                        <con:xsltTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                                            <con:resource ref="CustomerAgreement/XSLT/GenErrorReply"/>
+                                            <con:input>$inbound</con:input>
+                                            <con:param name="errorMessage">
+                                                <con:path>fn:concat("Customer hub reported error while getting agreement: ",$agreementResponse/cus:getAgreementResponse/cus:return/cus:ReplyInfo/cus:StatusMessage/text())</con:path>
+                                            </con:param>
+                                            <con:param name="errorCode">
+                                                <con:path>fn:concat("",$lastReturnedStatusCode)</con:path>
+                                            </con:param>
+                                            <con:param name="severityLevel">
+                                                <con:path>fn:concat("",$agreementResponse/cus:getAgreementResponse/cus:return/cus:ReplyInfo/cus:SeverityLevel/text())</con:path>
+                                            </con:param>
+                                        </con:xsltTransform>
+                                    </con3:expr>
+                                </con3:replace>
+                                <con2:reply isError="false">
+                                    <con2:comment>... and then return generated error reply</con2:comment>
+                                    <con2:id>_ActionId-3993726136537753842-1b28e27d.139252399bf.-6699</con2:id>
+                                </con2:reply>
+                            </con3:actions>
+                        </con3:case>
+                    </con3:ifThenElse>
+                    <con3:assign varName="agreementFoundInchub">
+                        <con2:id>_ActionId-3993726136537753842-1b28e27d.139252399bf.-7b03</con2:id>
+                        <con3:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">fn:not(fn:count($agreementResponse//cus:Subscription)=0) or fn:not(fn:count($agreementResponse//cus:AccountInfo)=0)</con:xqueryText>
+                        </con3:expr>
+                    </con3:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage name="DefineTarget">
+                <con:comment/>
+                <con:context>
+                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                </con:context>
+                <con:actions>
+                    <con3:assign varName="agreementOrigin">
+                        <con2:id>_ActionId-1034414749076247224--6f766e9d.13a8802772a.-682e</con2:id>
+                        <con3:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">if( ($restrictSearchToTargetSystem="CU") or ($agreementFoundInchub="true") or ($requestSupportedByNabs="false")) then "CU" else "NABS"</con:xqueryText>
+                        </con3:expr>
+                    </con3:assign>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="DetermineTargetSystem">
+                <con:comment>Obtains information that is used later to decide whether lookup is made in Cu or nabs</con:comment>
+                <con:request>DetermineTargetSystem_request</con:request>
+                <con:response>DetermineTargetSystem_response</con:response>
+            </con:pipeline-node>
+            <con:branch-node type="condition" name="CuOrNabs">
+                <con:comment/>
+                <con:branch-table variable="agreementOrigin">
+                    <con:branch name="GetNabsAgreement">
+                        <con:operator>equals</con:operator>
+                        <con:value>"NABS"</con:value>
+                        <con:flow>
+                            <con:pipeline-node name="EnrichNabsResponse">
+                                <con:comment/>
+                                <con:request>EnrichNabsResponse_request</con:request>
+                                <con:response>EnrichNabsResponse_response</con:response>
+                            </con:pipeline-node>
+                            <con:route-node name="CallNabsAdapter" error-handler="_onErrorHandler-1615438491781052770--e7f0e46.139b03cf04c.-6f81">
+                                <con:comment/>
+                                <con:context>
+                                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:userNsDecl prefix="java" namespace="java:dk.tdc.nabs.adaptor.external.datatypes"/>
+                                    <con2:userNsDecl prefix="nabsadapt" namespace="http://dk/tdc/nabs/adaptor"/>
+                                    <con2:userNsDecl prefix="myXsi" namespace="http://www.w3.org/2001/XMLSchema-instance"/>
+                                    <con2:userNsDecl prefix="adaptNew" namespace="java:dk.tdc.nabs.adaptor.external.datatypes.newSSA"/>
+                                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:comment>Fetch agreement from nabs</con2:comment>
+                                        <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6f7e</con2:id>
+                                        <con1:service ref="NabsAdapter/BusinessServices/NabsAdapterBusinessServiceHttp" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:outboundTransform>
+                                            <con3:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6f4a</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con3:location>
+                                                <con3:expr>
+                                                    <con:xsltTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                                                        <con:resource ref="CustomerAgreement/XSLT/CustAgrToNabsGetAgreReq"/>
+                                                        <con:input>$body/*[1]</con:input>
+                                                    </con:xsltTransform>
+                                                </con3:expr>
+                                            </con3:replace>
+                                            <con4:log>
+                                                <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6653</con2:id>
+                                                <con4:logLevel>debug</con4:logLevel>
+                                                <con4:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$body</con:xqueryText>
+                                                </con4:expr>
+                                                <con4:message>customeragreement_call_nabsadapter_getAgreement_request</con4:message>
+                                            </con4:log>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con4:log>
+                                                <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6652</con2:id>
+                                                <con4:logLevel>debug</con4:logLevel>
+                                                <con4:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$body</con:xqueryText>
+                                                </con4:expr>
+                                                <con4:message>customeragreement_call_nabsadapter_getAgreement_request</con4:message>
+                                            </con4:log>
+                                            <con3:rename varName="body">
+                                                <con2:comment>Rename nabsadapter namespaces to CustomerAgreement's</con2:comment>
+                                                <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6f47</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//java:*|//nabsadapt:*|//adaptNew:*</con:xpathText>
+                                                </con3:location>
+                                                <con3:namespace>http://dk/tdc/bss/crm/customeragreement</con3:namespace>
+                                            </con3:rename>
+                                            <con3:replace varName="body" contents-only="false">
+                                                <con2:comment>Remove nilled elements and unused namespace declarations</con2:comment>
+                                                <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6f37</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con3:location>
+                                                <con3:expr>
+                                                    <con:xsltTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                                                        <con:resource ref="CustomerAgreement/XSLT/removeNilAndUnusedNamespaces"/>
+                                                        <con:input>$body</con:input>
+                                                    </con:xsltTransform>
+                                                </con3:expr>
+                                            </con3:replace>
+                                            <con3:assign varName="lastReturnedStatusCode">
+                                                <con2:comment>Get returned error code</con2:comment>
+                                                <con2:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-6f7b</con2:id>
+                                                <con3:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$body/cus:getAgreementResponse/cus:return/cus:ReplyInfo/cus:StatusCode/text()</con:xqueryText>
+                                                </con3:expr>
+                                            </con3:assign>
+                                            <con3:ifThenElse>
+                                                <con2:comment>Check that no errors are reported , errorcode shold be &lt;>0</con2:comment>
+                                                <con2:id>_ActionId-8511228784433338360-452c0e14.13b5ff7872e.-1ca6</con2:id>
+                                                <con3:case>
+                                                    <con3:condition>
+                                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$lastReturnedStatusCode!="0"</con:xqueryText>
+                                                    </con3:condition>
+                                                    <con3:actions>
+                                                        <con3:replace varName="body" contents-only="true">
+                                                            <con2:comment>if error code is reprored, generate error reply ..</con2:comment>
+                                                            <con2:id>_ActionId-8511228784433338360-452c0e14.13b5ff7872e.-1ca5</con2:id>
+                                                            <con3:location>
+                                                                <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                            </con3:location>
+                                                            <con3:expr>
+                                                                <con:xsltTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                                                                    <con:resource ref="CustomerAgreement/XSLT/GenErrorReply"/>
+                                                                    <con:input>$outbound</con:input>
+                                                                    <con:param name="errorMessage">
+                                                                        <con:path>fn:concat("Nabsadapter reported error: ",$body/cus:getAgreementResponse/cus:return/cus:ReplyInfo/cus:StatusMessage/text())</con:path>
+                                                                    </con:param>
+                                                                    <con:param name="errorCode">
+                                                                        <con:path>fn:concat("",$lastReturnedStatusCode)</con:path>
+                                                                    </con:param>
+                                                                    <con:param name="severityLevel">
+                                                                        <con:path>fn:concat("",$body/cus:getAgreementResponse/cus:return/cus:ReplyInfo/cus:SeverityLevel/text())</con:path>
+                                                                    </con:param>
+                                                                </con:xsltTransform>
+                                                            </con3:expr>
+                                                        </con3:replace>
+                                                        <con2:reply isError="false">
+                                                            <con2:comment>... and then return generated error reply</con2:comment>
+                                                            <con2:id>_ActionId-8511228784433338360-452c0e14.13b5ff7872e.-1ca4</con2:id>
+                                                        </con2:reply>
+                                                    </con3:actions>
+                                                </con3:case>
+                                            </con3:ifThenElse>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="GetChubAgreement">
+                        <con:operator>equals</con:operator>
+                        <con:value>"CU"</con:value>
+                        <con:flow>
+                            <con:pipeline-node name="ReturnAlreadyFetchedAgreement">
+                                <con:comment/>
+                                <con:request>ReturnAlreadyFetchedAgreement_request</con:request>
+                                <con:response>ReturnAlreadyFetchedAgreement_response</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:default-branch>
+                        <con:flow>
+                            <con:pipeline-node name="PipelinePairNode1">
+                                <con:request>PipelinePairNode1_request</con:request>
+                                <con:response>PipelinePairNode1_response</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:default-branch>
+                </con:branch-table>
+            </con:branch-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

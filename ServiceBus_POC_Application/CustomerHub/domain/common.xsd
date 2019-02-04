@@ -1,0 +1,503 @@
+<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="http://service.chub.tdc.dk" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.chub.tdc.dk" xmlns:adr="http://service.chub.tdc.dk/domain/address">
+
+    <xs:import namespace="http://service.chub.tdc.dk/domain/address" schemaLocation="addressSimple.xsd"/>
+
+    <xs:include schemaLocation="commonSimple.xsd"/>
+
+    <xs:complexType name="CommonStandardReply">
+        <xs:sequence>
+            <xs:element name="ReplyInfo" type="tns:ReplyInfo"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CommonStandardReply" type="tns:CommonStandardReply"/>
+
+    <xs:complexType name="CustomerSegment">
+        <xs:sequence>
+            <xs:element name="CustomerSegmentType" type="xs:string" minOccurs="0"/>
+            <xs:element name="CustomerSegmentCode" type="xs:string" minOccurs="0"/>
+            <xs:element name="CustomerSegmentText" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ProductGroupProductListType">
+        <xs:sequence>
+            <xs:element ref="tns:ProductCode" minOccurs="0"/>
+            <xs:element ref="tns:ProductName" minOccurs="0"/>
+            <xs:element ref="tns:MustBeApproved" minOccurs="0"/>
+            <xs:element ref="tns:StartDate" minOccurs="0"/>
+            <xs:element ref="tns:EndDate" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ProductGroupProductList" type="tns:ProductGroupProductListType"/>
+
+
+    <xs:complexType name="EmailType">
+        <xs:sequence>
+            <xs:element name="EmailElement" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="Email" type="tns:EmailType">
+        <xs:annotation>
+            <xs:documentation>List of emails</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ReplyInfo">
+        <xs:sequence>
+            <xs:element name="ReplyTimestamp" type="tns:DateTime" minOccurs="0"/>
+            <xs:element name="ServerId" type="xs:string" minOccurs="0"/>
+            <xs:element name="SeverityLevel" type="xs:int" nillable="false"/>
+            <xs:element name="StatusCode" type="xs:int" nillable="false"/>
+            <xs:element name="StatusMessage" type="xs:string" minOccurs="0"/>
+            <xs:element name="TransactionDuration" type="xs:long" nillable="false"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="Reply" type="tns:ReplyInfo"/>
+
+    <xs:element name="notFound">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="error" type="xs:string"/>
+                <xs:element name="key" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="MailAttachmentType">
+        <xs:sequence>
+            <xs:element name="Data" type="xs:string"/>
+            <xs:element name="Filename" type="xs:string"/>
+            <xs:element name="ContentType" type="xs:string"/>
+            <xs:element name="CsvToExcel" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="MailAttachment" type="tns:MailAttachmentType">
+        <xs:annotation>
+            <xs:documentation>Attachement to mail</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="SendMailType">
+        <xs:sequence>
+            <xs:element name="From" type="xs:string"/>
+            <xs:element name="To" type="xs:string"/>
+            <xs:element name="Cc" type="xs:string" minOccurs="0"/>
+            <xs:element name="Bcc" type="xs:string" minOccurs="0"/>
+            <xs:element name="Subject" type="xs:string"/>
+            <xs:element name="Body" type="xs:string" minOccurs="0"/>
+            <xs:element ref="tns:MailAttachment" minOccurs="0" maxOccurs="2"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="validationError">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="error" type="xs:string"/>
+                <xs:element name="field" type="xs:string"/>
+                <xs:element name="value" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="SPCProductHierarkiType">
+        <xs:sequence>
+            <xs:element ref="tns:SPCProductCode"/>
+            <xs:element ref="tns:MinAntal"/>
+            <xs:element ref="tns:MaxAntal"/>
+            <xs:element ref="tns:Default" minOccurs="0"/>
+            <xs:element name="SPCProduct" type="tns:SPCProductHierarkiType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SPCProductCodeNameType">
+        <xs:sequence>
+            <xs:element ref="tns:SPCProductCode"/>
+            <xs:element ref="tns:SPCProductName"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="SPCProductCodeName" type="tns:SPCProductCodeNameType">
+        <xs:annotation>
+            <xs:documentation>SPC product code and name</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="CUProductIDType">
+        <xs:sequence>
+            <xs:element ref="tns:ProduktGruppe"/>
+            <xs:element ref="tns:ProduktElement"/>
+            <xs:element ref="tns:ProduktFunktion"/>
+            <xs:element ref="tns:AfsaetningType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CUProductID" type="tns:CUProductIDType">
+        <xs:annotation>
+            <xs:documentation>Cu Product ID type</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="PriceType">
+        <xs:sequence>
+            <xs:element ref="tns:PriceEventType"/>
+            <xs:element ref="tns:PeriodeLength"/>
+            <xs:element ref="tns:PriceWithVat"/>
+            <xs:element ref="tns:PriceWithoutVat"/>
+            <xs:element ref="tns:MinimumPriceWithVat"/>
+            <xs:element ref="tns:MinimumPriceWithoutVat"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="Price" type="tns:PriceType">
+        <xs:annotation>
+            <xs:documentation>Price type</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ParameterValidationType">
+        <xs:sequence>
+            <xs:element ref="tns:ValidationType"/>
+            <xs:element ref="tns:ValidationExpression"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ParameterValidation" type="tns:ParameterValidationType">
+        <xs:annotation>
+            <xs:documentation>Price type</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ParameterListType">
+        <xs:sequence>
+            <xs:element ref="tns:ParameterValueText"/>
+            <xs:element ref="tns:ParameterValue"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ParameterList" type="tns:ParameterListType">
+        <xs:annotation>
+            <xs:documentation>A list of parameters from the parm_value table</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="HeaderAuthenticationType">
+        <xs:sequence>
+            <xs:element name="UserName" type="xs:string"/>
+            <xs:element name="Password" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="HeaderAuthentication" type="tns:HeaderAuthenticationType">
+        <xs:annotation>
+            <xs:documentation>The authentication elements located in the header</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="BaseRuleType">
+        <xs:sequence>
+            <xs:element ref="tns:RuleName"/>
+            <xs:element ref="tns:RuleText" minOccurs="0"/>
+            <xs:element name="Enforce" type="xs:boolean"/>
+            <xs:element name="Inform" type="xs:boolean"/>
+            <xs:element ref="tns:SPCProductCodeName" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ExcludeRuleType">
+        <xs:complexContent>
+            <xs:extension base="tns:BaseRuleType">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="ExcludeRule" type="tns:ExcludeRuleType">
+        <xs:annotation>
+            <xs:documentation>Cu Product ID type</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="IncludeRuleType">
+        <xs:complexContent>
+            <xs:extension base="tns:BaseRuleType">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="IncludeRule" type="tns:IncludeRuleType">
+        <xs:annotation>
+            <xs:documentation>Cu Product ID type</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="MigrateRuleType">
+        <xs:complexContent>
+            <xs:extension base="tns:BaseRuleType">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="MigrateRule" type="tns:MigrateRuleType">
+        <xs:annotation>
+            <xs:documentation>Cu Product ID type</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="CountRuleType">
+        <xs:complexContent>
+            <xs:extension base="tns:BaseRuleType">
+                <xs:sequence>
+                    <xs:element name="Count" type="xs:int"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="CountRule" type="tns:CountRuleType">
+        <xs:annotation>
+            <xs:documentation>Cu Product ID type</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ParameterType">
+        <xs:sequence>
+            <xs:element ref="tns:ParameterName"/>
+            <xs:element ref="tns:ParameterText"/>
+            <xs:element ref="tns:ParameterAdvisory"/>
+            <xs:element ref="tns:ParameterDataType"/>
+            <xs:element ref="tns:ParameterLength"/>
+            <xs:element ref="tns:UiTemplate" minOccurs="0"/>
+            <xs:element ref="tns:ParameterValidation" minOccurs="0"/>
+            <xs:element ref="tns:ParameterList" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="tns:Visible"/>
+            <xs:element ref="tns:Mandatory"/>
+            <xs:element ref="tns:ListIndicator"/>
+            <xs:element ref="tns:Enabled"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="Parameter" type="tns:ParameterType">
+        <xs:annotation>
+            <xs:documentation>Parameter type</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ProductParameterEventType">
+        <xs:sequence>
+            <xs:element ref="tns:ParameterEventType"/>
+            <xs:element ref="tns:CUProductNumber" minOccurs="0"/>
+            <xs:element ref="tns:CUAttribute" minOccurs="0"/>
+            <xs:element ref="tns:Package" minOccurs="0"/>
+            <xs:element ref="tns:OrderPlacementType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ProductParameterEvent" type="tns:ProductParameterEventType">
+        <xs:annotation>
+            <xs:documentation>Product Parameter type</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ParListEntriesType">
+        <xs:sequence>
+            <xs:element ref="tns:ParText"/>
+            <xs:element ref="tns:ParValue"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ParListEntries" type="tns:ParListEntriesType">
+        <xs:annotation>
+            <xs:documentation>Product Parameter type</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ProductParameterType">
+        <xs:sequence>
+            <xs:element ref="tns:ParameterName"/>
+            <xs:element ref="tns:ProductParameterEvent" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element ref="tns:ParListEntries" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ProductParameter" type="tns:ProductParameterType">
+        <xs:annotation>
+            <xs:documentation>Product Parameter type</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ProductPackageType">
+        <xs:sequence>
+            <xs:element ref="tns:ProductPackageEventType"/>
+            <xs:element ref="tns:Package"/>
+            <xs:element ref="tns:PackageParameter" minOccurs="0"/>
+            <xs:element ref="tns:OrderPlacementType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ProductPackage" type="tns:ProductPackageType">
+        <xs:annotation>
+            <xs:documentation>Product Packag type</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="SegmentCodeListType">
+        <xs:sequence>
+            <xs:element ref="tns:SegmentCode" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="SegmentCodeList" type="tns:SegmentCodeListType">
+        <xs:annotation>
+            <xs:documentation>Product Packag type</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="CommitmentEndDateCause" type="tns:CommitmentEndDateCauseType">
+        <xs:annotation>
+            <xs:documentation>CommitmentmentEndDateCause Type</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:simpleType name="CommitmentEndDateCauseType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+
+
+    <xs:complexType name="SPCProductType">
+        <xs:sequence>
+            <xs:element ref="tns:SPCProductCode"/>
+            <xs:element ref="tns:SPCProductName"/>
+            <xs:element ref="tns:SPCProductType"/>
+            <xs:element ref="tns:ForSale"/>
+            <xs:element ref="tns:OnlyNewSale"/>
+            <xs:element ref="tns:Display"/>
+            <xs:element ref="tns:UiTemplate" minOccurs="0"/>
+            <xs:element ref="tns:MarketText" minOccurs="0"/>
+            <xs:element ref="tns:MarketPriceText" minOccurs="0"/>
+            <xs:element ref="tns:AdvisoryText" minOccurs="0"/>
+            <xs:element ref="tns:OmProductClass" minOccurs="0"/>
+            <xs:element ref="tns:CmsRef" minOccurs="0"/>
+            <xs:element name="CommitmentEndDate" type="tns:Date" minOccurs="0"/>
+            <xs:element ref="tns:CommitmentEndDateCause" minOccurs="0"/>
+            <xs:element ref="tns:SegmentCodeList" minOccurs="0"/>
+            <xs:element ref="tns:Exclude" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="tns:Include" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="tns:Migrate" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="tns:Count" minOccurs="0" maxOccurs="unbounded"/>
+
+
+
+            <xs:element ref="tns:Substitude" minOccurs="0"/>
+
+            <xs:element ref="tns:Price" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="tns:ProductParameter" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="tns:ProductPackage" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="tns:AlreadyActive" minOccurs="0"/>
+
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="SPCProduct" type="tns:SPCProductType"/>
+
+    <xs:complexType name="SPCProductInformationType">
+        <xs:sequence>
+            <xs:element ref="tns:Category"/>
+            <xs:element ref="tns:SPCProductCode"/>
+            <xs:element ref="tns:SPCProductName"/>
+            <xs:element ref="tns:ForSale"/>
+            <xs:element ref="tns:OnlyNewSale"/>
+            <xs:element ref="tns:Display"/>
+            <xs:element ref="tns:OmProductClass" minOccurs="0"/>
+            <xs:element ref="tns:CmsRef" minOccurs="0"/>
+            <xs:element ref="tns:SegmentCodeList" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="SPCProductInformation" type="tns:SPCProductInformationType">
+        <xs:annotation>
+            <xs:documentation>Type of product</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="NameAddressIDType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="PricePlanType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="PricePlan" type="tns:PricePlanType">
+        <xs:annotation>
+            <xs:documentation>PricePlan</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="NameAddressID" type="tns:NameAddressIDType">
+        <xs:annotation>
+            <xs:documentation>A.k.a. LinkType</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="AddressesType">
+        <xs:sequence>
+            <xs:element name="Owner" type="tns:NameAddressInfo" minOccurs="0"/>
+            <xs:element name="Payer" type="tns:NameAddressInfo" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="NameAddressInfo">
+        <xs:sequence>
+            <xs:element ref="tns:NameAddressID" minOccurs="0"/>
+            <xs:sequence>
+                <xs:element name="NameId" type="xs:string" minOccurs="0"/>
+                <xs:element name="NameFormat" type="xs:string" minOccurs="0"/>
+                <xs:element name="Gender" type="xs:string" minOccurs="0"/>
+                <xs:element name="AddressAttention" type="xs:string" minOccurs="0"/>
+                <xs:element name="NameTitle" type="xs:string" minOccurs="0"/>
+                <xs:element name="AdditionalTitle" type="xs:string" minOccurs="0"/>
+                <xs:element name="FirstName" type="xs:string" minOccurs="0"/>
+                <xs:element name="MiddleInitial" type="xs:string" minOccurs="0"/>
+                <xs:element name="NameSuffix" type="xs:string" minOccurs="0"/>
+                <xs:element name="DateOfBirth" type="tns:Date" minOccurs="0"/>
+                <xs:element name="LastBusinessName" type="xs:string" minOccurs="0"/>
+                <xs:element name="NameExpireDate" type="tns:Date" minOccurs="0"/>
+            </xs:sequence>
+            <xs:choice>
+                <xs:sequence>
+                    <xs:annotation>
+                        <xs:documentation>Indlandsadresse</xs:documentation>
+                    </xs:annotation>
+                    <xs:element name="AddrId" type="xs:int" nillable="false"/>
+                    <xs:element name="AddressType" type="xs:string" minOccurs="0"/>
+                    <xs:element name="Country" type="xs:string" minOccurs="0"/>
+                    <xs:element name="State" type="xs:string" minOccurs="0"/>
+                    <xs:element name="MunicipalityCode" type="xs:string" minOccurs="0"/>
+                    <xs:element name="Municipality" type="xs:string" minOccurs="0"/>
+                    <xs:element name="Zip" type="xs:string" minOccurs="0"/>
+                    <xs:element name="City" type="xs:string" minOccurs="0"/>
+                    <xs:element name="Village" type="xs:string" minOccurs="0"/>
+                    <xs:element name="StreetName" type="xs:string" minOccurs="0"/>
+                    <xs:element name="StreetCode" type="xs:string" minOccurs="0"/>
+                    <xs:element name="HouseKey" type="xs:string" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Husnr</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="HouseLetter" type="xs:string" minOccurs="0"/>
+                    <xs:element name="Floor" type="xs:string" minOccurs="0"/>
+                    <xs:element name="Side" type="xs:string" minOccurs="0"/>
+                    <xs:element name="ApartmentNo" type="xs:string" minOccurs="0"/>
+                    <xs:element name="Location" type="xs:string" minOccurs="0"/>
+                    <xs:element name="SubNo" type="xs:string" minOccurs="0"/>
+                    <xs:element name="LocalValidation" type="xs:string" minOccurs="0"/>
+                    <xs:element name="AddrExpireDate" type="tns:Date" minOccurs="0"/>
+                    <xs:element ref="adr:MadId" minOccurs="0"/>
+                </xs:sequence>
+                <xs:sequence>
+                    <xs:annotation>
+                        <xs:documentation>Udlandsadresse</xs:documentation>
+                    </xs:annotation>
+                    <xs:element name="PrimaryLn" type="xs:string" minOccurs="0"/>
+                    <xs:element name="SecondaryLn" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:choice>
+            <xs:element name="FieldedInd" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>?</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="NameAddrEffectiveDate" type="tns:Date" minOccurs="0"/>
+            <xs:element name="NumOfBillCopies" type="xs:int" nillable="false" minOccurs="0"/>
+            <xs:element name="Pob" type="xs:string" minOccurs="0"/>
+            <xs:element name="CprStatus" type="xs:string" minOccurs="0"/>
+            <xs:element name="CprNameAddressProtected" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,1796 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+    <con:coreEntry>
+        <con:description/>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="CustomerAgreement/WSDL/GetCustomerDetailsCHubWSDL"/>
+            <con:binding>
+                <con:name>CustomerAgreementServicesSoapBindinghttp</con:name>
+                <con:namespace>http://dk/tdc/bss/crm/customeragreement</con:namespace>
+            </con:binding>
+        </con:binding>
+        <oper:operations>
+            <oper:monitoring enabled="true" aggregationInterval="10" level="pipeline"/>
+            <oper:tracingEnabled>true</oper:tracingEnabled>
+            <oper:reporting>false</oper:reporting>
+            <oper:logging enabled="false" level="debug"/>
+            <oper:sla-alerting enabled="true" level="normal"/>
+            <oper:pipeline-alerting enabled="true" level="normal"/>
+        </oper:operations>
+        <con:pageAttachments isEnabled="false"/>
+        <con:transactions isRequired="false" sameTxForResponse="false"/>
+    </con:coreEntry>
+    <con:router errorHandler="_onErrorHandler-1615438491781052770--e7f0e46.139b03cf04c.-76f4" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con4="http://www.bea.com/wli/sb/services/security/config" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+        <con:pipeline name="PipelinePairNode1_request" type="request">
+            <con:stage name="stage1" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/services/security/config">
+                <con:context>
+                    <con5:varNsDecl prefix="ser" namespace="http://service.chub.tdc.dk" xmlns:con5="http://www.bea.com/wli/sb/stages/config"/>
+                    <con6:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement" xmlns:con6="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con5:log xmlns:con5="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con6:id xmlns:con6="http://www.bea.com/wli/sb/stages/config">_ActionId-5391775764377159321--7ac54b89.146861323ce.-7988</con6:id>
+                        <con5:logLevel>error</con5:logLevel>
+                        <con5:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$body</con:xqueryText>
+                        </con5:expr>
+                        <con5:message>Request for CHUB -->></con5:message>
+                    </con5:log>
+                    <con5:assign varName="operationname">
+                        <con6:id xmlns:con6="http://www.bea.com/wli/sb/stages/config">_ActionId-8288878869480194841-4eef1e17.14698c981a6.-3a50</con6:id>
+                        <con5:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">fn:local-name($body/*)</con:xqueryText>
+                        </con5:expr>
+                    </con5:assign>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline name="PipelinePairNode2_response" type="response"/>
+        <con:pipeline name="PipelinePairNode2_request" type="request">
+            <con:stage name="ConvertICCNumberToMSISDN" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                <con:comment/>
+                <con:context>
+                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                    <con2:varNsDecl prefix="add" namespace="http://service.chub.tdc.dk/domain/address"/>
+                </con:context>
+                <con:actions>
+                    <con5:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-7483370943693565804-1d642bd5.1528810c473.-7f16</con2:id>
+                        <con5:location>
+                            <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                        </con5:location>
+                        <con5:expr>
+                            <con:xsltTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                                <con:resource ref="CustomerAgreement/XSLT/getCustomerSubscriptionProductsToApilinkConverter"/>
+                                <con:input>$body/*</con:input>
+                            </con:xsltTransform>
+                        </con5:expr>
+                    </con5:replace>
+                    <con5:assign varName="ICCNumber">
+                        <con2:id>_ActionId-8744065592600537353--5d044631.152e402186a.-7fa3</con2:id>
+                        <con5:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$body/cus:getCustomerSubscriptionProductsRequest/cus:SubscriptionNo/text()</con:xqueryText>
+                        </con5:expr>
+                    </con5:assign>
+                    <con5:assign varName="ApilinkRequest">
+                        <con2:id>_ActionId-7483370943693565804-1d642bd5.1528810c473.-7f13</con2:id>
+                        <con5:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config"><![CDATA[<getPairedCtnBySimRequest xmlns:java="java:dk.tdc.apilink.logic.datatypes">
+    <java:applicationId>DEAL</java:applicationId>
+    <java:userId></java:userId>
+    <java:serialNo>{$ICCNumber}</java:serialNo>
+</getPairedCtnBySimRequest>]]></con:xqueryText>
+                        </con5:expr>
+                    </con5:assign>
+                    <con5:wsCallout>
+                        <con2:id>_ActionId-7483370943693565804-1d642bd5.1528810c473.-7f12</con2:id>
+                        <con5:service ref="CustomerAgreement/BusinessService/GetMSISDNforICC" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con5:operation>getPairedCtnBySim</con5:operation>
+                        <con5:request>
+                            <con5:param>
+                                <con5:name>getPairedCtnBySimRequest</con5:name>
+                                <con5:variable>ApilinkRequest</con5:variable>
+                            </con5:param>
+                            <con5:header/>
+                        </con5:request>
+                        <con5:response>
+                            <con5:param>
+                                <con5:name>result</con5:name>
+                                <con5:variable>ApilinkResponse</con5:variable>
+                            </con5:param>
+                            <con5:header/>
+                        </con5:response>
+                        <con5:requestTransform/>
+                        <con5:responseTransform/>
+                    </con5:wsCallout>
+                    <con5:assign varName="SubscriptionNumber">
+                        <con2:id>_ActionId-7483370943693565804-1d642bd5.1528810c473.-7f11</con2:id>
+                        <con5:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$ApilinkResponse/primaryCtn/text()</con:xqueryText>
+                        </con5:expr>
+                    </con5:assign>
+                    <con4:log>
+                        <con2:id>_ActionId-7483370943693565804-1d642bd5.1528810c473.-7f10</con2:id>
+                        <con4:logLevel>error</con4:logLevel>
+                        <con4:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$SubscriptionNumber</con:xqueryText>
+                        </con4:expr>
+                        <con4:message>Subscription Number found from Apilink</con4:message>
+                    </con4:log>
+                    <con5:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-7483370943693565804-1d642bd5.1528810c473.-7f0f</con2:id>
+                        <con5:location>
+                            <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">./cus:getCustomerSubscriptionProductsRequest/cus:SubscriptionNo</con:xpathText>
+                        </con5:location>
+                        <con5:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$SubscriptionNumber</con:xqueryText>
+                        </con5:expr>
+                    </con5:replace>
+                    <con5:rename varName="body">
+                        <con2:id>_ActionId-8744065592600537353--5d044631.152e402186a.-7f9f</con2:id>
+                        <con5:location>
+                            <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.//*</con:xpathText>
+                        </con5:location>
+                        <con5:namespace>http://service.chub.tdc.dk</con5:namespace>
+                    </con5:rename>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline name="_onErrorHandler-1615438491781052770--e7f0e46.139b03cf04c.-76f4" type="error">
+            <con:stage name="ForwardError" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                <con:context>
+                    <con3:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con4:reply isError="true" xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                        <con4:id>_ActionId-1615438491781052770--e7f0e46.139b03cf04c.-76f3</con4:id>
+                    </con4:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline name="PipelinePairNode1_response" type="response">
+            <con:stage name="stage1" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/services/security/config">
+                <con:context>
+                    <con5:varNsDecl prefix="ser" namespace="http://service.chub.tdc.dk" xmlns:con5="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con5:log xmlns:con5="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con6:id xmlns:con6="http://www.bea.com/wli/sb/stages/config">_ActionId-5391775764377159321--7ac54b89.146861323ce.-7981</con6:id>
+                        <con5:logLevel>error</con5:logLevel>
+                        <con5:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$body</con:xqueryText>
+                        </con5:expr>
+                        <con5:message>Response from CHUB -->></con5:message>
+                    </con5:log>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="PipelinePairNode1">
+                <con:request>PipelinePairNode1_request</con:request>
+                <con:response>PipelinePairNode1_response</con:response>
+            </con:pipeline-node>
+            <con:branch-node type="condition" name="BranchNode1">
+                <con:branch-table variable="operationname">
+                    <con:branch name="getAgreement">
+                        <con:operator>equals</con:operator>
+                        <con:value>"getAgreement"</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode2">
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-8288878869480194841-4eef1e17.14698c981a6.-39a5</con2:id>
+                                        <con1:service ref="CustomerAgreement/ProxyServices/GetAgreementLocal" xsi:type="con:PipelineRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>getAgreement</con1:operation>
+                                        <con1:outboundTransform/>
+                                        <con1:responseTransform/>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="getAgreementByICC">
+                        <con:operator>equals</con:operator>
+                        <con:value>"getAgreementByICCRequest"</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode3">
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-8288878869480194841-4eef1e17.14698c981a6.-39a4</con2:id>
+                                        <con1:service ref="CustomerAgreement/ProxyServices/GetAgreementLocal" xsi:type="con:PipelineRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>getAgreementByICC</con1:operation>
+                                        <con1:outboundTransform/>
+                                        <con1:responseTransform/>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="getCustomerInformation">
+                        <con:operator>equals</con:operator>
+                        <con:value>"getCustomerInformation"</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode4">
+                                <con:context>
+                                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-8288878869480194841-4eef1e17.14698c981a6.-39a3</con2:id>
+                                        <con1:service ref="CustomerHub/BusinessServices/CustomerHubBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>getCustomerInformation</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-8288878869480194841-4eef1e17.14698c981a6.-3766</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getCustomerInformationRequest xmlns:cus="http://service.chub.tdc.dk">
+{$body/*:getCustomerInformation/*:return/*}
+&lt;/cus:getCustomerInformationRequest></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:rename varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con2:id>_ActionId-8288878869480194841-4eef1e17.14698c981a6.-29cc</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cuhub:*</con:xpathText>
+                                                </con3:location>
+                                                <con3:namespace>http://dk/tdc/bss/crm/customeragreement</con3:namespace>
+                                            </con3:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-8288878869480194841-4eef1e17.14698c981a6.-2e32</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getCustomerInformationReply xmlns:cus="http://dk/tdc/bss/crm/customeragreement">
+&lt;cus:return>
+{$body/*/*}
+&lt;/cus:return>
+&lt;/cus:getCustomerInformationReply></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="getCustomerLID">
+                        <con:operator>equals</con:operator>
+                        <con:value>"getCustomerLID"</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode1">
+                                <con:context>
+                                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-8288878869480194841-4eef1e17.14698c981a6.-3a12</con2:id>
+                                        <con1:service ref="CustomerHub/BusinessServices/CustomerHubBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>getCustomerLID</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-8288878869480194841-4eef1e17.14698c981a6.-36ab</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getCustomerLIDRequest xmlns:cus="http://service.chub.tdc.dk">
+{$body/*:getCustomerLID/*:return/*}
+&lt;/cus:getCustomerLIDRequest></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:rename varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con2:id>_ActionId-8288878869480194841-4eef1e17.14698c981a6.-29a1</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cuhub:*</con:xpathText>
+                                                </con3:location>
+                                                <con3:namespace>http://dk/tdc/bss/crm/customeragreement</con3:namespace>
+                                            </con3:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-8288878869480194841-4eef1e17.14698c981a6.-299e</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getCustomerLIDReply xmlns:cus="http://dk/tdc/bss/crm/customeragreement">
+&lt;cus:return>
+{$body/*/*}
+&lt;/cus:return>
+&lt;/cus:getCustomerLIDReply></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="getCustomerSubscriptions">
+                        <con:operator>equals</con:operator>
+                        <con:value>"getCustomerSubscriptions"</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode5">
+                                <con:context>
+                                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                                    <con2:varNsDecl prefix="add" namespace="http://service.chub.tdc.dk/domain/address"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-8288878869480194841-4eef1e17.14698c981a6.-39a2</con2:id>
+                                        <con1:service ref="CustomerHub/BusinessServices/CustomerHubBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>getCustomerSubscriptions</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-8288878869480194841-4eef1e17.14698c981a6.-3688</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getCustomerSubscriptionsRequest xmlns:cus="http://service.chub.tdc.dk">
+{$body/*:getCustomerSubscriptions/*:return/*}
+&lt;/cus:getCustomerSubscriptionsRequest></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:rename varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con2:id>_ActionId-8288878869480194841-4eef1e17.14698c981a6.-299f</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cuhub:*</con:xpathText>
+                                                </con3:location>
+                                                <con3:namespace>http://dk/tdc/bss/crm/customeragreement</con3:namespace>
+                                            </con3:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-8288878869480194841-4eef1e17.14698c981a6.-2998</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getCustomerSubscriptionsReply xmlns:cus="http://dk/tdc/bss/crm/customeragreement">
+&lt;cus:return>
+{$body/*/*}
+&lt;/cus:return>
+&lt;/cus:getCustomerSubscriptionsReply></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="getCustomerSubscriptionsVK">
+                        <con:operator>equals</con:operator>
+                        <con:value>"getCustomerSubscriptionsVK"</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode6">
+                                <con:context>
+                                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                                    <con2:varNsDecl prefix="add" namespace="http://service.chub.tdc.dk/domain/address"/>
+                                    <con2:varNsDecl prefix="cab" namespace="http://service.chub.tdc.dk/domain/cableunit"/>
+                                    <con2:varNsDecl prefix="sty" namespace="http://service.chub.tdc.dk/domain/styretafsaetning"/>
+                                    <con2:varNsDecl prefix="head" namespace="http://header.cu.tdc.dk"/>
+                                    <con2:varNsDecl prefix="v1" namespace="http://service.tdc.dk/chub/order/v1"/>
+                                    <con2:varNsDecl prefix="v11" namespace="http://service.tdc.dk/chub/order/address/v1"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-3193239860438942704-2f4088ae.157f5653dc7.-7f8d</con2:id>
+                                        <con1:service ref="CustomerHub/BusinessServices/CustomerHubBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>getCustomerSubscriptionsVK</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-3193239860438942704-2f4088ae.157f5653dc7.-7f8c</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getCustomerSubscriptionsVKRequest xmlns:cus="http://service.chub.tdc.dk">
+{$body/*:getCustomerSubscriptionsVK/*:return/*}
+&lt;/cus:getCustomerSubscriptionsVKRequest></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:rename varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con2:id>_ActionId-3193239860438942704-2f4088ae.157f5653dc7.-7f8b</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cuhub:*</con:xpathText>
+                                                </con3:location>
+                                                <con3:namespace>http://dk/tdc/bss/crm/customeragreement</con3:namespace>
+                                            </con3:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-3193239860438942704-2f4088ae.157f5653dc7.-7f8a</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getCustomerSubscriptionsVKReply xmlns:cus="http://dk/tdc/bss/crm/customeragreement">
+&lt;cus:return>
+{$body/*/*}
+&lt;/cus:return>
+&lt;/cus:getCustomerSubscriptionsVKReply></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="listAccounts">
+                        <con:operator>equals</con:operator>
+                        <con:value>"listAccounts"</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode7">
+                                <con:context>
+                                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-461918066423688392-1ba7fe29.14af0a06a7c.-2d5c</con2:id>
+                                        <con1:service ref="CustomerHub/BusinessServices/CustomerHubBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>listAccounts</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-461918066423688392-1ba7fe29.14af0a06a7c.-2d5b</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:listAccountsRequest xmlns:cus="http://service.chub.tdc.dk">
+{$body/*:listAccounts/*:return/*}
+&lt;/cus:listAccountsRequest></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:rename varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con2:id>_ActionId-461918066423688392-1ba7fe29.14af0a06a7c.-2d5a</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cuhub:*</con:xpathText>
+                                                </con3:location>
+                                                <con3:namespace>http://dk/tdc/bss/crm/customeragreement</con3:namespace>
+                                            </con3:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-461918066423688392-1ba7fe29.14af0a06a7c.-2d59</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:listAccountsReply xmlns:cus="http://dk/tdc/bss/crm/customeragreement">
+&lt;cus:return>
+{$body/*/*}
+&lt;/cus:return>
+&lt;/cus:listAccountsReply></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="searchByAddress">
+                        <con:operator>equals</con:operator>
+                        <con:value>"searchByAddressRequest"</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode8">
+                                <con:context>
+                                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                                    <con2:varNsDecl prefix="add" namespace="http://service.chub.tdc.dk/domain/address"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-461918066423688392-1ba7fe29.14af0a06a7c.-2ca3</con2:id>
+                                        <con1:service ref="CustomerHub/BusinessServices/CustomerHubBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>searchByAddress</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con5:assign varName="req">
+                                                <con2:id>_ActionId-604027925868453670--7e21650c.154eb5b56a7.-7f80</con2:id>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$body</con:xqueryText>
+                                                </con5:expr>
+                                            </con5:assign>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-461918066423688392-1ba7fe29.14af0a06a7c.-2ca2</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:searchByAddressRequest xmlns:cus="http://service.chub.tdc.dk">
+{$body/*/*}
+&lt;/cus:searchByAddressRequest></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                            <con5:assign varName="req1">
+                                                <con2:id>_ActionId-604027925868453670--7e21650c.154eb5b56a7.-7f7f</con2:id>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$body</con:xqueryText>
+                                                </con5:expr>
+                                            </con5:assign>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:rename varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con2:id>_ActionId-461918066423688392-1ba7fe29.14af0a06a7c.-2ca1</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cuhub:*</con:xpathText>
+                                                </con3:location>
+                                                <con3:namespace>http://dk/tdc/bss/crm/customeragreement</con3:namespace>
+                                            </con3:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-461918066423688392-1ba7fe29.14af0a06a7c.-2ca0</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$body/*</con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="getCustomerSubscriptionProducts">
+                        <con:operator>equals</con:operator>
+                        <con:value>"getCustomerSubscriptionProducts"</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode9">
+                                <con:context>
+                                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                                    <con2:varNsDecl prefix="add" namespace="http://service.chub.tdc.dk/domain/address"/>
+                                    <con2:varNsDecl prefix="cab" namespace="http://service.chub.tdc.dk/domain/cableunit"/>
+                                    <con2:varNsDecl prefix="sty" namespace="http://service.chub.tdc.dk/domain/styretafsaetning"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-5024340753545159380-7d2673eb.15747d5f9c7.-7f7b</con2:id>
+                                        <con1:service ref="CustomerHub/BusinessServices/CustomerHubBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>getCustomerSubscriptionProducts</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-5024340753545159380-7d2673eb.15747d5f9c7.-7f7a</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getCustomerSubscriptionProductsRequest xmlns:cus="http://service.chub.tdc.dk">
+{$body/*:getCustomerSubscriptionProducts/*:return/*}
+&lt;/cus:getCustomerSubscriptionProductsRequest></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:rename varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con2:id>_ActionId-5024340753545159380-7d2673eb.15747d5f9c7.-7f79</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cuhub:*</con:xpathText>
+                                                </con3:location>
+                                                <con3:namespace>http://dk/tdc/bss/crm/customeragreement</con3:namespace>
+                                            </con3:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-5024340753545159380-7d2673eb.15747d5f9c7.-7f78</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getCustomerSubscriptionProductsReply xmlns:cus="http://dk/tdc/bss/crm/customeragreement">
+&lt;cus:return>
+{$body/*/*}
+&lt;/cus:return>
+&lt;/cus:getCustomerSubscriptionProductsReply></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="getLinkitInfo">
+                        <con:operator>equals</con:operator>
+                        <con:value>"getLinkitInfo"</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode10">
+                                <con:context>
+                                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-624666271812823254--412f09e9.14c2fc3bac8.-49cb</con2:id>
+                                        <con1:service ref="CustomerHub/BusinessServices/CustomerHubBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>getLinkitInfo</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-624666271812823254--412f09e9.14c2fc3bac8.-49ca</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getLinkitInfo xmlns:cus="http://service.chub.tdc.dk">
+&lt;cus:request>
+{$body/*:getLinkitInfo/*:return/*}
+&lt;/cus:request>
+&lt;/cus:getLinkitInfo></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:rename varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con2:id>_ActionId-624666271812823254--412f09e9.14c2fc3bac8.-49c9</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cuhub:*</con:xpathText>
+                                                </con3:location>
+                                                <con3:namespace>http://dk/tdc/bss/crm/customeragreement</con3:namespace>
+                                            </con3:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-624666271812823254--412f09e9.14c2fc3bac8.-49c8</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getLinkitInfoReply xmlns:cus="http://dk/tdc/bss/crm/customeragreement">
+&lt;cus:return>
+{$body/*/*}
+&lt;/cus:return>
+&lt;/cus:getLinkitInfoReply></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="getCprNameAddress">
+                        <con:operator>equals</con:operator>
+                        <con:value>"getCprNameAddress"</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode11">
+                                <con:context>
+                                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-624666271812823254--412f09e9.14c2fc3bac8.-48ed</con2:id>
+                                        <con1:service ref="CustomerHub/BusinessServices/CustomerHubBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>getCprNameAddress</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-624666271812823254--412f09e9.14c2fc3bac8.-48ec</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getCprNameAddress xmlns:cus="http://service.chub.tdc.dk">
+{$body/*:getCprNameAddress/*:return/*}
+&lt;/cus:getCprNameAddress></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:rename varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con2:id>_ActionId-624666271812823254--412f09e9.14c2fc3bac8.-48eb</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cuhub:*</con:xpathText>
+                                                </con3:location>
+                                                <con3:namespace>http://dk/tdc/bss/crm/customeragreement</con3:namespace>
+                                            </con3:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-624666271812823254--412f09e9.14c2fc3bac8.-48ea</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getCprNameAddressReply xmlns:cus="http://dk/tdc/bss/crm/customeragreement">
+&lt;cus:return>
+{$body/*/*}
+&lt;/cus:return>
+&lt;/cus:getCprNameAddressReply></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="getAccountInformation">
+                        <con:operator>equals</con:operator>
+                        <con:value>"getAccountInformation"</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode12">
+                                <con:context>
+                                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-624666271812823254--412f09e9.14c2fc3bac8.-48b9</con2:id>
+                                        <con1:service ref="CustomerHub/BusinessServices/CustomerHubBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>getAccountInformation</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-624666271812823254--412f09e9.14c2fc3bac8.-48b8</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getAccountInformationRequest xmlns:cus="http://service.chub.tdc.dk">
+{$body/*:getAccountInformation/*:return/*}
+&lt;/cus:getAccountInformationRequest></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:rename varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con2:id>_ActionId-624666271812823254--412f09e9.14c2fc3bac8.-48b7</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cuhub:*</con:xpathText>
+                                                </con3:location>
+                                                <con3:namespace>http://dk/tdc/bss/crm/customeragreement</con3:namespace>
+                                            </con3:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-624666271812823254--412f09e9.14c2fc3bac8.-48b6</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getAccountInformationReply xmlns:cus="http://dk/tdc/bss/crm/customeragreement">
+&lt;cus:return>
+{$body/*/*}
+&lt;/cus:return>
+&lt;/cus:getAccountInformationReply></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="getSubscriptionByCUOrder">
+                        <con:operator>equals</con:operator>
+                        <con:value>"getSubscriptionByCUOrder"</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode13">
+                                <con:context>
+                                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-6485243576627081984--16435ccf.14c34ea0078.-75a7</con2:id>
+                                        <con1:service ref="CustomerHub/BusinessServices/CustomerHubBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>getSubscriptionByCUOrder</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-6485243576627081984--16435ccf.14c34ea0078.-75a6</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getSubscriptionByCUOrderRequest xmlns:cus="http://service.chub.tdc.dk">
+{$body/*:getSubscriptionByCUOrder/*:return/*}
+&lt;/cus:getSubscriptionByCUOrderRequest></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:rename varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con2:id>_ActionId-6485243576627081984--16435ccf.14c34ea0078.-75a5</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cuhub:*</con:xpathText>
+                                                </con3:location>
+                                                <con3:namespace>http://dk/tdc/bss/crm/customeragreement</con3:namespace>
+                                            </con3:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-6485243576627081984--16435ccf.14c34ea0078.-75a4</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getSubscriptionByCUOrderReply xmlns:cus="http://dk/tdc/bss/crm/customeragreement">
+&lt;cus:return>
+{$body/*/*}
+&lt;/cus:return>
+&lt;/cus:getSubscriptionByCUOrderReply ></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="getStatus">
+                        <con:operator>equals</con:operator>
+                        <con:value>"getStatus"</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode14">
+                                <con:context>
+                                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-6485243576627081984--16435ccf.14c34ea0078.-7583</con2:id>
+                                        <con1:service ref="CustomerHub/BusinessServices/CustomerHubBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>getStatus</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-6485243576627081984--16435ccf.14c34ea0078.-7582</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getStatusRequest xmlns:cus="http://service.chub.tdc.dk">
+{$body/*:getStatus/*:return/*}
+&lt;/cus:getStatusRequest></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:rename varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con2:id>_ActionId-6485243576627081984--16435ccf.14c34ea0078.-7581</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cuhub:*</con:xpathText>
+                                                </con3:location>
+                                                <con3:namespace>http://dk/tdc/bss/crm/customeragreement</con3:namespace>
+                                            </con3:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-6485243576627081984--16435ccf.14c34ea0078.-7580</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getStatusReply xmlns:cus="http://dk/tdc/bss/crm/customeragreement">
+&lt;cus:return>
+{$body/*/*}
+&lt;/cus:return>
+&lt;/cus:getStatusReply ></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="migrateSubscription">
+                        <con:operator>equals</con:operator>
+                        <con:value>"migrateSubscription"</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode15">
+                                <con:context>
+                                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-6485243576627081984--16435ccf.14c34ea0078.-7571</con2:id>
+                                        <con1:service ref="CustomerHub/BusinessServices/CustomerHubBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>migrateSubscription</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-6485243576627081984--16435ccf.14c34ea0078.-7570</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:migrateSubscriptionRequest xmlns:cus="http://service.chub.tdc.dk">
+{$body/*:migrateSubscription/*:return/*}
+&lt;/cus:migrateSubscriptionRequest></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:rename varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con2:id>_ActionId-6485243576627081984--16435ccf.14c34ea0078.-756f</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cuhub:*</con:xpathText>
+                                                </con3:location>
+                                                <con3:namespace>http://dk/tdc/bss/crm/customeragreement</con3:namespace>
+                                            </con3:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-6485243576627081984--16435ccf.14c34ea0078.-756e</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:migrateSubscriptionReply xmlns:cus="http://dk/tdc/bss/crm/customeragreement">
+&lt;cus:return>
+{$body/*/*}
+&lt;/cus:return>
+&lt;/cus:migrateSubscriptionReply ></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="getNabsParameters">
+                        <con:operator>equals</con:operator>
+                        <con:value>"getNabsParameters"</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode16">
+                                <con:context>
+                                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-6485243576627081984--16435ccf.14c34ea0078.-7360</con2:id>
+                                        <con1:service ref="CustomerHub/BusinessServices/CustomerHubBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>getNabsParameters</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-6485243576627081984--16435ccf.14c34ea0078.-735f</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getNabsParametersRequest xmlns:cus="http://service.chub.tdc.dk">
+{$body/*:getNabsParameters/*:return/*}
+&lt;/cus:getNabsParametersRequest></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:rename varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con2:id>_ActionId-6485243576627081984--16435ccf.14c34ea0078.-735e</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cuhub:*</con:xpathText>
+                                                </con3:location>
+                                                <con3:namespace>http://dk/tdc/bss/crm/customeragreement</con3:namespace>
+                                            </con3:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-6485243576627081984--16435ccf.14c34ea0078.-735d</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getNabsParametersReply xmlns:cus="http://dk/tdc/bss/crm/customeragreement">
+&lt;cus:return>
+{$body/*/*}
+&lt;/cus:return>
+&lt;/cus:getNabsParametersReply ></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="getSubscriptionProductsByICCRequest">
+                        <con:operator>equals</con:operator>
+                        <con:value>"getSubscriptionProductsByICCRequest"</con:value>
+                        <con:flow>
+                            <con:pipeline-node name="PipelinePairNode2">
+                                <con:request>PipelinePairNode2_request</con:request>
+                                <con:response>PipelinePairNode2_response</con:response>
+                            </con:pipeline-node>
+                            <con:route-node name="RouteNode17">
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-8744065592600537353--5d044631.152e402186a.-7fa0</con2:id>
+                                        <con1:service ref="CustomerHub/BusinessServices/CustomerHubBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>getCustomerSubscriptionProducts</con1:operation>
+                                        <con1:outboundTransform/>
+                                        <con1:responseTransform/>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="getLids">
+                        <con:operator>equals</con:operator>
+                        <con:value>"getLidsRequest"</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode18">
+                                <con:context>
+                                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                                    <con2:varNsDecl prefix="add" namespace="http://service.chub.tdc.dk/domain/address"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-2689761456534167830-6f2ad94d.15428075eb7.-7f71</con2:id>
+                                        <con1:service ref="CustomerHub/BusinessServices/CustomerHubBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>getLids</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-2689761456534167830-6f2ad94d.15428075eb7.-7f70</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getLidsRequest xmlns:cus="http://service.chub.tdc.dk">
+{$body/*/*}
+&lt;/cus:getLidsRequest></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con5:assign varName="res">
+                                                <con2:id>_ActionId-1402662982537091157--2eab424c.154bfe83ca5.-75eb</con2:id>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$body</con:xqueryText>
+                                                </con5:expr>
+                                            </con5:assign>
+                                            <con3:rename varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con2:id>_ActionId-2689761456534167830-6f2ad94d.15428075eb7.-7f6f</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cuhub:*</con:xpathText>
+                                                </con3:location>
+                                                <con3:namespace>http://dk/tdc/bss/crm/customeragreement</con3:namespace>
+                                            </con3:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-2689761456534167830-6f2ad94d.15428075eb7.-7f6e</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$body/*</con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="getNextBillingDate">
+                        <con:operator>equals</con:operator>
+                        <con:value>"getNextBillingDate"</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode19">
+                                <con:context>
+                                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                                    <con2:varNsDecl prefix="add" namespace="http://service.chub.tdc.dk/domain/address"/>
+                                    <con2:varNsDecl prefix="cab" namespace="http://service.chub.tdc.dk/domain/cableunit"/>
+                                    <con2:varNsDecl prefix="sty" namespace="http://service.chub.tdc.dk/domain/styretafsaetning"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-7196254420421821419--437b2668.15750ab0919.-7f54</con2:id>
+                                        <con1:service ref="CustomerHub/BusinessServices/CustomerHubBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>getNextBillingDate</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-7196254420421821419--437b2668.15750ab0919.-7f53</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getNextBillingDateRequest xmlns:cus="http://service.chub.tdc.dk">
+{$body/*:getNextBillingDate/*:return/*}
+&lt;/cus:getNextBillingDateRequest></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                            <con5:assign varName="bsa">
+                                                <con2:id>_ActionId-7196254420421821419--437b2668.15750ab0919.-7f52</con2:id>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$body</con:xqueryText>
+                                                </con5:expr>
+                                            </con5:assign>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:rename varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con2:id>_ActionId-7196254420421821419--437b2668.15750ab0919.-7f51</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cuhub:*</con:xpathText>
+                                                </con3:location>
+                                                <con3:namespace>http://dk/tdc/bss/crm/customeragreement</con3:namespace>
+                                            </con3:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-7196254420421821419--437b2668.15750ab0919.-7f50</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getNextBillingDateReply xmlns:cus="http://dk/tdc/bss/crm/customeragreement">
+&lt;cus:return>
+{$body/*/*}
+&lt;/cus:return>
+&lt;/cus:getNextBillingDateReply></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="findSubscriptionInKIS">
+                        <con:operator>equals</con:operator>
+                        <con:value>"findSubscriptionInKIS"</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode20">
+                                <con:context>
+                                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                                    <con2:varNsDecl prefix="add" namespace="http://service.chub.tdc.dk/domain/address"/>
+                                    <con2:varNsDecl prefix="cab" namespace="http://service.chub.tdc.dk/domain/cableunit"/>
+                                    <con2:varNsDecl prefix="sty" namespace="http://service.chub.tdc.dk/domain/styretafsaetning"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-7196254420421821419--437b2668.15750ab0919.-7f59</con2:id>
+                                        <con1:service ref="CustomerHub/BusinessServices/CustomerHubBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>findSubscriptionInKIS</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-7196254420421821419--437b2668.15750ab0919.-7f58</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:findSubscriptionInKISRequest xmlns:cus="http://service.chub.tdc.dk">
+{$body/*:findSubscriptionInKIS/*:return/*}
+&lt;/cus:findSubscriptionInKISRequest></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                            <con5:assign varName="bsa">
+                                                <con2:id>_ActionId-7196254420421821419--437b2668.15750ab0919.-7f57</con2:id>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$body</con:xqueryText>
+                                                </con5:expr>
+                                            </con5:assign>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:rename varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con2:id>_ActionId-7196254420421821419--437b2668.15750ab0919.-7f56</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cuhub:*</con:xpathText>
+                                                </con3:location>
+                                                <con3:namespace>http://dk/tdc/bss/crm/customeragreement</con3:namespace>
+                                            </con3:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-7196254420421821419--437b2668.15750ab0919.-7f55</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:findSubscriptionInKISReply xmlns:cus="http://dk/tdc/bss/crm/customeragreement">
+&lt;cus:return>
+{$body/*/*}
+&lt;/cus:return>
+&lt;/cus:findSubscriptionInKISReply></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="searchVisitation">
+                        <con:operator>equals</con:operator>
+                        <con:value>"searchVisitation"</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode21">
+                                <con:context>
+                                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                                    <con2:varNsDecl prefix="add" namespace="http://service.chub.tdc.dk/domain/address"/>
+                                    <con2:varNsDecl prefix="cab" namespace="http://service.chub.tdc.dk/domain/cableunit"/>
+                                    <con2:varNsDecl prefix="sty" namespace="http://service.chub.tdc.dk/domain/styretafsaetning"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-5024340753545159380-7d2673eb.15747d5f9c7.-7f88</con2:id>
+                                        <con1:service ref="CustomerHub/BusinessServices/CustomerHubBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>searchVisitation</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-5024340753545159380-7d2673eb.15747d5f9c7.-7f87</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:searchVisitationRequest xmlns:cus="http://service.chub.tdc.dk">
+{$body/*:searchVisitation/*:return/*}
+&lt;/cus:searchVisitationRequest></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                            <con5:assign varName="bsa">
+                                                <con2:id>_ActionId-5024340753545159380-7d2673eb.15747d5f9c7.-7f7c</con2:id>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$body</con:xqueryText>
+                                                </con5:expr>
+                                            </con5:assign>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:rename varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con2:id>_ActionId-5024340753545159380-7d2673eb.15747d5f9c7.-7f86</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cuhub:*</con:xpathText>
+                                                </con3:location>
+                                                <con3:namespace>http://dk/tdc/bss/crm/customeragreement</con3:namespace>
+                                            </con3:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-5024340753545159380-7d2673eb.15747d5f9c7.-7f85</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:searchVisitationReply xmlns:cus="http://dk/tdc/bss/crm/customeragreement">
+&lt;cus:return>
+{$body/*/*}
+&lt;/cus:return>
+&lt;/cus:searchVisitationReply></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="getProductOffering">
+                        <con:operator>equals</con:operator>
+                        <con:value>"getProductOffering"</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode22">
+                                <con:context>
+                                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                                    <con2:varNsDecl prefix="add" namespace="http://service.chub.tdc.dk/domain/address"/>
+                                    <con2:varNsDecl prefix="cab" namespace="http://service.chub.tdc.dk/domain/cableunit"/>
+                                    <con2:varNsDecl prefix="sty" namespace="http://service.chub.tdc.dk/domain/styretafsaetning"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-5024340753545159380-7d2673eb.15747d5f9c7.-7f84</con2:id>
+                                        <con1:service ref="CustomerHub/BusinessServices/CustomerHubBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>getProductOffering</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-5024340753545159380-7d2673eb.15747d5f9c7.-7f83</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getProductOfferingRequest xmlns:cus="http://service.chub.tdc.dk">
+{$body/*:getProductOffering/*:return/*}
+&lt;/cus:getProductOfferingRequest></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:rename varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con2:id>_ActionId-5024340753545159380-7d2673eb.15747d5f9c7.-7f82</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cuhub:*</con:xpathText>
+                                                </con3:location>
+                                                <con3:namespace>http://dk/tdc/bss/crm/customeragreement</con3:namespace>
+                                            </con3:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-5024340753545159380-7d2673eb.15747d5f9c7.-7f81</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getProductOfferingReply xmlns:cus="http://dk/tdc/bss/crm/customeragreement">
+&lt;cus:return>
+{$body/*/*}
+&lt;/cus:return>
+&lt;/cus:getProductOfferingReply></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="getProductGroups">
+                        <con:operator>equals</con:operator>
+                        <con:value>"getProductGroups"</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode23">
+                                <con:context>
+                                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                                    <con2:varNsDecl prefix="add" namespace="http://service.chub.tdc.dk/domain/address"/>
+                                    <con2:varNsDecl prefix="cab" namespace="http://service.chub.tdc.dk/domain/cableunit"/>
+                                    <con2:varNsDecl prefix="sty" namespace="http://service.chub.tdc.dk/domain/styretafsaetning"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-5024340753545159380-7d2673eb.15747d5f9c7.-7f80</con2:id>
+                                        <con1:service ref="CustomerHub/BusinessServices/CustomerHubBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>getProductGroups</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-5024340753545159380-7d2673eb.15747d5f9c7.-7f7f</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getProductGroupsRequest xmlns:cus="http://service.chub.tdc.dk">
+{$body/*:getProductGroups/*:return/*}
+&lt;/cus:getProductGroupsRequest></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:rename varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con2:id>_ActionId-5024340753545159380-7d2673eb.15747d5f9c7.-7f7e</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cuhub:*</con:xpathText>
+                                                </con3:location>
+                                                <con3:namespace>http://dk/tdc/bss/crm/customeragreement</con3:namespace>
+                                            </con3:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-5024340753545159380-7d2673eb.15747d5f9c7.-7f7d</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getProductGroupsReply xmlns:cus="http://dk/tdc/bss/crm/customeragreement">
+&lt;cus:return>
+{$body/*/*}
+&lt;/cus:return>
+&lt;/cus:getProductGroupsReply></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="checkSuspensionStatus">
+                        <con:operator>equals</con:operator>
+                        <con:value>"checkSuspensionStatus"</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode24">
+                                <con:context>
+                                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:varNsDecl prefix="cab" namespace="http://service.chub.tdc.dk/domain/cableunit"/>
+                                    <con2:varNsDecl prefix="add" namespace="http://service.chub.tdc.dk/domain/address"/>
+                                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                                    <con2:varNsDecl prefix="sty" namespace="http://service.chub.tdc.dk/domain/styretafsaetning"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-3457815833875983610--54c5f0cc.157d132c400.-7f9b</con2:id>
+                                        <con1:service ref="CustomerHub/BusinessServices/CustomerHubBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>checkSuspensionStatus</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-3457815833875983610--54c5f0cc.157d132c400.-7f9a</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:checkSuspensionStatusRequest xmlns:cus="http://service.chub.tdc.dk">
+{$body/*:checkSuspensionStatus/*:return/*}
+&lt;/cus:checkSuspensionStatusRequest></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:rename varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con2:id>_ActionId-3457815833875983610--54c5f0cc.157d132c400.-7f99</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cuhub:*</con:xpathText>
+                                                </con3:location>
+                                                <con3:namespace>http://dk/tdc/bss/crm/customeragreement</con3:namespace>
+                                            </con3:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-3457815833875983610--54c5f0cc.157d132c400.-7f98</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:checkSuspensionStatusReply xmlns:cus="http://dk/tdc/bss/crm/customeragreement">
+&lt;cus:return>
+{$body/*/*}
+&lt;/cus:return>
+&lt;/cus:checkSuspensionStatusReply></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="getTrackAndTrace">
+                        <con:operator>equals</con:operator>
+                        <con:value>"getTrackAndTrace"</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode25">
+                                <con:context>
+                                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:varNsDecl prefix="cab" namespace="http://service.chub.tdc.dk/domain/cableunit"/>
+                                    <con2:varNsDecl prefix="add" namespace="http://service.chub.tdc.dk/domain/address"/>
+                                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                                    <con2:varNsDecl prefix="sty" namespace="http://service.chub.tdc.dk/domain/styretafsaetning"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-1280002281962806634--645ac663.1598c429ff0.-7f04</con2:id>
+                                        <con1:service ref="CustomerHub/BusinessServices/CustomerHubBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>getTrackAndTrace</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-1280002281962806634--645ac663.1598c429ff0.-7f03</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getTrackAndTraceRequest xmlns:cus="http://service.chub.tdc.dk">
+{$body/*:getTrackAndTrace/*:return/*}
+&lt;/cus:getTrackAndTraceRequest></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:rename varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con2:id>_ActionId-1280002281962806634--645ac663.1598c429ff0.-7f02</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cuhub:*</con:xpathText>
+                                                </con3:location>
+                                                <con3:namespace>http://dk/tdc/bss/crm/customeragreement</con3:namespace>
+                                            </con3:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-1280002281962806634--645ac663.1598c429ff0.-7f01</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getTrackAndTraceReply xmlns:cus="http://dk/tdc/bss/crm/customeragreement">
+&lt;cus:return>
+{$body/*/*}
+&lt;/cus:return>
+&lt;/cus:getTrackAndTraceReply></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="getPermissionItemList">
+                        <con:operator>equals</con:operator>
+                        <con:value>"getPermissionItemList"</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode26">
+                                <con:context>
+                                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:varNsDecl prefix="cab" namespace="http://service.chub.tdc.dk/domain/cableunit"/>
+                                    <con2:varNsDecl prefix="add" namespace="http://service.chub.tdc.dk/domain/address"/>
+                                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                                    <con2:varNsDecl prefix="sty" namespace="http://service.chub.tdc.dk/domain/styretafsaetning"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-7234239418962855630-3ddafd3f.15f80fe9448.-7f5b</con2:id>
+                                        <con1:service ref="CustomerHub/BusinessServices/CustomerHubBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>getPermissionItemList</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con5:rename varName="body">
+                                                <con2:id>_ActionId-7234239418962855630-3ddafd3f.15f80fe9448.-7f5a</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cus:*</con:xpathText>
+                                                </con5:location>
+                                                <con5:namespace>http://service.chub.tdc.dk</con5:namespace>
+                                            </con5:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-7234239418962855630-3ddafd3f.15f80fe9448.-7f59</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getPermissionItemListRequest xmlns:cus="http://service.chub.tdc.dk">
+{$body/*:getPermissionItemList/*:return/*}
+&lt;/cus:getPermissionItemListRequest></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:rename varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con2:id>_ActionId-7234239418962855630-3ddafd3f.15f80fe9448.-7f55</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cuhub:*</con:xpathText>
+                                                </con3:location>
+                                                <con3:namespace>http://dk/tdc/bss/crm/customeragreement</con3:namespace>
+                                            </con3:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-7234239418962855630-3ddafd3f.15f80fe9448.-7f57</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getPermissionItemListReply xmlns:cus="http://dk/tdc/bss/crm/customeragreement">
+&lt;cus:return>
+{$body/*/*}
+&lt;/cus:return>
+&lt;/cus:getPermissionItemListReply></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="getCustomerLegacyKundenr">
+                        <con:operator>equals</con:operator>
+                        <con:value>"getCustomerLegacyKundenr"</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode27">
+                                <con:context>
+                                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:varNsDecl prefix="cab" namespace="http://service.chub.tdc.dk/domain/cableunit"/>
+                                    <con2:varNsDecl prefix="add" namespace="http://service.chub.tdc.dk/domain/address"/>
+                                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                                    <con2:varNsDecl prefix="sty" namespace="http://service.chub.tdc.dk/domain/styretafsaetning"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-3949253966969181612-3e05238f.1610dd27575.-7f76</con2:id>
+                                        <con1:service ref="CustomerHub/BusinessServices/CustomerHubBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>getCustomerLegacyKundenr</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con5:rename varName="body">
+                                                <con2:id>_ActionId-3949253966969181612-3e05238f.1610dd27575.-7f75</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cus:*</con:xpathText>
+                                                </con5:location>
+                                                <con5:namespace>http://service.chub.tdc.dk</con5:namespace>
+                                            </con5:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-3949253966969181612-3e05238f.1610dd27575.-7f74</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getCustomerLegacyKundenrRequest xmlns:cus="http://service.chub.tdc.dk">
+{$body/*:getCustomerLegacyKundenr/*:return/*}
+&lt;/cus:getCustomerLegacyKundenrRequest></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:rename varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con2:id>_ActionId-3949253966969181612-3e05238f.1610dd27575.-7f73</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cuhub:*</con:xpathText>
+                                                </con3:location>
+                                                <con3:namespace>http://dk/tdc/bss/crm/customeragreement</con3:namespace>
+                                            </con3:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-3949253966969181612-3e05238f.1610dd27575.-7f72</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getCustomerLegacyKundenrReply xmlns:cus="http://dk/tdc/bss/crm/customeragreement">
+&lt;cus:return>
+{$body/*/*}
+&lt;/cus:return>
+&lt;/cus:getCustomerLegacyKundenrReply></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="getHistoryAccountInformation">
+                        <con:operator>equals</con:operator>
+                        <con:value>"getHistoryAccountInformation"</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode28">
+                                <con:context>
+                                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:varNsDecl prefix="cab" namespace="http://service.chub.tdc.dk/domain/cableunit"/>
+                                    <con2:varNsDecl prefix="add" namespace="http://service.chub.tdc.dk/domain/address"/>
+                                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                                    <con2:varNsDecl prefix="sty" namespace="http://service.chub.tdc.dk/domain/styretafsaetning"/>
+                                    <con2:varNsDecl prefix="v1" namespace="http://service.tdc.dk/chub/order/v1"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-6988812983708414297--509c9af.16155d98911.-7f76</con2:id>
+                                        <con1:service ref="CustomerHub/BusinessServices/CustomerHubBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>getHistoryAccountInformation</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con5:rename varName="body">
+                                                <con2:id>_ActionId-6988812983708414297--509c9af.16155d98911.-7f75</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cus:*</con:xpathText>
+                                                </con5:location>
+                                                <con5:namespace>http://service.chub.tdc.dk</con5:namespace>
+                                            </con5:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-6988812983708414297--509c9af.16155d98911.-7f74</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getHistoryAccountInformationRequest xmlns:cus="http://service.chub.tdc.dk">
+{$body/*:getHistoryAccountInformation/*:return/*}
+&lt;/cus:getHistoryAccountInformationRequest></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:rename varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con2:id>_ActionId-6988812983708414297--509c9af.16155d98911.-7f73</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cuhub:*</con:xpathText>
+                                                </con3:location>
+                                                <con3:namespace>http://dk/tdc/bss/crm/customeragreement</con3:namespace>
+                                            </con3:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-6988812983708414297--509c9af.16155d98911.-7f72</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:getHistoryAccountInformationReply xmlns:cus="http://dk/tdc/bss/crm/customeragreement">
+&lt;cus:return>
+{$body/*/*}
+&lt;/cus:return>
+&lt;/cus:getHistoryAccountInformationReply></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="searchHistoryByAddress">
+                        <con:operator>equals</con:operator>
+                        <con:value>"searchHistoryByAddress"</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode29">
+                                <con:context>
+                                    <con2:userNsDecl prefix="ser" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:userNsDecl prefix="info" namespace="http://tdc.dk/bss/crm/account/info"/>
+                                    <con2:userNsDecl prefix="cuhub" namespace="http://service.chub.tdc.dk"/>
+                                    <con2:varNsDecl prefix="cab" namespace="http://service.chub.tdc.dk/domain/cableunit"/>
+                                    <con2:varNsDecl prefix="add" namespace="http://service.chub.tdc.dk/domain/address"/>
+                                    <con2:varNsDecl prefix="cus" namespace="http://dk/tdc/bss/crm/customeragreement"/>
+                                    <con2:varNsDecl prefix="sty" namespace="http://service.chub.tdc.dk/domain/styretafsaetning"/>
+                                    <con2:varNsDecl prefix="v1" namespace="http://service.tdc.dk/chub/order/v1"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-6988812983708414297--509c9af.16155d98911.-7f71</con2:id>
+                                        <con1:service ref="CustomerHub/BusinessServices/CustomerHubBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>searchHistoryByAddress</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con5:rename varName="body">
+                                                <con2:id>_ActionId-6988812983708414297--509c9af.16155d98911.-7f70</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cus:*</con:xpathText>
+                                                </con5:location>
+                                                <con5:namespace>http://service.chub.tdc.dk</con5:namespace>
+                                            </con5:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-6988812983708414297--509c9af.16155d98911.-7f6f</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:searchHistoryByAddressRequest xmlns:cus="http://service.chub.tdc.dk">
+{$body/*:searchHistoryByAddress/*:return/*}
+&lt;/cus:searchHistoryByAddressRequest></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:rename varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con2:id>_ActionId-6988812983708414297--509c9af.16155d98911.-7f6e</con2:id>
+                                                <con3:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">//cuhub:*</con:xpathText>
+                                                </con3:location>
+                                                <con3:namespace>http://dk/tdc/bss/crm/customeragreement</con3:namespace>
+                                            </con3:rename>
+                                            <con5:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-6988812983708414297--509c9af.16155d98911.-7f6d</con2:id>
+                                                <con5:location>
+                                                    <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                </con5:location>
+                                                <con5:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;cus:searchHistoryByAddressReply xmlns:cus="http://dk/tdc/bss/crm/customeragreement">
+&lt;cus:return>
+{$body/*/*}
+&lt;/cus:return>
+&lt;/cus:searchHistoryByAddressReply></con:xqueryText>
+                                                </con5:expr>
+                                            </con5:replace>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:default-branch/>
+                </con:branch-table>
+            </con:branch-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

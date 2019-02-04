@@ -1,0 +1,3647 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<s0:definitions name="CustomerAgreementServicesDefinitions" targetNamespace="http://dk/tdc/bss/crm/customeragreement" xmlns="" xmlns:s0="http://schemas.xmlsoap.org/wsdl/" xmlns:cagr="http://dk/tdc/bss/crm/customeragreement" xmlns:s2="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:header="http://header.cu.tdc.dk">
+	<s0:types>
+	<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:header="http://header.cu.tdc.dk" elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="http://header.cu.tdc.dk">
+			<xs:complexType name="AuthorizationType">
+				<xs:sequence>
+					<xs:element name="SessionID" type="xs:string" minOccurs="1"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="AuthenticationHeader" type="header:AuthorizationType"/>
+			<xs:simpleType name="RequestIdType">
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:element name="RequestId" type="header:RequestIdType"/>
+			<xs:simpleType name="OnBehalfOfUserIdType">
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:element name="OnBehalfOfUserId" type="header:OnBehalfOfUserIdType"/>
+		</xs:schema>
+		<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://service.chub.tdc.dk/domain/styretafsaetning" xmlns:afs="http://service.chub.tdc.dk/domain/styretafsaetning" xmlns:cagr="http://dk/tdc/bss/crm/customeragreement" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:ns="http://service.chub.tdc.dk" xmlns:s0="http://schemas.xmlsoap.org/wsdl/" xmlns:s2="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:spc="http://service.chub.tdc.dk/SPC" xmlns:tns="http://service.chub.tdc.dk" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+			<xs:simpleType name="CustomerTypeType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="A"/>
+					<xs:enumeration value="O"/>
+					<xs:enumeration value="I"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="CustomerType" type="afs:CustomerTypeType">
+				<xs:annotation>
+					<xs:documentation>kunde type O(O-kunde) I(I/E kunde) A(Alle)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="ProductGroupCodeType">
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="12"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="ProductGroupCode" type="afs:ProductGroupCodeType">
+				<xs:annotation>
+					<xs:documentation>code indicating the product group</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="IsApprovedType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="J"/>
+					<xs:enumeration value="N"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="IsApproved" type="afs:IsApprovedType">
+				<xs:annotation>
+					<xs:documentation>Approved afsaetning</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="ProductGroupNameType">
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="40"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="ProductGroupName" type="afs:ProductGroupNameType">
+				<xs:annotation>
+					<xs:documentation>description name for the product group</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="ProductOfferingProductGroupType">
+				<xs:sequence>
+					<xs:element ref="afs:ProductGroupCode"/>
+					<xs:element ref="afs:ProductGroupName"/>
+					<xs:element ref="cagr:StartDate" minOccurs="0"/>
+					<xs:element ref="cagr:EndDate" minOccurs="0"/>
+					<xs:element ref="afs:CustomerType"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="ProductOfferingProductGroup" type="afs:ProductOfferingProductGroupType">
+				<xs:annotation>
+					<xs:documentation>Product group, that can be used on cable units(anlaeg)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="ProductGroupListType">
+				<xs:sequence>
+					<xs:element ref="afs:ProductGroupCode"/>
+					<xs:element ref="afs:ProductGroupName"/>
+					<xs:element ref="cagr:ProductGroupProductList" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="ProductGroupList" type="afs:ProductGroupListType">
+				<xs:annotation>
+					<xs:documentation>Product group, that can be used on cable units(anlaeg)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:schema>
+		<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://service.chub.tdc.dk/domain/cableunit" xmlns:cagr="http://dk/tdc/bss/crm/customeragreement" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:ns="http://service.chub.tdc.dk" xmlns:s0="http://schemas.xmlsoap.org/wsdl/" xmlns:s2="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:spc="http://service.chub.tdc.dk/SPC" xmlns:tns="http://service.chub.tdc.dk" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:anl="http://service.chub.tdc.dk/domain/cableunit">
+			<xs:simpleType name="InstalSeqNoType">
+				<xs:restriction base="xs:long"/>
+			</xs:simpleType>
+			<xs:element name="InstalSeqNo" type="anl:InstalSeqNoType">
+				<xs:annotation>
+					<xs:documentation>Installation sequence number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="CableUnitNumberType">
+				<xs:restriction base="xs:long"/>
+			</xs:simpleType>
+			<xs:element name="CableUnitNumber" type="anl:CableUnitNumberType">
+				<xs:annotation>
+					<xs:documentation>number of cable unit (anlaeg)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="BbWithoutTvType">
+				<xs:restriction base="xs:boolean"/>
+			</xs:simpleType>
+			<xs:element name="BbWithoutTv" type="anl:BbWithoutTvType">
+				<xs:annotation>
+					<xs:documentation>Tillad BredbÃ¥nd u. TV (true/false)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="DocsisTypeType">
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:element name="DocsisType" type="anl:DocsisTypeType">
+				<xs:annotation>
+					<xs:documentation>Docsis type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:schema>
+		<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://service.chub.tdc.dk/domain/address" xmlns:cagr="http://dk/tdc/bss/crm/customeragreement" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:ns="http://service.chub.tdc.dk" xmlns:s0="http://schemas.xmlsoap.org/wsdl/" xmlns:s2="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:spc="http://service.chub.tdc.dk/SPC" xmlns:tns="http://service.chub.tdc.dk" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:adr="http://service.chub.tdc.dk/domain/address">
+			<xs:simpleType name="AmsAdrNoType">
+				<xs:restriction base="xs:long"/>
+			</xs:simpleType>
+			<xs:element name="AmsAdrNo" type="adr:AmsAdrNoType">
+				<xs:annotation>
+					<xs:documentation>Ams address number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="MadIdType">
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:element name="MadId" type="adr:MadIdType">
+				<xs:annotation>
+					<xs:documentation>ADDRESSSPECIFICID alternate addressId (not GKS)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="InstallationSequenceNumberType">
+				<xs:restriction base="xs:long"/>
+			</xs:simpleType>
+			<xs:element name="InstallationSequenceNumber" type="adr:InstallationSequenceNumberType">
+				<xs:annotation>
+					<xs:documentation>instal_seq_no</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="HouseNameType">
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:element name="HouseName" type="adr:HouseNameType">
+				<xs:annotation>
+					<xs:documentation>House name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="BuildingType">
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:element name="Building" type="adr:BuildingType">
+				<xs:annotation>
+					<xs:documentation>The building</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="ZipType">
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:element name="Zip" type="adr:ZipType">
+				<xs:annotation>
+					<xs:documentation>Postnr</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="StreetNameType">
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:element name="StreetName" type="adr:StreetNameType">
+				<xs:annotation>
+					<xs:documentation>Vejnavn</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="HouseKeyType">
+				<xs:restriction base="xs:int"/>
+			</xs:simpleType>
+			<xs:element name="HouseKey" type="adr:HouseKeyType">
+				<xs:annotation>
+					<xs:documentation>Husnr</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="HouseLetterType">
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:element name="HouseLetter" type="adr:HouseLetterType">
+				<xs:annotation>
+					<xs:documentation>Opgang</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="FloorType">
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:element name="Floor" type="adr:FloorType">
+				<xs:annotation>
+					<xs:documentation>Etage</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="SideType">
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:element name="Side" type="adr:SideType">
+				<xs:annotation>
+					<xs:documentation>Side doer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:schema>
+		<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://dk/tdc/bss/crm/customeragreement" xmlns:cagr="http://dk/tdc/bss/crm/customeragreement" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://dk/tdc/bss/crm/customeragreement" xmlns:afs="http://service.chub.tdc.dk/domain/styretafsaetning" xmlns:adr="http://service.chub.tdc.dk/domain/address" xmlns:anl="http://service.chub.tdc.dk/domain/cableunit">
+			<xs:complexType name="InstalledProduct">
+				<xs:sequence>
+					<xs:element name="ProductCode" type="xs:string" minOccurs="0"/>
+					<xs:element name="ProductName" type="xs:string" minOccurs="0"/>
+					<xs:element name="ProductCount" type="xs:int" minOccurs="0"/>
+					<xs:element name="RecurringChargeAmountWithoutVat" type="Amount" minOccurs="0"/>
+					<xs:element name="RecurringChargeAmountVat" type="Amount" minOccurs="0"/>
+					<xs:element name="InstalledParameters" type="InstalledParameter" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="CommitmentEndDate" type="xs:date" minOccurs="0"/>
+					<xs:element name="Owner" type="xs:string" minOccurs="0"/>
+					<xs:element name="Payer" type="xs:string" minOccurs="0"/>
+					<xs:element name="User" type="xs:string" minOccurs="0"/>
+					<xs:element name="AdditionalProducts" type="InstalledProduct" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="FuturePriceChangeScheduledIndicator" type="xs:boolean" minOccurs="0"/>
+					<xs:element minOccurs="0" name="ProductType" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="InstalledParameter">
+				<xs:sequence>
+					<xs:element name="ParameterCode" type="xs:string" minOccurs="0"/>
+					<xs:element name="ParameterValue" type="xs:string" minOccurs="0"/>
+					<xs:element name="ParameterValueName" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="CommonStandardReply">
+				<xs:sequence>
+					<xs:element name="ReplyInfo" type="ReplyInfo"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ReplyInfo">
+				<xs:sequence>
+					<xs:element name="ReplyTimestamp" type="xs:dateTime" minOccurs="0"/>
+					<xs:element name="ServerId" type="xs:string" minOccurs="0"/>
+					<xs:element name="SeverityLevel" type="xs:int" minOccurs="0"/>
+					<xs:element name="StatusCode" type="xs:int" minOccurs="0"/>
+					<xs:element name="StatusMessage" type="xs:string" minOccurs="0"/>
+					<xs:element name="TransactionDuration" type="xs:long" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="PermissionDetails">
+				<xs:sequence>
+					<xs:element name="PermissionInfoList" type="PermissionInfo" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="PermissionItemList" type="PermissionItem" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="PermissionInfo">
+				<xs:sequence>
+					<xs:element name="PermissionItemId" type="xs:string" minOccurs="0"/>
+					<xs:element name="PermissionParamValue" type="xs:string" minOccurs="0"/>
+					<xs:element name="PermissionValue" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="PermissionItem">
+				<xs:sequence>
+					<xs:element name="CorrectionInd" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="DefaultValue" type="xs:string" minOccurs="0"/>
+					<xs:element name="DisplayInd" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="DisplayLabel" type="xs:string" minOccurs="0"/>
+					<xs:element name="DisplaySeqNo" type="xs:int" minOccurs="0"/>
+					<xs:element name="ParamType" type="PermissionParamType" minOccurs="0"/>
+					<xs:element name="PermissionGroup" type="xs:string" minOccurs="0"/>
+					<xs:element name="PermissionItemId" type="xs:string" minOccurs="0"/>
+					<xs:element name="PfCode" type="xs:string" minOccurs="0"/>
+					<xs:element name="PtCode" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="PermissionParamType">
+				<xs:sequence>
+					<xs:element name="DefaultDataCode" type="xs:string" minOccurs="0"/>
+					<xs:element name="InputDataType" type="xs:string" minOccurs="0"/>
+					<xs:element name="InputFieldSize" type="xs:int" minOccurs="0"/>
+					<xs:element name="InputRequiredInd" type="xs:boolean" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getAgreementReply">
+				<xs:complexContent>
+					<xs:extension base="CommonStandardReply">
+						<xs:sequence>
+							<xs:element name="NameAdressInfoList" type="NameAddressInfo" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element name="AccountInfo" type="AccountInfo" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element name="Subscription" type="Subscription" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element name="More" type="xs:boolean" minOccurs="0"/>
+							<xs:element name="StartPos" type="xs:int" minOccurs="0"/>
+							<xs:element name="EndPos" type="xs:int" minOccurs="0"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ERegistrationInfo">
+				<xs:sequence>
+					<xs:element name="InvoiceInfo" type="InvoiceInfo" minOccurs="0"/>
+					<xs:element name="LetterInfo" type="LetterInfo" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="NotificationParamInfo" type="NotificationParamInfo" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="InvoiceInfo">
+				<xs:sequence>
+					<xs:element name="InvoiceType" type="xs:string" minOccurs="0"/>
+					<xs:element name="InvoiceFormat" type="xs:string" minOccurs="0"/>
+					<xs:element name="Email" type="xs:string" minOccurs="0"/>
+					<xs:element name="PaperCopy" type="xs:string" minOccurs="0"/>
+					<xs:element name="DirectDebitInd" type="xs:string" minOccurs="0"/>
+					<xs:element name="EdiParamInfo" type="EdiParamInfo" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="ChannelDescription" type="xs:string" minOccurs="0"/>
+					<xs:element name="MethodDescription" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="EdiParamInfo">
+				<xs:sequence>
+					<xs:element name="EanNumber" type="xs:string" minOccurs="0"/>
+					<xs:element name="EdiFormat" type="xs:string" minOccurs="0"/>
+					<xs:element name="Reference" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="LetterInfo">
+				<xs:sequence>
+					<xs:element name="Email" type="xs:string" minOccurs="0"/>
+					<xs:element name="LetterType" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="NotificationParamInfo">
+				<xs:sequence>
+					<xs:element name="EmailNotifInd" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="SmsNotifInd" type="xs:boolean" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="AccountInfo">
+				<xs:sequence>
+					<xs:element name="NameAddressRef" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>reference to NameAdress</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="LinktItId" type="xs:string" minOccurs="0"/>
+					<xs:element name="CustomerNumber" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Contains customer number</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomerNoRef" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>reference to custumer (if payer account) </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CvrNumber" type="xs:string" minOccurs="0"/>
+					<xs:element name="AccountType" type="xs:string" minOccurs="0"/>
+					<xs:element name="AccountNo" type="xs:int" minOccurs="0"/>
+					<xs:element name="AccountNoStatus" type="xs:string" minOccurs="0"/>
+					<xs:element name="ArBalance" type="xs:double" minOccurs="0"/>
+					<xs:element name="GroupID" type="xs:string" minOccurs="0"/>
+					<xs:element name="PaymentMethod" type="xs:string" minOccurs="0"/>
+					<xs:element name="BlProdFreq" type="xs:string" minOccurs="0"/>
+					<xs:element name="ERegistrationInfo" type="ERegistrationInfo" minOccurs="0"/>
+					<xs:element name="PermissionDetails" type="PermissionDetails" minOccurs="0"/>
+					<xs:element name="CustomerSegment" type="CustomerSegment" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="ConsumerAssociation" type="ConsumerAssociationType" minOccurs="0"/>
+					<xs:element name="LegacySystem" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="CustomerSegment">
+				<xs:sequence>
+					<xs:element name="CustomerSegmentType" type="xs:string" minOccurs="0"/>
+					<xs:element name="CustomerSegmentCode" type="xs:string" minOccurs="0"/>
+					<xs:element name="CustomerSegmentText" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="NameAddressInfo">
+				<xs:sequence>
+					<xs:element name="NameAddressID" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>A.k.a. LinkType</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="NameId" type="xs:string" minOccurs="0"/>
+					<xs:element name="NameFormat" type="xs:string" minOccurs="0"/>
+					<xs:element name="Gender" type="xs:string" minOccurs="0"/>
+					<xs:element name="AddressAttention" type="xs:string" minOccurs="0"/>
+					<xs:element name="NameTitle" type="xs:string" minOccurs="0"/>
+					<xs:element name="AdditionalTitle" type="xs:string" minOccurs="0"/>
+					<xs:element name="FirstName" type="xs:string" minOccurs="0"/>
+					<xs:element name="MiddleInitial" type="xs:string" minOccurs="0"/>
+					<xs:element name="NameSuffix" type="xs:string" minOccurs="0"/>
+					<xs:element name="DateOfBirth" type="xs:date" minOccurs="0"/>
+					<xs:element name="LastBusinessName" type="xs:string" minOccurs="0"/>
+					<xs:element name="NameExpireDate" type="xs:date" minOccurs="0"/>
+					<xs:element name="AddrId" type="xs:int" minOccurs="0"/>
+					<xs:element name="AddressType" type="xs:string" minOccurs="0"/>
+					<xs:element name="Country" type="xs:string" minOccurs="0"/>
+					<xs:element name="State" type="xs:string" minOccurs="0"/>
+					<xs:element name="MunicipalityCode" type="xs:string" minOccurs="0"/>
+					<xs:element name="Zip" type="xs:string" minOccurs="0"/>
+					<xs:element name="City" type="xs:string" minOccurs="0"/>
+					<xs:element name="Village" type="xs:string" minOccurs="0"/>
+					<xs:element name="StreetName" type="xs:string" minOccurs="0"/>
+					<xs:element name="StreetCode" type="xs:string" minOccurs="0"/>
+					<xs:element name="HouseKey" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Husnr</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="HouseLetter" type="xs:string" minOccurs="0"/>
+					<xs:element name="Floor" type="xs:string" minOccurs="0"/>
+					<xs:element name="Side" type="xs:string" minOccurs="0"/>
+					<xs:element name="ApartmentNo" type="xs:string" minOccurs="0"/>
+					<xs:element name="Location" type="xs:string" minOccurs="0"/>
+					<xs:element name="SubNo" type="xs:string" minOccurs="0"/>
+					<xs:element name="LocalValidation" type="xs:string" minOccurs="0"/>
+					<xs:element name="AddrExpireDate" type="xs:date" minOccurs="0"/>
+					<xs:element name="PrimaryLn" type="xs:string" minOccurs="0"/>
+					<xs:element name="SecondaryLn" type="xs:string" minOccurs="0"/>
+					<xs:element name="FieldedInd" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>?</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="NameAddrEffectiveDate" type="xs:date" minOccurs="0"/>
+					<xs:element name="NumOfBillCopies" type="xs:int" minOccurs="0" />
+					<xs:element name="Pob" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getCustomerSubscriptionProductsRequest">
+				<xs:sequence>
+					<xs:element ref="UserId"/>
+					<xs:element ref="RequestId" minOccurs="0"/>
+					<xs:element ref="ProductCatalog" minOccurs="0"/>
+					<xs:element ref="IncludeAddresses" minOccurs="0"/>
+					<xs:element name="Catalog" type="xs:string"/>
+					<xs:choice>
+						<xs:element name="LinkItId" type="xs:string" minOccurs="0"/>
+						<xs:element name="CvrNumber" type="CvrNr" minOccurs="0"/>
+						<xs:element ref="CustomerNumber" minOccurs="0"/>
+						<xs:element ref="SubscriptionNo" minOccurs="0" maxOccurs="200"/>
+						<xs:element name="AccountNo" type="xs:string" minOccurs="0"/>
+						<xs:element name="CprEncrypted" type="CprEncrypted" minOccurs="0"/>
+						<xs:element name="InstallationSequenceNumber" type="xs:long" minOccurs="0"/>
+					</xs:choice>
+					<xs:element ref="HideAdditionalProducts" minOccurs="0"/>
+					<xs:choice>
+						<xs:element ref="AppendOrdersToDate" minOccurs="0"/>
+						<xs:element ref="AppendOrdersToOrder" minOccurs="0"/>
+						<xs:element ref="AppendOrders" minOccurs="0"/>
+					</xs:choice>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="AppendOrders" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Append orders up until this CU order</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AppendOrdersToOrder" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Append orders up until this CU order</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AppendOrdersToDate" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Append orders up until this dateTime</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="CprEncrypted">
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:element name="IncludeAddresses" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Include addresses in output</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CustomerNumber" type="CustomerNumberType"/>
+			<xs:simpleType name="CustomerNumberType">
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:element name="HideAdditionalProducts" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Should products include only toplevel products or full product tree</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="getCustomerSubscriptionProductsResponse">
+				<xs:complexContent>
+					<xs:extension base="CommonStandardReply">
+						<xs:sequence>
+							<xs:element ref="CustomerSubscriptionProducts" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="CustomerSubscriptionProducts" type="CustomerSubscriptionProductsType"/>
+			<xs:complexType name="CustomerSubscriptionProductsType">
+				<xs:sequence>
+					<xs:element ref="CustomerNumber"/>
+					<xs:element ref="SubscriptionNo"/>
+					<xs:element name="AccountNo" type="xs:int"/>
+					<xs:element name="ActiveOrderIndicator" type="xs:boolean"/>
+					<xs:element name="Address" type="NameAddressInfo"/>
+					<xs:choice>
+						<xs:element name="Product" type="SubscriptionProductType" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element ref="CUSubscriptionProduct" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:choice>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="SubscriptionProductType">
+				<xs:complexContent>
+					<xs:extension base="ProductBaseType">
+						<xs:sequence>
+							<xs:element name="VisibleIndicator" type="xs:boolean" minOccurs="0"/>
+							<xs:element ref="OmProductClass" minOccurs="0"/>
+							<xs:element ref="SubscriptionProductParameter" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element name="AdditionalProducts" type="SubscriptionProductType" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="OrderInformation" minOccurs="0"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="CUSubscriptionProduct" type="CUSubscriptionProductType"/>
+			<xs:complexType name="CUSubscriptionProductType">
+				<xs:complexContent>
+					<xs:extension base="CUProductBaseType">
+						<xs:sequence>
+							<xs:element name="InstalledParameters" type="InstalledParameter" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="CUSubscriptionProduct" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="OrderInformation" minOccurs="0"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="CUProductBaseType">
+				<xs:sequence>
+					<xs:element name="ProductCode" type="xs:string" minOccurs="0"/>
+					<xs:element name="ProductName" type="xs:string" minOccurs="0"/>
+					<xs:element name="ProductType" type="xs:string" minOccurs="0"/>
+					<xs:element ref="ProductCount" minOccurs="0"/>
+					<xs:element name="RecurringChargeAmountWithoutVat" type="Amount" minOccurs="0"/>
+					<xs:element name="RecurringChargeAmountVat" type="Amount" minOccurs="0"/>
+					<xs:element name="CommitmentEndDate" type="Date" minOccurs="0"/>
+					<xs:element name="Owner" type="xs:string" minOccurs="0"/>
+					<xs:element name="Payer" type="xs:string" minOccurs="0"/>
+					<xs:element name="User" type="xs:string" minOccurs="0"/>
+					<xs:element name="FuturePriceChangeScheduledIndicator" type="xs:boolean" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="SubscriptionProductParameter" type="SubscriptionProductParameterType"/>
+			<xs:complexType name="SubscriptionProductParameterType">
+				<xs:sequence>
+					<xs:element name="ParameterCode" type="xs:string" minOccurs="0"/>
+					<xs:element name="ParameterName" type="xs:string" minOccurs="0"/>
+					<xs:element name="ParameterValue" type="xs:string" minOccurs="0"/>
+					<xs:element name="ParameterValueName" type="xs:string" minOccurs="0"/>
+					<xs:element name="VisibleIndicator" type="xs:boolean" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="OmProductClass" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Om product class</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OrderInformation" type="OrderInformationType"/>
+			<xs:complexType name="OrderInformationType">
+				<xs:sequence>
+					<xs:element ref="ProductAction"/>
+					<xs:element ref="CUOrderId"/>
+					<xs:element ref="AppendDate" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="ProductAction" type="ProductActionType">
+				<xs:annotation>
+					<xs:documentation>Product action, what happends to this product</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="ProductActionType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="ADD" />
+					<xs:enumeration value="CHANGE" />
+					<xs:enumeration value="DELETE" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="CUOrderId" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Order id of CU orde</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AppendDate" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Date/time it is appended</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="ProductBaseType">
+				<xs:sequence>
+					<xs:element name="ProductCode" type="xs:string" minOccurs="0"/>
+					<xs:element name="ProductName" type="xs:string" minOccurs="0"/>
+					<xs:element name="ProductType" type="xs:string" minOccurs="0"/>
+					<xs:element ref="ProductCount" minOccurs="0"/>
+					<xs:element name="RecurringChargeAmountWithoutVat" type="Amount" minOccurs="0"/>
+					<xs:element name="RecurringChargeAmountVat" type="Amount" minOccurs="0"/>
+					<xs:element name="CommitmentEndDate" type="Date" minOccurs="0"/>
+					<xs:element name="Owner" type="xs:string" minOccurs="0"/>
+					<xs:element name="Payer" type="xs:string" minOccurs="0"/>
+					<xs:element name="User" type="xs:string" minOccurs="0"/>
+					<xs:element name="FuturePriceChangeScheduledIndicator" type="xs:boolean" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="ProductCount" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>number of products</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="Date">
+				<xs:restriction base="xs:date"/>
+			</xs:simpleType>
+			<xs:complexType name="Subscription">
+				<xs:sequence>
+					<xs:element name="SubStatus" type="xs:string" minOccurs="0"/>
+					<xs:element name="SubscriptionNo" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="Product" type="InstalledProduct" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="CUProduct" type="CUInstalledProductType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:sequence>
+						<xs:element name="ActiveOrderInd" type="xs:boolean" minOccurs="0"/>
+						<xs:element name="ExpectedLastOrderCompleteDate" type="xs:dateTime" minOccurs="0"/>
+					</xs:sequence>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="CommonStandardRequest">
+				<xs:sequence>
+					<xs:element name="SalesChannel" type="xs:string" minOccurs="0"/>
+					<xs:element name="UserId" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="CUInstalledProductType">
+				<xs:complexContent>
+					<xs:extension base="CUProductBaseType">
+						<xs:sequence>
+							<xs:element name="InstalledParameters" type="InstalledParameter" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="CUInstalledProduct" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="CUInstalledProduct" type="CUInstalledProductType">
+				<xs:annotation>
+					<xs:documentation>Product in CU format</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="Product">
+				<xs:sequence>
+					<xs:element name="ProductDescription" type="xs:string" minOccurs="0"/>
+					<xs:element name="ProductId" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="Amount">
+				<xs:restriction base="xs:decimal">
+					<xs:totalDigits value="11"/>
+					<xs:fractionDigits value="2"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ConsumerAssociationType">
+				<xs:sequence>
+					<xs:element name="IsMember" type="xs:boolean"/>
+					<xs:element name="MemberNumber" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getAgreementRequest">
+				<xs:sequence>
+					<xs:element ref="UserId"/>
+					<xs:element ref="RequestId" minOccurs="0"/>
+					<xs:element ref="ProductCatalog" minOccurs="0"/>
+					<xs:element name="Catalog" type="xs:string"/>
+					<xs:element name="SalesChannel" type="xs:string" minOccurs="0"  nillable="true"/>
+					<xs:choice>
+						<xs:element name="LinkItId" type="xs:string" minOccurs="0"  nillable="true"/>
+						<xs:element name="CvrNumber" type="CvrNr" minOccurs="0"  nillable="true"/>
+						<xs:element name="CustomerNoRef" type="xs:string" minOccurs="0"  nillable="true"/>
+						<xs:element ref="SubscriptionNo" minOccurs="0"  nillable="true"/>
+						<xs:element ref="ServiceIdNo" minOccurs="0"  nillable="true"/>
+						<xs:element name="NameAddressID" type="xs:string" minOccurs="0"  nillable="true"/>
+						<xs:element ref="AccountNo" minOccurs="0"  nillable="true"/>
+						<xs:element name="CprEncrypted" type="xs:string" minOccurs="0"  nillable="true"/>
+						<xs:element minOccurs="0" name="TargetSystem" type="xs:string"  nillable="true"/>
+					</xs:choice>
+					<xs:element name="ShortReply" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="StartPos" type="xs:int" minOccurs="0"/>
+					<xs:element name="ReturnedSubscriptionCount" type="xs:int" minOccurs="0"/>
+					<xs:element name="OrderApplyDate" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="UserId" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Userid</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RequestId" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>A common requestID if used it will be used for logging, and pased to client services where possible</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProductCatalog" type="ProductCatalogType">
+				<xs:annotation>
+					<xs:documentation>Type indicating product catalog, does only hold currently supported product catalogues</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="ProductCatalogType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="SPC" />
+					<xs:enumeration value="CU" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="SubscriptionNo" type="SubscriptionNumberType"/>
+			<xs:simpleType name="SubscriptionNumberType">
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:simpleType name="CvrNr">
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:element name="ServiceIdNo" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>SIK</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AccountNo" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Kontonr / betanr</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="getAgreementRequestByIcc">
+				<xs:sequence>
+					<xs:element minOccurs="1" name="UserId" type="xs:string"/>
+					<xs:element minOccurs="1" name="Catalog" type="xs:string"/>
+					<xs:element minOccurs="0" name="SalesChannel" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="0" name="ICC" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="0" name="TargetSystem" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="0" name="ShortReply" type="xs:boolean"/>
+					<xs:element minOccurs="0" name="StartPos" type="xs:int"/>
+					<xs:element minOccurs="0" name="ReturnedSubscriptionCount" type="xs:int"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getLinkitInfoRequest">
+				<xs:sequence>
+					<xs:element name="UserId" type="xs:string"/>
+					<xs:element minOccurs="0" ref="RequestId"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="AccountNo" type="xs:int"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="CvrNumber" type="CvrNr"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="Ban" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getLinkitInfoResponse">
+				<xs:complexContent>
+					<xs:extension base="CommonStandardReply">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="LinkitInfoList" type="LinkitInfo"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="LinkitInfo">
+				<xs:sequence>
+					<xs:element name="LinktItId" type="xs:string"/>
+					<xs:element minOccurs="0" name="CvrNumber" type="CvrNr"/>
+					<xs:element minOccurs="0" name="AccountNo" type="xs:int"/>
+					<xs:element minOccurs="0" name="Ban" type="xs:string"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="CustomerSegment" type="CustomerSegment"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getCprNameAddressRequest">
+				<xs:sequence>
+					<xs:element name="UserId" type="xs:string"/>
+					<xs:element name="Cpr" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getCprNameAddressResponse">
+				<xs:complexContent>
+					<xs:extension base="CommonStandardReply">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="NameAddressInfoList" type="NameAddressInfo"/>
+							<xs:sequence/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="getAccountInformationRequest">
+				<xs:sequence>
+					<xs:element name="UserId" type="xs:string"/>
+					<xs:element minOccurs="0" ref="RequestId"/>
+					<xs:element ref="CustomerNumber"/>
+					<xs:element name="AccountNo" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getAccountInformationResponse">
+				<xs:complexContent>
+					<xs:extension base="CommonStandardReply">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="AccountInformationDetails" type="AccountInformationDetailsType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="AccountInformationDetailsType">
+				<xs:sequence>
+					<xs:element name="AccountNo" type="xs:int"/>
+					<xs:element name="AccountType" type="xs:string" minOccurs="0"/>
+					<xs:element name="BillingAgent" type="xs:string" minOccurs="0"/>
+					<xs:element minOccurs="0" ref="CustomerNumber"/>
+					<xs:element minOccurs="0" name="Address" type="NameAddressInfo"/>
+					<xs:element minOccurs="0" name="Remarks" type="xs:string"/>
+					<xs:element minOccurs="0" name="BlProdFreq" type="xs:string"/>
+					<xs:element minOccurs="0" name="ERegistrationInfo" type="ERegistrationInfo"/>
+					<xs:element minOccurs="0" name="PermissionDetails" type="PermissionDetails"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="AccountInformationDetails" type="AccountInformationDetailsType"/>
+			<xs:complexType name="getCustomerInformationRequest">
+				<xs:sequence>
+					<xs:element name="UserId" type="xs:string"/>
+					<xs:element minOccurs="0" ref="RequestId"/>
+					<xs:choice>
+						<xs:element minOccurs="0" name="LinkItId" type="xs:string"/>
+						<xs:element minOccurs="0" name="CvrNumber" type="CvrNr"/>
+						<xs:element minOccurs="0" ref="CustomerNumber"/>
+						<xs:element minOccurs="0" name="SubscriptionNo" type="xs:string"/>
+						<xs:element minOccurs="0" name="AccountNo" type="xs:string"/>
+						<xs:element minOccurs="0" name="CprEncrypted" type="CprEncrypted"/>
+						<xs:element ref="ServiceIdNo" minOccurs="0"/>
+					</xs:choice>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getCustomerInformationResponse">
+				<xs:complexContent>
+					<xs:extension base="CommonStandardReply">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" ref="CustomerInformation"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="CustomerInformationType">
+				<xs:sequence>
+					<xs:element ref="CustomerNumber"/>
+					<xs:element minOccurs="0" name="LinkItId" type="xs:string"/>
+					<xs:element minOccurs="0" name="CvrNumber" type="CvrNr"/>
+					<xs:element minOccurs="0" name="CprEncrypted" type="CprEncrypted"/>
+					<xs:element name="CustomerSegment" type="CustomerSegment"/>
+					<xs:element name="Address" type="NameAddressInfo"/>
+					<xs:element minOccurs="0" name="ERegistrationInfo" type="ERegistrationInfo"/>
+					<xs:element minOccurs="0" name="PermissionDetails" type="PermissionDetails"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="CustomerInformation" type="CustomerInformationType"/>
+			<xs:complexType name="getSubscriptionInformationRequest">
+				<xs:sequence>
+					<xs:element name="UserId" type="xs:string"/>
+					<xs:element ref="RequestId" minOccurs="0"/>
+					<xs:element ref="SubscriptionNo"/>
+					<xs:element ref="AppendOrders" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getSubscriptionInformationResponse">
+				<xs:complexContent>
+					<xs:extension base="CommonStandardReply">
+						<xs:sequence>
+							<xs:element ref="SubscriptionInformation"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="SubscriptionInformationType">
+				<xs:sequence>
+					<xs:element ref="CustomerNo"/>
+					<xs:element name="AccountNo" type="xs:int"/>
+					<xs:element name="Address" type="NameAddressInfo"/>
+					<xs:element ref="SubscriptionNo" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="SubscriptionInformation" type="SubscriptionInformationType"/>
+			<xs:simpleType name="CustomerNoType">
+				<xs:restriction base="xs:long"/>
+			</xs:simpleType>
+			<xs:element name="CustomerNo" type="CustomerNoType"/>
+			<xs:complexType name="getCustomerSubscriptionsRequest">
+				<xs:sequence>
+					<xs:element ref="UserId"/>
+					<xs:element minOccurs="0" ref="RequestId"/>
+					<xs:choice>
+						<xs:element minOccurs="0" name="LinkItId" type="xs:string"/>
+						<xs:element minOccurs="0" name="CvrNumber" type="CvrNr"/>
+						<xs:element minOccurs="0" ref="CustomerNumber"/>
+						<xs:element maxOccurs="200" minOccurs="0" ref="SubscriptionNo"/>
+						<xs:element maxOccurs="100" minOccurs="0" name="AccountNo" type="xs:string"/>
+						<xs:element minOccurs="0" name="CprEncrypted" type="CprEncrypted"/>
+						<xs:element minOccurs="0" name="InstallationSequenceNumber" type="xs:long"/>
+					</xs:choice>
+					<xs:element minOccurs="0" ref="PagingInfo"/>
+					<xs:element minOccurs="0" ref="IncludeAddresses"/>
+					<xs:element minOccurs="0" ref="IncludeAccounts"/>
+					<xs:element minOccurs="0" ref="AppendOrders"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="PagingInfoType">
+				<xs:sequence>
+					<xs:element name="From" type="xs:int" minOccurs="0"/>
+					<xs:element name="Count" type="xs:int" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="PagingInfo" type="PagingInfoType">
+				<xs:annotation>
+					<xs:documentation>Used to specify a paged result, you need only a subset of the result from instance number (From) and the number of instances Count</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="getCustomerSubscriptionsResponse">
+				<xs:complexContent>
+					<xs:extension base="CommonStandardReply">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="1" ref="CustomerSubscription"/>
+							<xs:element minOccurs="0" ref="PagingResultInfo"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="PagingResultInfoType">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="More" type="xs:boolean"/>
+					<xs:element minOccurs="0" name="StartPos" type="xs:int"/>
+					<xs:element minOccurs="0" name="EndPos" type="xs:int"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="PagingResultInfo" type="PagingResultInfoType">
+				<xs:annotation>
+					<xs:documentation>When using paging, this info tells you the result info</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="CustomerSubscriptionType">
+				<xs:sequence>
+					<xs:element ref="CustomerNumber"/>
+					<xs:element name="Address" type="NameAddressInfo"/>
+					<xs:element name="ERegistrationInfo" type="ERegistrationInfo" minOccurs="0"/>
+					<xs:element ref="Subscriptions" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="CustomerSubscription" type="CustomerSubscriptionType"/>
+			<xs:complexType name="SubscriptionListType">
+				<xs:sequence>
+					<xs:element ref="SubscriptionNo"/>
+					<xs:element ref="SubscriptionType" minOccurs="0"/>
+					<xs:element ref="HiddenInCatalog" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="AccountNo" type="xs:int" minOccurs="0"/>
+					<xs:element name="Address" type="NameAddressInfo" minOccurs="0"/>
+					<xs:element name="ERegistrationInfo" type="ERegistrationInfo"/>
+					<xs:element name="ActiveOrderInd" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="ExpectedLastOrderCompleteDate" type="xs:dateTime" minOccurs="0"/>
+					<xs:element ref="adr:InstallationSequenceNumber" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="HiddenInCatalog" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Will be removed, eaten, hidden in catalog</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="SubscriptionTypeType">
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:element name="SubscriptionType" type="SubscriptionTypeType"/>
+			<xs:element name="Subscriptions" type="SubscriptionListType"/>
+			<xs:complexType name="getCustomerSubscriptionsVKRequest">
+				<xs:sequence>
+					<xs:element ref="UserId"/>
+					<xs:element minOccurs="0" ref="RequestId"/>
+					<xs:element ref="SubscriptionNo"/>
+					<xs:element minOccurs="0" name="AddMobileSubscriptions" type="xs:boolean"/>
+					<xs:element minOccurs="0" name="IncludeAddresses" type="xs:boolean"/>
+					<xs:element minOccurs="0" name="ExcludeXporting" type="xs:boolean"/>
+					<xs:element minOccurs="0" name="HideActiveNumbers" type="xs:boolean"/>
+					<xs:element minOccurs="0" ref="PagingInfo"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getCustomerSubscriptionsVKResponse">
+				<xs:complexContent>
+					<xs:extension base="CommonStandardReply">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="1" ref="CustomerSubscription"/>
+							<xs:element minOccurs="0" ref="PagingResultInfo"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="getCustomerLIDRequest">
+				<xs:sequence>
+					<xs:element name="UserId" type="xs:string"/>
+					<xs:element name="Catalog" type="xs:string"/>
+					<xs:element minOccurs="0" ref="RequestId"/>
+					<xs:choice>
+						<xs:element minOccurs="0" name="LinkItId" type="xs:string"/>
+						<xs:element minOccurs="0" name="CvrNumber" type="CvrNr"/>
+						<xs:element minOccurs="0" ref="CustomerNumber"/>
+						<xs:element minOccurs="0" name="SubscriptionNo" type="xs:string"/>
+						<xs:element minOccurs="0" name="AccountNo" type="xs:string"/>
+						<xs:element minOccurs="0" name="CprEncrypted" type="CprEncrypted"/>
+					</xs:choice>
+					<xs:choice>
+						<xs:element ref="AppendOrdersToDate" minOccurs="0"/>
+						<xs:element ref="AppendOrdersToOrder" minOccurs="0"/>
+						<xs:element ref="AppendOrders" minOccurs="0"/>
+					</xs:choice>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getCustomerLIDResponse">
+				<xs:complexContent>
+					<xs:extension base="CommonStandardReply">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" ref="CustomerLIDInformation"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="CustomerLIDInformationType">
+				<xs:sequence>
+					<xs:element ref="CustomerNumber"/>
+					<xs:element minOccurs="0" name="LinkItId" type="xs:string"/>
+					<xs:element minOccurs="0" name="CvrNumber" type="CvrNr"/>
+					<xs:element minOccurs="0" name="CprEncrypted" type="CprEncrypted"/>
+					<xs:element name="CustomerSegment" type="CustomerSegment"/>
+					<xs:element name="Address" type="NameAddressInfo"/>
+					<xs:element minOccurs="0" name="SubscriptionNo" type="xs:string"/>
+					<xs:choice>
+						<xs:element name="Product" type="InstalledProduct" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element ref="CUInstalledProduct" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:choice>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="CustomerLIDInformation" type="CustomerLIDInformationType"/>
+			<xs:complexType name="getSubscriptionByCUOrderRequest">
+				<xs:sequence>
+					<xs:element ref="UserId"/>
+					<xs:element minOccurs="0" ref="RequestId"/>
+					<xs:element ref="ProductCatalog" minOccurs="0"/>
+					<xs:element name="Catalog" type="xs:string"/>
+					<xs:element minOccurs="0" name="SalesChannel" type="xs:string"/>
+					<xs:element minOccurs="0" ref="SubscriptionNo"/>
+					<xs:choice>
+						<xs:element ref="OrderType"/>
+						<xs:element ref="KundesagsKode"/>
+					</xs:choice>
+					<xs:element maxOccurs="unbounded" minOccurs="0" ref="CUOrdreLinie"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="OrderTypeType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Opsigelse"/>
+					<xs:enumeration value="Oprettelse"/>
+					<xs:enumeration value="Overtagelse"/>
+					<xs:enumeration value="Flytning"/>
+					<xs:enumeration value="GenopsÃ¦tning"/>
+					<xs:enumeration value="Hvilende"/>
+					<xs:enumeration value="Samle aftaler"/>
+					<xs:enumeration value="NummerÃ¦ndring"/>
+					<xs:enumeration value="TakstÃ¦ndring"/>
+					<xs:enumeration value="Ã†ndring"/>
+					<xs:enumeration value="Kunde, bruger eller betalerrettelse"/>
+					<xs:enumeration value="Samleregning"/>
+					<xs:enumeration value="Specialmarkering"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="OrderType" type="OrderTypeType">
+				<xs:annotation>
+					<xs:documentation>Type of order</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="KundesagsKodeType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="100"/>
+					<xs:enumeration value="102"/>
+					<xs:enumeration value="104"/>
+					<xs:enumeration value="110"/>
+					<xs:enumeration value="112"/>
+					<xs:enumeration value="114"/>
+					<xs:enumeration value="200"/>
+					<xs:enumeration value="204"/>
+					<xs:enumeration value="209"/>
+					<xs:enumeration value="210"/>
+					<xs:enumeration value="214"/>
+					<xs:enumeration value="219"/>
+					<xs:enumeration value="250"/>
+					<xs:enumeration value="252"/>
+					<xs:enumeration value="300"/>
+					<xs:enumeration value="303"/>
+					<xs:enumeration value="304"/>
+					<xs:enumeration value="309"/>
+					<xs:enumeration value="310"/>
+					<xs:enumeration value="313"/>
+					<xs:enumeration value="314"/>
+					<xs:enumeration value="500"/>
+					<xs:enumeration value="509"/>
+					<xs:enumeration value="510"/>
+					<xs:enumeration value="519"/>
+					<xs:enumeration value="600"/>
+					<xs:enumeration value="610"/>
+					<xs:enumeration value="710"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="KundesagsKode" type="KundesagsKodeType">
+				<xs:annotation>
+					<xs:documentation>Allowed kundesagskoder</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="CUOrdreLinieType">
+				<xs:sequence>
+					<xs:element ref="TransaktionsType" minOccurs="0"/>
+					<xs:element ref="CUProductID"/>
+					<xs:element ref="ProduktAntal"/>
+					<xs:element ref="KanalNummer" minOccurs="0"/>
+					<xs:element ref="ServiceIdNo" minOccurs="0"/>
+					<xs:element ref="TekstLovligTekst" minOccurs="0"/>
+					<xs:element ref="ArbitraerEngangsPris" minOccurs="0"/>
+					<xs:element ref="ArbitraerLoebendePris" minOccurs="0"/>
+					<xs:element ref="AccountNo" minOccurs="0"/>
+					<xs:element ref="Saldomaks" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="CUOrdreLinie" type="CUOrdreLinieType">
+				<xs:annotation>
+					<xs:documentation>CU ordre linie</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="TransaktionsTypeType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="A"/>
+					<xs:enumeration value="B"/>
+					<xs:enumeration value="F"/>
+					<xs:enumeration value="I"/>
+					<xs:enumeration value="K"/>
+					<xs:enumeration value="KG"/>
+					<xs:enumeration value="KN"/>
+					<xs:enumeration value="KO"/>
+					<xs:enumeration value="KĂ†"/>
+					<xs:enumeration value="L"/>
+					<xs:enumeration value="M"/>
+					<xs:enumeration value="N"/>
+					<xs:enumeration value="O"/>
+					<xs:enumeration value="OM"/>
+					<xs:enumeration value="OD"/>
+					<xs:enumeration value="ODR"/>
+					<xs:enumeration value="OP"/>
+					<xs:enumeration value="OPR"/>
+					<xs:enumeration value="OL"/>
+					<xs:enumeration value="OR"/>
+					<xs:enumeration value="R"/>
+					<xs:enumeration value="RM"/>
+					<xs:enumeration value="RD"/>
+					<xs:enumeration value="RP"/>
+					<xs:enumeration value="RL"/>
+					<xs:enumeration value="S"/>
+					<xs:enumeration value="T"/>
+					<xs:enumeration value="TM"/>
+					<xs:enumeration value="TD"/>
+					<xs:enumeration value="TDR"/>
+					<xs:enumeration value="TP"/>
+					<xs:enumeration value="TPR"/>
+					<xs:enumeration value="TL"/>
+					<xs:enumeration value="TR"/>
+					<xs:enumeration value="U"/>
+					<xs:enumeration value="X"/>
+					<xs:enumeration value="Ă†"/>
+					<xs:enumeration value="Ă†N"/>
+					<xs:enumeration value="Ă†O"/>
+					<xs:enumeration value="Ă"/>
+					<xs:enumeration value="000"/>
+					<xs:enumeration value="010"/>
+					<xs:enumeration value="011"/>
+					<xs:enumeration value="012"/>
+					<xs:enumeration value="013"/>
+					<xs:enumeration value="014"/>
+					<xs:enumeration value="015"/>
+					<xs:enumeration value="016"/>
+					<xs:enumeration value="021"/>
+					<xs:enumeration value="023"/>
+					<xs:enumeration value="027"/>
+					<xs:enumeration value="028"/>
+					<xs:enumeration value="029"/>
+					<xs:enumeration value="030"/>
+					<xs:enumeration value="031"/>
+					<xs:enumeration value="033"/>
+					<xs:enumeration value="034"/>
+					<xs:enumeration value="035"/>
+					<xs:enumeration value="036"/>
+					<xs:enumeration value="037"/>
+					<xs:enumeration value="038"/>
+					<xs:enumeration value="039"/>
+					<xs:enumeration value="041"/>
+					<xs:enumeration value="042"/>
+					<xs:enumeration value="043"/>
+					<xs:enumeration value="051"/>
+					<xs:enumeration value="052"/>
+					<xs:enumeration value="053"/>
+					<xs:enumeration value="060"/>
+					<xs:enumeration value="062"/>
+					<xs:enumeration value="063"/>
+					<xs:enumeration value="064"/>
+					<xs:enumeration value="065"/>
+					<xs:enumeration value="080"/>
+					<xs:enumeration value="081"/>
+					<xs:enumeration value="094"/>
+					<xs:enumeration value="600"/>
+					<xs:enumeration value="666"/>
+					<xs:enumeration value="777"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="TransaktionsType" type="TransaktionsTypeType">
+				<xs:annotation>
+					<xs:documentation>CU transaktionsType</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="CUProductIDType">
+				<xs:sequence>
+					<xs:element ref="ProduktGruppe"/>
+					<xs:element ref="ProduktElement"/>
+					<xs:element ref="ProduktFunktion"/>
+					<xs:element ref="AfsaetningType"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="CUProductID" type="CUProductIDType">
+				<xs:annotation>
+					<xs:documentation>Cu Product ID type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProduktGruppe" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Produkt gruppe</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProduktElement" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Produkt element</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProduktFunktion" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Produkt funktion</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="AfsaetningTypeType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="A"/>
+					<xs:enumeration value="B"/>
+					<xs:enumeration value="C"/>
+					<xs:enumeration value="D"/>
+					<xs:enumeration value="E"/>
+					<xs:enumeration value="F"/>
+					<xs:enumeration value="G"/>
+					<xs:enumeration value="H"/>
+					<xs:enumeration value="I"/>
+					<xs:enumeration value="J"/>
+					<xs:enumeration value="K"/>
+					<xs:enumeration value="L"/>
+					<xs:enumeration value="M"/>
+					<xs:enumeration value="N"/>
+					<xs:enumeration value="O"/>
+					<xs:enumeration value="P"/>
+					<xs:enumeration value="Q"/>
+					<xs:enumeration value="R"/>
+					<xs:enumeration value="S"/>
+					<xs:enumeration value="T"/>
+					<xs:enumeration value="U"/>
+					<xs:enumeration value="W"/>
+					<xs:enumeration value="X"/>
+					<xs:enumeration value="Y"/>
+					<xs:enumeration value="Z"/>
+					<xs:enumeration value="Ã†"/>
+					<xs:enumeration value="Ã˜"/>
+					<xs:enumeration value="Ã…"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="AfsaetningType" type="AfsaetningTypeType">
+				<xs:annotation>
+					<xs:documentation>CU afsaetning</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProduktAntal" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Antal produkter</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="KanalNummer" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Lid loebeID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TekstLovligTekst" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Tekst lovlig tekst (feks. lid)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ArbitraerEngangsPris" type="xs:double">
+				<xs:annotation>
+					<xs:documentation>Engangspris (arbitraer)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ArbitraerLoebendePris" type="xs:double">
+				<xs:annotation>
+					<xs:documentation>Loebende pris(arbitraer)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="SaldomaksType">
+				<xs:sequence>
+					<xs:element ref="SaldomaksAdvis"/>
+					<xs:element ref="SaldomaksKvartal" minOccurs="0"/>
+					<xs:element ref="SaldomaksMaaned" minOccurs="0"/>
+					<xs:element ref="SaldomaksMidlertidig" minOccurs="0"/>
+					<xs:element ref="SaldomaksSpaerringVedOverskridelse"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="Saldomaks" type="SaldomaksType">
+				<xs:annotation>
+					<xs:documentation>Oplysninger om saldomaks</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SaldomaksAdvis" type="SaldomaksAdvisType">
+				<xs:annotation>
+					<xs:documentation>saldomaks advis type, hvem sendes advis til</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="SaldomaksAdvisType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Installation"/>
+					<xs:enumeration value="Betaler"/>
+					<xs:enumeration value="Kunde"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="SaldomaksKvartal" type="SaldomaksGraenseType">
+				<xs:annotation>
+					<xs:documentation>Kvartals graense</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="SaldomaksGraenseType">
+				<xs:restriction base="xs:double"/>
+			</xs:simpleType>
+			<xs:element name="SaldomaksMaaned" type="SaldomaksGraenseType">
+				<xs:annotation>
+					<xs:documentation>Maaneds graense</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SaldomaksMidlertidig" type="SaldomaksGraenseType">
+				<xs:annotation>
+					<xs:documentation>Midlertidig saldomaks graense</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SaldomaksSpaerringVedOverskridelse" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Loebende pris(arbitraer)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="getSubscriptionByCUOrderResponse">
+				<xs:complexContent>
+					<xs:extension base="CommonStandardReply">
+						<xs:sequence>
+							<xs:element minOccurs="0" ref="SubscriptionNo"/>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="Product" type="OrderProductType"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="OrderProductType">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="ProductCode" type="xs:string"/>
+					<xs:element minOccurs="0" name="ProductName" type="xs:string"/>
+					<xs:element minOccurs="0" name="ProductType" type="xs:string"/>
+					<xs:element minOccurs="0" name="ProductCountBefore" type="xs:int"/>
+					<xs:element minOccurs="0" name="ProductCountAfter" type="xs:int"/>
+					<xs:element minOccurs="0" ref="ProductAction"/>
+					<xs:element minOccurs="0" name="RecurringChargeAmountWithoutVat" type="Amount"/>
+					<xs:element minOccurs="0" name="RecurringChargeAmountVat" type="Amount"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="OrderParameters" type="InstalledParameter"/>
+					<xs:element minOccurs="0" name="CommitmentEndDate" type="Date"/>
+					<xs:element minOccurs="0" name="Owner" type="xs:string"/>
+					<xs:element minOccurs="0" name="Payer" type="xs:string"/>
+					<xs:element minOccurs="0" name="User" type="xs:string"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="AdditionalProduct" type="OrderProductType"/>
+					<xs:element minOccurs="0" name="FuturePriceChangeScheduledIndicator" type="xs:boolean"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getAfsaetningRequest">
+				<xs:sequence>
+					<xs:element ref="UserId"/>
+					<xs:element ref="RequestId" minOccurs="0"/>
+					<xs:element ref="ProductCatalog" minOccurs="0"/>
+					<xs:element ref="Catalogue"/>
+					<xs:element ref="Category"/>
+					<xs:element ref="afs:CustomerType"/>
+					<xs:element name="SPProductCode" type="SPCProductCodeType" minOccurs="0"/>
+					<xs:choice>
+						<xs:element ref="SubscriptionNo"/>
+						<xs:element ref="anl:InstalSeqNo"/>
+						<xs:element ref="adr:AmsAdrNo"/>
+						<xs:element ref="adr:MadId"/>
+						<xs:element ref="anl:CableUnitNumber"/>
+					</xs:choice>
+					<xs:element name="AfsaetningDate" type="xs:date" minOccurs="0"/>
+					<xs:element ref="AppendOrders" minOccurs="0"/>
+					<xs:element ref="AddPriceData" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="Catalogue" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>SPC Catalog(ue)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Category" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>SPC product category</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="SPCProductCodeType">
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:element name="SPCProductCode" type="SPCProductCodeType">
+				<xs:annotation>
+					<xs:documentation>SPC product code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AddPriceData" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Add price information to responser</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="getAfsaetningResponse">
+				<xs:complexContent>
+					<xs:extension base="CommonStandardReply">
+						<xs:sequence>
+							<xs:choice>
+								<xs:element ref="MigrateToProduct" minOccurs="1"/>
+								<xs:element ref="anl:CableUnitNumber" minOccurs="2" maxOccurs="unbounded"/>
+							</xs:choice>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="MigrateToProductType">
+				<xs:sequence>
+					<xs:element ref="MigrateHierarki" minOccurs="1"/>
+					<xs:element ref="SPCProduct" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element ref="Parameter" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element ref="ExcludeRule" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element ref="IncludeRule" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element ref="MigrateRule" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element ref="CountRule" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="MigrateToProduct" type="MigrateToProductType"/>
+			<xs:complexType name="MigrateHierarkiType">
+				<xs:sequence>
+					<xs:element ref="SPCProductCode"/>
+					<xs:element ref="MigrateAction"/>
+					<xs:element ref="MinAntal"/>
+					<xs:element ref="MaxAntal"/>
+					<xs:element ref="ProductCount" minOccurs="0"/>
+					<xs:element ref="Default" minOccurs="0"/>
+					<xs:element name="InstalledParameters" type="InstalledParameter" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="RecurringChargeAmountWithoutVat" type="Amount" minOccurs="0"/>
+					<xs:element name="RecurringChargeAmountVat" type="Amount" minOccurs="0"/>
+					<xs:element ref="MigrateHierarki" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="MigrateHierarki" type="MigrateHierarkiType"/>
+			<xs:simpleType name="MigrateActionType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="ADD"/>
+					<xs:enumeration value="KEEP"/>
+					<xs:enumeration value="DELETE"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="MigrateAction" type="MigrateActionType">
+				<xs:annotation>
+					<xs:documentation>Migrate action, what happends to this product on migration</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MinAntal" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Max antal af produkt</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaxAntal" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Max antal af produkt</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Default" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Is product the default choice</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="SPCProductTypeType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="SP"/>
+					<xs:enumeration value="PG"/>
+					<xs:enumeration value="SG"/>
+					<xs:enumeration value="AP"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="SPCProductType" type="SPCProductTypeType"/>
+			<xs:element name="IncludeAccounts" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Include accounts in output</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="SPCProductType">
+				<xs:sequence>
+					<xs:element ref="SPCProductCode"/>
+					<xs:element ref="SPCProductName"/>
+					<xs:element ref="SPCProductType"/>
+					<xs:element ref="ForSale"/>
+					<xs:element ref="OnlyNewSale"/>
+					<xs:element ref="Display"/>
+					<xs:element ref="UiTemplate" minOccurs="0"/>
+					<xs:element ref="MarketText" minOccurs="0"/>
+					<xs:element ref="MarketPriceText" minOccurs="0"/>
+					<xs:element ref="AdvisoryText" minOccurs="0"/>
+					<xs:element ref="OmProductClass" minOccurs="0"/>
+					<xs:element ref="CmsRef" minOccurs="0"/>
+					<xs:element ref="Exclude" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element ref="Include" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element ref="Migrate" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element ref="Count" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element ref="Substitude" minOccurs="0"/>
+					<xs:element ref="Price" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element ref="ProductParameter" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element ref="ProductPackage" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element ref="AlreadyActive" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="SPCProduct" type="SPCProductType"/>
+			<xs:simpleType name="SPCProductNameType">
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:element name="SPCProductName" type="SPCProductNameType">
+				<xs:annotation>
+					<xs:documentation>SPC product code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ForSale" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Is product for sale</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OnlyNewSale" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Is product only for new sale</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Display" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Should product be displayed</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="UiTemplateTypeType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="DROPDOWN"/>
+					<xs:enumeration value="TINY"/>
+					<xs:enumeration value="RADIO"/>
+					<xs:enumeration value="TAB"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="UiTemplate" type="UiTemplateTypeType">
+				<xs:annotation>
+					<xs:documentation>Display / UI Template type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MarketText" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Market text</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MarketPriceText" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Market price text</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AdvisoryText" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Advisory text</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CmsRef" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>CmsRef</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Exclude" type="RuleNameType">
+				<xs:annotation>
+					<xs:documentation>Exclude SPC product code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="RuleNameType">
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:element name="Include" type="RuleNameType">
+				<xs:annotation>
+					<xs:documentation>Include SPC product code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Migrate" type="RuleNameType">
+				<xs:annotation>
+					<xs:documentation>Include SPC product code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Count" type="RuleNameType">
+				<xs:annotation>
+					<xs:documentation>Count rule</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Substitude" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Substitute</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="PriceType">
+				<xs:sequence>
+					<xs:element ref="PriceEventType"/>
+					<xs:element ref="PeriodeLength"/>
+					<xs:element ref="PriceWithVat"/>
+					<xs:element ref="PriceWithoutVat"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="Price" type="PriceType">
+				<xs:annotation>
+					<xs:documentation>Price type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="PriceEventTypeType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="ADD"/>
+					<xs:enumeration value="CHANGE"/>
+					<xs:enumeration value="KEEP"/>
+					<xs:enumeration value="DELETE"/>
+					<xs:enumeration value="MONTHLY"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="PriceEventType" type="PriceEventTypeType"/>
+			<xs:complexType name="ParameterType">
+				<xs:sequence>
+					<xs:element ref="ParameterName"/>
+					<xs:element ref="ParameterText"/>
+					<xs:element ref="ParameterAdvisory"/>
+					<xs:element ref="ParameterDataType"/>
+					<xs:element ref="ParameterLength"/>
+					<xs:element ref="UiTemplate" minOccurs="0"/>
+					<xs:element ref="ParameterValidation" minOccurs="0"/>
+					<xs:element ref="ParameterList" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element ref="Visible"/>
+					<xs:element ref="Mandatory"/>
+					<xs:element ref="ListIndicator"/>
+					<xs:element ref="Enabled"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="Parameter" type="ParameterType">
+				<xs:annotation>
+					<xs:documentation>Parameter type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ParameterName" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name of parameter</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ParameterText" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Parameter text</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ParameterAdvisory" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Parameter advisory, help text</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="ParameterDataTypeType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="BOOLEAN"/>
+					<xs:enumeration value="DATE"/>
+					<xs:enumeration value="INT"/>
+					<xs:enumeration value="NUMERIC"/>
+					<xs:enumeration value="STRING"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="ParameterDataType" type="ParameterDataTypeType"/>
+			<xs:element name="ParameterLength" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Price type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="ParameterValidationType">
+				<xs:sequence>
+					<xs:element ref="ValidationType"/>
+					<xs:element ref="ValidationExpression"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="ParameterValidation" type="ParameterValidationType">
+				<xs:annotation>
+					<xs:documentation>Price type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="ValidationTypeType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="CLASS"/>
+					<xs:enumeration value="REGEX"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="ValidationType" type="ValidationTypeType">
+				<xs:annotation>
+					<xs:documentation>Price type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ValidationExpression" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Parameter validation expression</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="ParameterListType">
+				<xs:sequence>
+					<xs:element ref="ParameterValueText"/>
+					<xs:element ref="ParameterValue"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="ParameterList" type="ParameterListType">
+				<xs:annotation>
+					<xs:documentation>A list of parameters from the parm_value table</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ParameterValueText" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The text from the parm_value table</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ParameterValue" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The value from the parm_value table</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Visible" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>is visible</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Mandatory" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>is visible</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ListIndicator" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>is visible</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Enabled" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>is visible</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="ExcludeRuleType">
+				<xs:complexContent>
+					<xs:extension base="BaseRuleType">
+						<xs:sequence/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="ExcludeRule" type="ExcludeRuleType">
+				<xs:annotation>
+					<xs:documentation>Cu Product ID type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="BaseRuleType">
+				<xs:sequence>
+					<xs:element ref="RuleName"/>
+					<xs:element ref="RuleText" minOccurs="0"/>
+					<xs:element name="Enforce" type="xs:boolean"/>
+					<xs:element name="Inform" type="xs:boolean"/>
+					<xs:element ref="SPCProductCodeName" minOccurs="1" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="RuleName" type="RuleNameType">
+				<xs:annotation>
+					<xs:documentation>Rule name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="RuleTextType">
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:element name="RuleText" type="RuleTextType">
+				<xs:annotation>
+					<xs:documentation>Rule text</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="SPCProductCodeNameType">
+				<xs:sequence>
+					<xs:element ref="SPCProductCode"/>
+					<xs:element ref="SPCProductName"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="SPCProductCodeName" type="SPCProductCodeNameType">
+				<xs:annotation>
+					<xs:documentation>SPC product code and name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="IncludeRuleType">
+				<xs:complexContent>
+					<xs:extension base="BaseRuleType">
+						<xs:sequence/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="IncludeRule" type="IncludeRuleType">
+				<xs:annotation>
+					<xs:documentation>Cu Product ID type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="MigrateRuleType">
+				<xs:complexContent>
+					<xs:extension base="BaseRuleType">
+						<xs:sequence/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="MigrateRule" type="MigrateRuleType">
+				<xs:annotation>
+					<xs:documentation>Cu Product ID type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="CountRuleType">
+				<xs:complexContent>
+					<xs:extension base="BaseRuleType">
+						<xs:sequence>
+							<xs:element name="Count" type="xs:int"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="CountRule" type="CountRuleType">
+				<xs:annotation>
+					<xs:documentation>Cu Product ID type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="PeriodeLengthType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="1"/>
+					<xs:enumeration value="3"/>
+					<xs:enumeration value="6"/>
+					<xs:enumeration value="12"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="PeriodeLength" type="PeriodeLengthType">
+				<xs:annotation>
+					<xs:documentation>Price periode 1/3/6/12</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PriceWithoutVat" type="Amount">
+				<xs:annotation>
+					<xs:documentation>Price without vat</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PriceWithVat" type="Amount">
+				<xs:annotation>
+					<xs:documentation>Price with vat</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="ProductParameterEventType">
+				<xs:sequence>
+					<xs:element ref="ParameterEventType"/>
+					<xs:element ref="CUProductNumber" minOccurs="0"/>
+					<xs:element ref="CUAttribute" minOccurs="0"/>
+					<xs:element ref="Package" minOccurs="0"/>
+					<xs:element ref="OrderPlacementType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="ProductParameterEvent" type="ProductParameterEventType">
+				<xs:annotation>
+					<xs:documentation>Product Parameter type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="OrderPlacementTypeType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="H"/>
+					<xs:enumeration value="U"/>
+					<xs:enumeration value="S"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="OrderPlacementType" type="OrderPlacementTypeType">
+				<xs:annotation>
+					<xs:documentation>Where should package be run H(oved) U(nder)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="ProductParameterType">
+				<xs:sequence>
+					<xs:element ref="ParameterName"/>
+					<xs:element ref="ProductParameterEvent" minOccurs="1" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="ProductParameter" type="ProductParameterType">
+				<xs:annotation>
+					<xs:documentation>Product Parameter type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="ParameterEventTypeType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="ADD"/>
+					<xs:enumeration value="CHANGE"/>
+					<xs:enumeration value="KEEP"/>
+					<xs:enumeration value="DELETE"/>
+					<xs:enumeration value="NONE"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="ParameterEventType" type="ParameterEventTypeType">
+				<xs:annotation>
+					<xs:documentation>Parameter type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CUProductNumber" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Cu product number e.g. 01_100_00</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CUAttribute" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Cu felt</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Package" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>pakke</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="ProductPackageEventTypeType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="ADD"/>
+					<xs:enumeration value="CHANGE"/>
+					<xs:enumeration value="KEEP"/>
+					<xs:enumeration value="DELETE"/>
+					<xs:enumeration value="NONE"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="ProductPackageEventType" type="ProductPackageEventTypeType">
+				<xs:annotation>
+					<xs:documentation>Parameter type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="ProductPackageType">
+				<xs:sequence>
+					<xs:element ref="ProductPackageEventType"/>
+					<xs:element ref="Package"/>
+					<xs:element ref="PackageParameter" minOccurs="0"/>
+					<xs:element ref="OrderPlacementType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="ProductPackage" type="ProductPackageType">
+				<xs:annotation>
+					<xs:documentation>Product Packag type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PackageParameter" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Package parameter</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AlreadyActive" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Is this ready</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="getStatusRequest">
+				<xs:sequence/>
+			</xs:complexType>
+			<xs:complexType name="getStatusResponse">
+				<xs:complexContent>
+					<xs:extension base="CommonStandardReply">
+						<xs:sequence>
+							<xs:element ref="CUDataUpdateInformation"/>
+							<xs:element ref="SPCDataUpdateInformation"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="CUDataUpdateInformation" type="DataUpdateInformationType"/>
+			<xs:element name="SPCDataUpdateInformation" type="DataUpdateInformationType"/>
+			<xs:complexType name="DataUpdateInformationType">
+				<xs:sequence>
+					<xs:element name="LastUpdateTime" type="xs:dateTime"/>
+					<xs:element name="LastUpdateEnvironment" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="migrateSubscriptionRequest">
+				<xs:sequence>
+					<xs:element ref="User"/>
+					<xs:element minOccurs="0" ref="RequestId"/>
+					<xs:element ref="Catalogue"/>
+					<xs:element ref="SubscriptionNumber"/>
+					<xs:choice>
+						<xs:element minOccurs="0" ref="AppendOrdersToDate"/>
+						<xs:element minOccurs="0" ref="AppendOrdersToOrder"/>
+						<xs:element minOccurs="0" ref="AppendOrders"/>
+					</xs:choice>
+					<xs:element name="MigrateToSPCProduct" type="SPCProductCodeType"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="migrateSubscriptionResponse">
+				<xs:complexContent>
+					<xs:extension base="CommonStandardReply">
+						<xs:sequence>
+							<xs:element minOccurs="1" ref="MigrateToProduct"/>
+							<xs:element minOccurs="1" ref="MigrateFromProduct"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:element name="SubscriptionNumber" type="SubscriptionNumberType"/>
+			<xs:complexType name="MigrateFromProductType">
+				<xs:sequence>
+					<xs:element name="Product" type="InstalledProduct" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="MigrateFromProduct" type="MigrateFromProductType"/>
+			<xs:complexType name="listAccountsRequest">
+				<xs:sequence>
+					<xs:element name="UserId" type="xs:string"/>
+					<xs:element minOccurs="0" ref="RequestId"/>
+					<xs:choice>
+						<xs:element name="LinkItId" type="xs:string"/>
+						<xs:element ref="Cvr"/>
+					</xs:choice>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="Cvr" type="CvrNr"/>
+			<xs:complexType name="listAccountsResponse">
+				<xs:complexContent>
+					<xs:extension base="CommonStandardReply">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" ref="AccountNumber"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:simpleType name="AccountNumberType">
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:element name="AccountNumber" type="AccountNumberType"/>
+			<xs:complexType name="getCprOrderNoCreationIfActiveRequest">
+				<xs:sequence>
+					<xs:element ref="UserId"/>
+					<xs:element ref="RequestId" minOccurs="0"/>
+					<xs:element name="Cpr" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getCprOrderNoCreationIfActiveResponse">
+				<xs:complexContent>
+					<xs:extension base="CommonStandardReply">
+						<xs:sequence>
+							<xs:element name="OrderNumber" type="xs:int" minOccurs="0"/>
+							<xs:element name="CustomerNumber" type="xs:long" minOccurs="0"/>
+							<xs:element ref="UserId"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="searchByAddressRequest">
+				<xs:sequence>
+					<xs:element ref="UserId"/>
+					<xs:element ref="RequestId" minOccurs="0"/>
+					<xs:choice>
+						<xs:element ref="KVHXKey"/>
+						<xs:element ref="AddressSearch"/>
+						<xs:element ref="adr:InstallationSequenceNumber"/>
+						<xs:element ref="adr:AmsAdrNo"/>
+						<xs:element ref="adr:MadId"/>
+					</xs:choice>
+					<xs:element ref="AddressSearchResultType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="searchByAddressResponse">
+				<xs:complexContent>
+					<xs:extension base="CommonStandardReply">
+						<xs:sequence>
+							<xs:element ref="CustomerAtAddress" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:simpleType name="KVHXKeyType">
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:element name="KVHXKey" type="KVHXKeyType">
+				<xs:annotation>
+					<xs:documentation>KVHX key in the format KKKVVVVHHHHEESSSS (K:Kommunekode V:Vejkode H:Husnr E:Etage S:SideDoer)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="User" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>SPC User</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="AddressSearchType">
+				<xs:sequence>
+					<xs:element name="StreetName" type="xs:string"/>
+					<xs:element name="HouseKey" type="xs:int"/>
+					<xs:element name="Zip" type="xs:int"/>
+					<xs:element name="MunicipalityCode" type="xs:int" minOccurs="0"/>
+					<xs:element name="Floor" type="xs:string" minOccurs="0"/>
+					<xs:choice minOccurs="0">
+						<xs:element name="Side" type="xs:string"/>
+						<xs:element name="ApartmentNo" type="xs:string"/>
+					</xs:choice>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="AddressSearch" type="AddressSearchType"/>
+			<xs:simpleType name="AddressSearchResultTypeType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Customer"/>
+					<xs:enumeration value="Subscription"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="AddressSearchResultType" type="AddressSearchResultTypeType">
+				<xs:annotation>
+					<xs:documentation>Defines if search is for customers or subscriptions</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="CustomerAtAddressType">
+				<xs:sequence>
+					<xs:element ref="CustomerNo"/>
+					<xs:element ref="NameInfo" minOccurs="0"/>
+					<xs:element ref="SubscriptionNo" minOccurs="0"/>
+					<xs:element ref="adr:InstallationSequenceNumber" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="CustomerAtAddress" type="CustomerAtAddressType"/>
+			<xs:complexType name="NameInfoType">
+				<xs:sequence>
+					<xs:element name="FirstName" type="xs:string" minOccurs="0"/>
+					<xs:element name="LastBusinessName" type="xs:string" minOccurs="0"/>
+					<xs:element name="NameTitle" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="NameInfo" type="NameInfoType"/>
+			<xs:complexType name="getNabsParametersRequest">
+				<xs:sequence>
+					<xs:element ref="UserId"/>
+					<xs:element ref="RequestId" minOccurs="0"/>
+					<xs:choice>
+						<xs:element ref="SubscriptionNo"/>
+						<xs:element ref="Catalogue"/>
+						<xs:element ref="SPCProductCode"/>
+					</xs:choice>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getNabsParametersResponse">
+				<xs:complexContent>
+					<xs:extension base="CommonStandardReply">
+						<xs:sequence>
+							<xs:element ref="NabsProduct"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="NabsProductType">
+				<xs:sequence>
+					<xs:element ref="SPCProductCode"/>
+					<xs:element name="InstalledParameters" type="InstalledParameter" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element ref="NabsProduct" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="NabsProduct" type="NabsProductType"/>
+			<xs:complexType name="getLidsRequest">
+				<xs:sequence>
+					<xs:element ref="UserId"/>
+					<xs:element ref="RequestId" minOccurs="0"/>
+					<xs:element name="AccountNo" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getLidsResponse">
+				<xs:complexContent>
+					<xs:extension base="CommonStandardReply">
+						<xs:sequence>
+							<xs:element name="Lid" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="getNextBillingDateRequest">
+				<xs:sequence>
+					<xs:element ref="UserId"/>
+					<xs:element ref="RequestId" minOccurs="0"/>
+					<xs:element name="AccountNo" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getNextBillingDateResponse">
+				<xs:complexContent>
+					<xs:extension base="CommonStandardReply">
+						<xs:sequence>
+							<xs:element ref="NextBillingDateInfo" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="NextBillingDateInfoType">
+				<xs:sequence>
+					<xs:element ref="AccountNo"/>
+					<xs:element name="Date" type="xs:date"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="NextBillingDateInfo" type="NextBillingDateInfoType"/>
+			<xs:complexType name="findSubscriptionInKISRequest">
+				<xs:sequence>
+					<xs:element ref="UserId"/>
+					<xs:element ref="RequestId" minOccurs="0"/>
+					<xs:element ref="SubscriptionNo"/>
+					<xs:choice>
+						<xs:element ref="KISId"/>
+						<xs:element ref="LinkitId"/>
+					</xs:choice>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="KISId" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Kis id</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="LinkitIdType">
+				<xs:annotation>
+					<xs:documentation>Linkit Id</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:element name="LinkitId" type="LinkitIdType"/>
+			<xs:complexType name="findSubscriptionInKISResponse">
+				<xs:complexContent>
+					<xs:extension base="CommonStandardReply">
+						<xs:sequence>
+							<xs:element name="SubscriptionActive" type="xs:boolean" minOccurs="0"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="checkSuspensionStatusRequest">
+				<xs:sequence>
+					<xs:element ref="UserId"/>
+					<xs:element ref="RequestId" minOccurs="0"/>
+					<xs:element name="Lid" type="xs:string" minOccurs="1" maxOccurs="20"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="checkSuspensionStatusResponse">
+				<xs:complexContent>
+					<xs:extension base="CommonStandardReply">
+						<xs:sequence>
+							<xs:element ref="SuspendedLid" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="SuspendedLidType">
+				<xs:sequence>
+					<xs:element ref="SubscriptionNo"/>
+					<xs:element name="Suspended" type="xs:boolean"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="SuspendedLid" type="SuspendedLidType"/>
+			<xs:complexType name="searchVisitationRequest">
+				<xs:sequence>
+					<xs:element ref="UserId"/>
+					<xs:element ref="RequestId" minOccurs="0"/>
+					<xs:element ref="adr:MadId"/>
+					<xs:element ref="ShowFormerLids"/>
+					<xs:element ref="ProductCatalog" minOccurs="0"/>
+					<xs:element ref="Catalogue" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="ShowFormerLids" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>containing former LID or not</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="searchVisitationResponse">
+				<xs:complexContent>
+					<xs:extension base="CommonStandardReply">
+						<xs:sequence>
+							<xs:element ref="SearchVisitationCustomer" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="SearchVisitationCustomerType">
+				<xs:sequence>
+					<xs:element ref="CustomerNo" minOccurs="0"/>
+					<xs:element ref="SearchVisitationLid" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="SearchVisitationCustomer" type="SearchVisitationCustomerType"/>
+			<xs:complexType name="SearchVisitationLidType">
+				<xs:sequence>
+					<xs:element ref="SubscriptionNo" minOccurs="0"/>
+					<xs:element ref="adr:InstallationSequenceNumber" minOccurs="0"/>
+					<xs:element ref="SearchVisitationProduct" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element ref="anl:CableUnitNumber" minOccurs="0"/>
+					<xs:element ref="IsFormerLid"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="SearchVisitationLid" type="SearchVisitationLidType"/>
+			<xs:complexType name="SearchVisitationProductType">
+				<xs:sequence>
+					<xs:element ref="ProductCode" minOccurs="0"/>
+					<xs:element ref="ProductName" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="SearchVisitationProduct" type="SearchVisitationProductType"/>
+			<xs:simpleType name="ProductCodeType">
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:element name="ProductCode" type="ProductCodeType">
+				<xs:annotation>
+					<xs:documentation>General product code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="ProductNameType">
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:element name="ProductName" type="ProductNameType">
+				<xs:annotation>
+					<xs:documentation>General product name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IsFormerLid" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Is a former LID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="getProductOfferingRequest">
+				<xs:sequence>
+					<xs:element ref="UserId"/>
+					<xs:element ref="RequestId" minOccurs="0"/>
+					<xs:choice>
+						<xs:element ref="anl:InstalSeqNo"/>
+						<xs:element ref="anl:CableUnitNumber"/>
+					</xs:choice>
+					<xs:element ref="ProductCatalog" minOccurs="0"/>
+					<xs:element ref="Catalogue" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getProductOfferingResponse">
+				<xs:complexContent>
+					<xs:extension base="CommonStandardReply">
+						<xs:sequence>
+							<xs:element ref="CableUnitProperties"/>
+							<xs:element ref="afs:ProductOfferingProductGroup" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="ProductOfferingProduct" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="CableUnitPropertiesType">
+				<xs:sequence>
+					<xs:element ref="anl:BbWithoutTv"/>
+					<xs:element ref="anl:DocsisType"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="CableUnitProperties" type="CableUnitPropertiesType"/>
+			<xs:complexType name="ProductOfferingProductType">
+				<xs:sequence>
+					<xs:element ref="ProductCode" minOccurs="0"/>
+					<xs:element ref="ProductName" minOccurs="0"/>
+					<xs:element ref="afs:ProductGroupCode"/>
+					<xs:element ref="afs:IsApproved"/>
+					<xs:element ref="StartDate" minOccurs="0"/>
+					<xs:element ref="EndDate" minOccurs="0"/>
+					<xs:element ref="afs:CustomerType"/>
+					<xs:element ref="ProductRequired"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="ProductOfferingProduct" type="ProductOfferingProductType"/>
+			<xs:simpleType name="StartDateType">
+				<xs:restriction base="xs:date"/>
+			</xs:simpleType>
+			<xs:element name="StartDate" type="StartDateType">
+				<xs:annotation>
+					<xs:documentation>The day it starts (is activated)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="EndDateType">
+				<xs:restriction base="xs:date"/>
+			</xs:simpleType>
+			<xs:element name="EndDate" type="EndDateType">
+				<xs:annotation>
+					<xs:documentation>The day it ends (is deactivated)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProductRequired" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>The customer has to buy this product</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="getProductGroupsRequest">
+				<xs:sequence>
+					<xs:element ref="UserId"/>
+					<xs:element ref="RequestId" minOccurs="0"/>
+					<xs:element ref="afs:ProductGroupCode" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element ref="ProductCatalog" minOccurs="0"/>
+					<xs:element ref="Catalogue" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getProductGroupsResponse">
+				<xs:complexContent>
+					<xs:extension base="CommonStandardReply">
+						<xs:sequence>
+							<xs:element ref="afs:ProductGroupList" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="ProductGroupProductListType">
+				<xs:sequence>
+					<xs:element ref="ProductCode" minOccurs="0"/>
+					<xs:element ref="ProductName" minOccurs="0"/>
+					<xs:element ref="MustBeApproved" minOccurs="0"/>
+					<xs:element ref="StartDate" minOccurs="0"/>
+					<xs:element ref="EndDate" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="ProductGroupProductList" type="ProductGroupProductListType"/>
+			<xs:simpleType name="MustBeApprovedType">
+				<xs:restriction base="xs:boolean"/>
+			</xs:simpleType>
+			<xs:element name="MustBeApproved" type="MustBeApprovedType">
+				<xs:annotation>
+					<xs:documentation>Must be approved yes/no</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="getBroadbandServicesRequest">
+				<xs:sequence>
+					<xs:element ref="UserId"/>
+					<xs:element ref="RequestId" minOccurs="0"/>
+					<xs:element ref="SubscriptionNo"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getBroadbandServicesResponse">
+				<xs:complexContent>
+					<xs:extension base="CommonStandardReply">
+						<xs:sequence>
+							<xs:element ref="BroadbandService" minOccurs="0"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="BroadbandServiceType">
+				<xs:sequence>
+					<xs:element ref="CustomerNumber" minOccurs="0"/>
+					<xs:element ref="IspName" minOccurs="0"/>
+					<xs:element ref="BroadbandServiceProduct" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="BroadbandService" type="BroadbandServiceType">
+				<xs:annotation>
+					<xs:documentation>Products related to broad band services</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IspName" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The name of the internet service provider</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="BroadbandServiceProductType">
+				<xs:sequence>
+					<xs:element ref="TaysId"/>
+					<xs:element ref="TaysModemId"/>
+					<xs:element ref="TaysServiceItem"/>
+					<xs:element ref="TaysSignal"/>
+					<xs:element ref="BroadbandServiceProductParameter" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="BroadbandServiceProduct" type="BroadbandServiceProductType">
+				<xs:annotation>
+					<xs:documentation>Products related to broad band services</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TaysId" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The given by Tays</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TaysModemId" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The modem ID given by Tays</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TaysServiceItem" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The modem ID given by Tays</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TaysSignal" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>The modem ID given by Tays</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="BroadbandServiceProductParameterType">
+				<xs:sequence>
+					<xs:element ref="anl:CableUnitNumber"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="BroadbandServiceProductParameter" type="BroadbandServiceProductParameterType">
+				<xs:annotation>
+					<xs:documentation>Products related to broad band services</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="getTrackAndTraceRequest">
+				<xs:sequence>
+					<xs:element ref="UserId"/>
+					<xs:element ref="RequestId" minOccurs="0"/>
+					<xs:element minOccurs="1" name="OrderId" nillable="true" type="xs:long"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTrackAndTraceResponse">
+				<xs:complexContent>
+					<xs:extension base="CommonStandardReply">
+						<xs:sequence>
+							<xs:element ref="TrackAndTraceInfo" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="TrackAndTraceInfoType">
+				<xs:sequence>
+					<xs:element ref="TrackAndTraceNr" minOccurs="0"/>
+					<xs:element ref="ActualLevDate" minOccurs="0"/>
+					<xs:element ref="IrisOrdreNr" minOccurs="0"/>
+					<xs:element ref="ProduktGruppe" minOccurs="0"/>
+					<xs:element ref="ProduktElement" minOccurs="0"/>
+					<xs:element ref="ProduktFunktion" minOccurs="0"/>
+					<xs:choice>
+						<xs:element ref="DropstedAddress" minOccurs="0"/>
+						<xs:element ref="PostAddress" minOccurs="0"/>
+					</xs:choice>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="TrackAndTraceInfo" type="TrackAndTraceInfoType">
+				<xs:annotation>
+					<xs:documentation>Products related to broad band services</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TrackAndTraceNr" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The track and trace nr from Iris</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:simpleType name="ActualLevDateType">
+				<xs:restriction base="xs:date"/>
+			</xs:simpleType>
+			<xs:element name="ActualLevDate" type="ActualLevDateType">
+				<xs:annotation>
+					<xs:documentation>Actual lev date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IrisOrdreNr" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The IRIS ordre nr (MAT_KATALOG_NR)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="DropstedAddressType">
+				<xs:sequence>
+					<xs:element ref="DeliveryAddressName" minOccurs="0"/>
+					<xs:element ref="DeliveryAddressAddress" minOccurs="0"/>
+					<xs:element ref="DeliveryAddressZipCity" minOccurs="0"/>
+					<xs:element ref="DeliveryAddressRemark" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="DropstedAddress" type="DropstedAddressType">
+				<xs:annotation>
+					<xs:documentation>Products related to broad band services</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:complexType name="PostAddressType">
+				<xs:sequence>
+					<xs:element ref="NameInfo" minOccurs="0"/>
+					<xs:element ref="adr:HouseName" minOccurs="0"/>
+					<xs:element ref="adr:Building" minOccurs="0"/>
+					<xs:element ref="adr:Zip" minOccurs="0"/>
+					<xs:element ref="adr:StreetName" minOccurs="0"/>
+					<xs:element ref="adr:HouseKey" minOccurs="0"/>
+					<xs:element ref="adr:HouseLetter" minOccurs="0"/>
+					<xs:element ref="adr:Floor" minOccurs="0"/>
+					<xs:element ref="adr:Side" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="PostAddress" type="PostAddressType">
+				<xs:annotation>
+					<xs:documentation>The address of the Iris post address</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DeliveryAddressName" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The name of the drop box</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DeliveryAddressAddress" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The actual adress of the drop box</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DeliveryAddressZipCity" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The zip and the city name of the drop box</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DeliveryAddressRemark" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Remarks associated with the drop box</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="getAgreement">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="request" type="getAgreementRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getAgreementResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="return" type="getAgreementReply"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getCustomerSubscriptionProducts">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getCustomerSubscriptionProductsRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getCustomerSubscriptionProductsReply">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getCustomerSubscriptionProductsResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getAgreementByICCRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="request" type="getAgreementRequestByIcc"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getAgreementByICCResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getAgreementReply"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getLinkitInfo">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getLinkitInfoRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getLinkitInfoReply">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getLinkitInfoResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getCprNameAddress">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getCprNameAddressRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getCprNameAddressReply">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getCprNameAddressResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getAccountInformation">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getAccountInformationRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getAccountInformationReply">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getAccountInformationResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getCustomerInformation">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getCustomerInformationRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getCustomerInformationReply">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getCustomerInformationResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getSubscriptionInformation">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getSubscriptionInformationRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getSubscriptionInformationReply">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getSubscriptionInformationResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getCustomerSubscriptions">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getCustomerSubscriptionsRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getCustomerSubscriptionsReply">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getCustomerSubscriptionsResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getCustomerSubscriptionsVK">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getCustomerSubscriptionsVKRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getCustomerSubscriptionsVKReply">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getCustomerSubscriptionsVKResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getCustomerLID">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getCustomerLIDRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getCustomerLIDReply">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getCustomerLIDResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getSubscriptionByCUOrder">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getSubscriptionByCUOrderRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getSubscriptionByCUOrderReply">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getSubscriptionByCUOrderResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getAfsaetning">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getAfsaetningRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getAfsaetningReply">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getAfsaetningResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getStatus">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getStatusRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getStatusReply">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getStatusResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="migrateSubscription">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="migrateSubscriptionRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="migrateSubscriptionReply">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="migrateSubscriptionResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="listAccounts">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="listAccountsRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="listAccountsReply">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="listAccountsResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getCprOrderNoCreationIfActive">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getCprOrderNoCreationIfActiveRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getCprOrderNoCreationIfActiveReply">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getCprOrderNoCreationIfActiveResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="searchByAddress">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="searchByAddressRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="searchByAddressReply">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="searchByAddressResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getNabsParameters">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getNabsParametersRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getNabsParametersReply">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getNabsParametersResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getLids">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getLidsRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getLidsReply">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getLidsResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getNextBillingDate">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getNextBillingDateRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getNextBillingDateReply">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getNextBillingDateResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="findSubscriptionInKIS">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="findSubscriptionInKISRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="findSubscriptionInKISReply">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="findSubscriptionInKISResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="checkSuspensionStatus">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="checkSuspensionStatusRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="checkSuspensionStatusReply">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="checkSuspensionStatusResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="searchVisitation">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="searchVisitationRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="searchVisitationReply">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="searchVisitationResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getProductOffering">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getProductOfferingRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getProductOfferingReply">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getProductOfferingResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getProductGroups">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getProductGroupsRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getProductGroupsReply">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getProductGroupsResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getBroadbandServices">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getBroadbandServicesRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getBroadbandServicesReply">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getBroadbandServicesResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getTrackAndTrace">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getTrackAndTraceRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getTrackAndTraceReply">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="getTrackAndTraceResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:schema>
+	</s0:types>
+	<s0:message name="getAgreementRequest">
+		<s0:part element="cagr:getAgreement" name="parameters" />
+	</s0:message>
+	<s0:message name="getAgreementResponse">
+		<s0:part element="cagr:getAgreementResponse" name="parameters" />
+	</s0:message>
+	<s0:message name="getAgreementByICC">
+		<s0:part element="cagr:getAgreementByICCRequest" name="parameters"/>
+	</s0:message>
+	<s0:message name="getAgreementByICCResponse">
+		<s0:part element="cagr:getAgreementByICCResponse" name="parameters"/>
+	</s0:message>
+	<s0:message name="getCustomerSubscriptionProducts">
+		<s0:part name="parameters" element="cagr:getCustomerSubscriptionProducts"/>
+	</s0:message>
+	<s0:message name="getCustomerSubscriptionProductsReply">
+		<s0:part name="parameters" element="cagr:getCustomerSubscriptionProductsReply"/>
+	</s0:message>
+	<s0:message name="getLinkitInfo">
+		<s0:part name="parameters" element="cagr:getLinkitInfo"/>
+	</s0:message>
+	<s0:message name="getLinkitInfoReply">
+		<s0:part name="parameters" element="cagr:getLinkitInfoReply"/>
+	</s0:message>
+	<s0:message name="getCprNameAddress">
+		<s0:part name="parameters" element="cagr:getCprNameAddress"/>
+	</s0:message>
+	<s0:message name="getCprNameAddressReply">
+		<s0:part name="parameters" element="cagr:getCprNameAddressReply"/>
+	</s0:message>
+	<s0:message name="getAccountInformation">
+		<s0:part name="parameters" element="cagr:getAccountInformation"/>
+	</s0:message>
+	<s0:message name="getAccountInformationReply">
+		<s0:part name="parameters" element="cagr:getAccountInformationReply"/>
+	</s0:message>
+	<s0:message name="getCustomerInformation">
+		<s0:part name="parameters" element="cagr:getCustomerInformation"/>
+	</s0:message>
+	<s0:message name="getCustomerInformationReply">
+		<s0:part name="parameters" element="cagr:getCustomerInformationReply"/>
+	</s0:message>
+	<s0:message name="getSubscriptionInformation">
+		<s0:part name="parameters" element="cagr:getSubscriptionInformation"/>
+	</s0:message>
+	<s0:message name="getSubscriptionInformationReply">
+		<s0:part name="parameters" element="cagr:getSubscriptionInformationReply"/>
+	</s0:message>
+	<s0:message name="getCustomerSubscriptions">
+		<s0:part name="parameters" element="cagr:getCustomerSubscriptions"/>
+	</s0:message>
+	<s0:message name="getCustomerSubscriptionsReply">
+		<s0:part name="parameters" element="cagr:getCustomerSubscriptionsReply"/>
+	</s0:message>
+	<s0:message name="getCustomerSubscriptionsVK">
+		<s0:part name="parameters" element="cagr:getCustomerSubscriptionsVK"/>
+	</s0:message>
+	<s0:message name="getCustomerSubscriptionsVKReply">
+		<s0:part name="parameters" element="cagr:getCustomerSubscriptionsVKReply"/>
+	</s0:message>
+	<s0:message name="getCustomerLID">
+		<s0:part name="parameters" element="cagr:getCustomerLID"/>
+	</s0:message>
+	<s0:message name="getCustomerLIDReply">
+		<s0:part name="parameters" element="cagr:getCustomerLIDReply"/>
+	</s0:message>
+	<s0:message name="getSubscriptionByCUOrder">
+		<s0:part name="parameters" element="cagr:getSubscriptionByCUOrder"/>
+	</s0:message>
+	<s0:message name="getSubscriptionByCUOrderReply">
+		<s0:part name="parameters" element="cagr:getSubscriptionByCUOrderReply"/>
+	</s0:message>
+	<s0:message name="getAfsaetning">
+		<s0:part name="parameters" element="cagr:getAfsaetning"/>
+	</s0:message>
+	<s0:message name="getAfsaetningReply">
+		<s0:part name="parameters" element="cagr:getAfsaetningReply"/>
+	</s0:message>
+	<s0:message name="getStatus">
+		<s0:part name="parameters" element="cagr:getStatus"/>
+	</s0:message>
+	<s0:message name="getStatusReply">
+		<s0:part name="parameters" element="cagr:getStatusReply"/>
+	</s0:message>
+	<s0:message name="migrateSubscription">
+		<s0:part name="parameters" element="cagr:migrateSubscription"/>
+	</s0:message>
+	<s0:message name="migrateSubscriptionReply">
+		<s0:part name="parameters" element="cagr:migrateSubscriptionReply"/>
+	</s0:message>
+	<s0:message name="listAccounts">
+		<s0:part name="parameters" element="cagr:listAccounts"/>
+	</s0:message>
+	<s0:message name="listAccountsReply">
+		<s0:part name="parameters" element="cagr:listAccountsReply"/>
+	</s0:message>
+	<s0:message name="getCprOrderNoCreationIfActive">
+		<s0:part name="parameters" element="cagr:getCprOrderNoCreationIfActive"/>
+	</s0:message>
+	<s0:message name="getCprOrderNoCreationIfActiveReply">
+		<s0:part name="parameters" element="cagr:getCprOrderNoCreationIfActiveReply"/>
+	</s0:message>
+	<s0:message name="searchByAddress">
+		<s0:part name="parameters" element="cagr:searchByAddress"/>
+	</s0:message>
+	<s0:message name="searchByAddressReply">
+		<s0:part name="parameters" element="cagr:searchByAddressReply"/>
+	</s0:message>
+	<s0:message name="getNabsParameters">
+		<s0:part name="parameters" element="cagr:getNabsParameters"/>
+	</s0:message>
+	<s0:message name="getNabsParametersReply">
+		<s0:part name="parameters" element="cagr:getNabsParametersReply"/>
+	</s0:message>
+	<s0:message name="getLids">
+		<s0:part name="parameters" element="cagr:getLids"/>
+	</s0:message>
+	<s0:message name="getLidsReply">
+		<s0:part name="parameters" element="cagr:getLidsReply"/>
+	</s0:message>
+	<s0:message name="getNextBillingDate">
+		<s0:part name="parameters" element="cagr:getNextBillingDate"/>
+	</s0:message>
+	<s0:message name="getNextBillingDateReply">
+		<s0:part name="parameters" element="cagr:getNextBillingDateReply"/>
+	</s0:message>
+	<s0:message name="findSubscriptionInKIS">
+		<s0:part name="parameters" element="cagr:findSubscriptionInKIS"/>
+	</s0:message>
+	<s0:message name="findSubscriptionInKISReply">
+		<s0:part name="parameters" element="cagr:findSubscriptionInKISReply"/>
+	</s0:message>
+	<s0:message name="checkSuspensionStatus">
+		<s0:part name="parameters" element="cagr:checkSuspensionStatus"/>
+	</s0:message>
+	<s0:message name="checkSuspensionStatusReply">
+		<s0:part name="parameters" element="cagr:checkSuspensionStatusReply"/>
+	</s0:message>
+	<s0:message name="searchVisitation">
+		<s0:part name="parameters" element="cagr:searchVisitation"/>
+	</s0:message>
+	<s0:message name="searchVisitationReply">
+		<s0:part name="parameters" element="cagr:searchVisitationReply"/>
+	</s0:message>
+	<s0:message name="getProductOffering">
+		<s0:part name="parameters" element="cagr:getProductOffering"/>
+	</s0:message>
+	<s0:message name="getProductOfferingReply">
+		<s0:part name="parameters" element="cagr:getProductOfferingReply"/>
+	</s0:message>
+	<s0:message name="getProductGroups">
+		<s0:part name="parameters" element="cagr:getProductGroups"/>
+	</s0:message>
+	<s0:message name="getProductGroupsReply">
+		<s0:part name="parameters" element="cagr:getProductGroupsReply"/>
+	</s0:message>
+	<s0:message name="getBroadbandServices">
+		<s0:part name="parameters" element="cagr:getBroadbandServices"/>
+	</s0:message>
+	<s0:message name="getBroadbandServicesReply">
+		<s0:part name="parameters" element="cagr:getBroadbandServicesReply"/>
+	</s0:message>
+	<s0:message name="getTrackAndTrace">
+		<s0:part name="parameters" element="cagr:getTrackAndTrace"/>
+	</s0:message>
+	<s0:message name="getTrackAndTraceReply">
+		<s0:part name="parameters" element="cagr:getTrackAndTraceReply"/>
+	</s0:message>
+	 <s0:message name="authorization">
+        <s0:part name="authorization" element="header:AuthenticationHeader"/>
+    </s0:message>
+    <s0:message name="requestId">
+        <s0:part name="requestId" element="header:RequestId"/>
+    </s0:message>
+    <s0:message name="onbehalfof">
+        <s0:part name="onbehalfof" element="header:OnBehalfOfUserId"/>
+    </s0:message>
+	<s0:portType name="GetAgreementPortType">
+		<s0:operation name="getAgreement">
+			<s0:input message="cagr:getAgreementRequest" wsaw:Action="urn:getAgreement"/>
+			<s0:output message="cagr:getAgreementResponse" wsaw:Action="urn:getAgreementResponse"/>
+		</s0:operation>
+		<s0:operation name="getAgreementByICC" parameterOrder="parameters">
+			<s0:input message="cagr:getAgreementByICC"/>
+			<s0:output message="cagr:getAgreementByICCResponse"/>
+		</s0:operation>
+		<s0:operation name="getCustomerSubscriptionProducts">
+			<s0:input message="cagr:getCustomerSubscriptionProducts"/>
+			<s0:output message="cagr:getCustomerSubscriptionProductsReply"/>
+		</s0:operation>
+		<s0:operation name="getLinkitInfo">
+			<s0:input message="cagr:getLinkitInfo"/>
+			<s0:output message="cagr:getLinkitInfoReply"/>
+		</s0:operation>
+		<s0:operation name="getCprNameAddress">
+			<s0:input message="cagr:getCprNameAddress"/>
+			<s0:output message="cagr:getCprNameAddressReply"/>
+		</s0:operation>
+		<s0:operation name="getAccountInformation">
+			<s0:input message="cagr:getAccountInformation"/>
+			<s0:output message="cagr:getAccountInformationReply"/>
+		</s0:operation>
+		<s0:operation name="getCustomerInformation">
+			<s0:input message="cagr:getCustomerInformation"/>
+			<s0:output message="cagr:getCustomerInformationReply"/>
+		</s0:operation>
+		<s0:operation name="getCustomerSubscriptionsVK">
+			<s0:input message="cagr:getCustomerSubscriptionsVK"/>
+			<s0:output message="cagr:getCustomerSubscriptionsVKReply"/>
+		</s0:operation>
+		<s0:operation name="getSubscriptionInformation">
+			<s0:input message="cagr:getSubscriptionInformation"/>
+			<s0:output message="cagr:getSubscriptionInformationReply"/>
+		</s0:operation>
+		<s0:operation name="getCustomerSubscriptions">
+			<s0:input message="cagr:getCustomerSubscriptions"/>
+			<s0:output message="cagr:getCustomerSubscriptionsReply"/>
+		</s0:operation>
+		<s0:operation name="getCustomerLID">
+			<s0:input message="cagr:getCustomerLID"/>
+			<s0:output message="cagr:getCustomerLIDReply"/>
+		</s0:operation>
+		<s0:operation name="getSubscriptionByCUOrder">
+			<s0:input message="cagr:getSubscriptionByCUOrder"/>
+			<s0:output message="cagr:getSubscriptionByCUOrderReply"/>
+		</s0:operation>
+		<s0:operation name="getAfsaetning">
+			<s0:input message="cagr:getAfsaetning"/>
+			<s0:output message="cagr:getAfsaetningReply"/>
+		</s0:operation>
+		<s0:operation name="getStatus">
+			<s0:input message="cagr:getStatus"/>
+			<s0:output message="cagr:getStatusReply"/>
+		</s0:operation>
+		<s0:operation name="migrateSubscription">
+			<s0:input message="cagr:migrateSubscription"/>
+			<s0:output message="cagr:migrateSubscriptionReply"/>
+		</s0:operation>
+		<s0:operation name="listAccounts">
+			<s0:input message="cagr:listAccounts"/>
+			<s0:output message="cagr:listAccountsReply"/>
+		</s0:operation>
+		<s0:operation name="getCprOrderNoCreationIfActive">
+			<s0:input message="cagr:getCprOrderNoCreationIfActive"/>
+			<s0:output message="cagr:getCprOrderNoCreationIfActiveReply"/>
+		</s0:operation>
+		<s0:operation name="searchByAddress">
+			<s0:input message="cagr:searchByAddress"/>
+			<s0:output message="cagr:searchByAddressReply"/>
+		</s0:operation>
+		<s0:operation name="getNabsParameters">
+			<s0:input message="cagr:getNabsParameters"/>
+			<s0:output message="cagr:getNabsParametersReply"/>
+		</s0:operation>
+		<s0:operation name="getLids">
+			<s0:input message="cagr:getLids"/>
+			<s0:output message="cagr:getLidsReply"/>
+		</s0:operation>
+		<s0:operation name="getNextBillingDate">
+			<s0:input message="cagr:getNextBillingDate"/>
+			<s0:output message="cagr:getNextBillingDateReply"/>
+		</s0:operation>
+		<s0:operation name="findSubscriptionInKIS">
+			<s0:input message="cagr:findSubscriptionInKIS"/>
+			<s0:output message="cagr:findSubscriptionInKISReply"/>
+		</s0:operation>
+		<s0:operation name="checkSuspensionStatus">
+			<s0:input message="cagr:checkSuspensionStatus"/>
+			<s0:output message="cagr:checkSuspensionStatusReply"/>
+		</s0:operation>
+		<s0:operation name="searchVisitation">
+			<s0:input message="cagr:searchVisitation"/>
+			<s0:output message="cagr:searchVisitationReply"/>
+		</s0:operation>
+		<s0:operation name="getProductOffering">
+			<s0:input message="cagr:getProductOffering"/>
+			<s0:output message="cagr:getProductOfferingReply"/>
+		</s0:operation>
+		<s0:operation name="getProductGroups">
+			<s0:input message="cagr:getProductGroups"/>
+			<s0:output message="cagr:getProductGroupsReply"/>
+		</s0:operation>
+		<s0:operation name="getBroadbandServices">
+			<s0:input message="cagr:getBroadbandServices"/>
+			<s0:output message="cagr:getBroadbandServicesReply"/>
+		</s0:operation>
+		<s0:operation name="getTrackAndTrace">
+			<s0:input message="cagr:getTrackAndTrace"/>
+			<s0:output message="cagr:getTrackAndTraceReply"/>
+		</s0:operation>
+	</s0:portType>
+	<s0:binding name="CustomerAgreementServicesSoapBindinghttp" type="cagr:GetAgreementPortType">
+		<s2:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<s0:operation name="getAgreement">
+			<s2:operation soapAction="urn:getAgreement" style="document"/>
+			<s0:input>
+				<s2:body use="literal"/>
+				<s2:header encodingStyle="uri" message="cagr:authorization" part="authorization" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:requestId" part="requestId" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:onbehalfof" part="onbehalfof" use="literal"/>
+			</s0:input>
+			<s0:output>
+				<s2:body use="literal"/>
+			</s0:output>
+		</s0:operation>
+		<s0:operation name="getAgreementByICC">
+			<s2:operation soapAction="getAgreementByICC" style="document"/>
+			<s0:input>
+				<s2:body parts="parameters" use="literal"/>
+				<s2:header encodingStyle="uri" message="cagr:authorization" part="authorization" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:requestId" part="requestId" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:onbehalfof" part="onbehalfof" use="literal"/>
+			</s0:input>
+			<s0:output>
+				<s2:body parts="parameters" use="literal"/>
+			</s0:output>
+		</s0:operation>
+		<s0:operation name="getCustomerSubscriptionProducts">
+			<s2:operation soapAction="urn:getCustomerSubscriptionProducts" style="document"/>
+			<s0:input>
+				<s2:body parts="parameters" use="literal"/>
+				<s2:header encodingStyle="uri" message="cagr:authorization" part="authorization" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:requestId" part="requestId" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:onbehalfof" part="onbehalfof" use="literal"/>
+			</s0:input>
+			<s0:output>
+				<s2:body parts="parameters" use="literal"/>
+			</s0:output>
+		</s0:operation>
+		<s0:operation name="getCustomerInformation">
+			<s2:operation soapAction="urn:getCustomerInformation" style="document"/>
+			<s0:input>
+				<s2:body parts="parameters" use="literal"/>
+				<s2:header encodingStyle="uri" message="cagr:authorization" part="authorization" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:requestId" part="requestId" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:onbehalfof" part="onbehalfof" use="literal"/>
+			</s0:input>
+			<s0:output>
+				<s2:body parts="parameters" use="literal"/>
+			</s0:output>
+		</s0:operation>
+		<s0:operation name="getCustomerSubscriptions">
+			<s2:operation soapAction="urn:getCustomerSubscriptions" style="document"/>
+			<s0:input>
+				<s2:body parts="parameters" use="literal"/>
+				<s2:header encodingStyle="uri" message="cagr:authorization" part="authorization" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:requestId" part="requestId" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:onbehalfof" part="onbehalfof" use="literal"/>
+			</s0:input>
+			<s0:output>
+				<s2:body parts="parameters" use="literal"/>
+			</s0:output>
+		</s0:operation>
+		<s0:operation name="getCustomerSubscriptionsVK">
+			<s2:operation soapAction="urn:getCustomerSubscriptionsVK" style="document"/>
+			<s0:input>
+				<s2:body parts="parameters" use="literal"/>
+				<s2:header encodingStyle="uri" message="cagr:authorization" part="authorization" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:requestId" part="requestId" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:onbehalfof" part="onbehalfof" use="literal"/>
+			</s0:input>
+			<s0:output>
+				<s2:body parts="parameters" use="literal"/>
+			</s0:output>
+		</s0:operation>
+		<s0:operation name="getCustomerLID">
+			<s2:operation soapAction="urn:getCustomerLID" style="document"/>
+			<s0:input>
+				<s2:body parts="parameters" use="literal"/>
+				<s2:header encodingStyle="uri" message="cagr:authorization" part="authorization" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:requestId" part="requestId" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:onbehalfof" part="onbehalfof" use="literal"/>
+			</s0:input>
+			<s0:output>
+				<s2:body parts="parameters" use="literal"/>
+			</s0:output>
+		</s0:operation>
+		<s0:operation name="getLinkitInfo">
+			<s2:operation soapAction="urn:getLinkitInfo" style="document"/>
+			<s0:input>
+				<s2:body parts="parameters" use="literal"/>
+				<s2:header encodingStyle="uri" message="cagr:authorization" part="authorization" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:requestId" part="requestId" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:onbehalfof" part="onbehalfof" use="literal"/>
+			</s0:input>
+			<s0:output>
+				<s2:body parts="parameters" use="literal"/>
+			</s0:output>
+		</s0:operation>
+		<s0:operation name="getCprNameAddress">
+			<s2:operation soapAction="urn:getCprNameAddress" style="document"/>
+			<s0:input>
+				<s2:body parts="parameters" use="literal"/>
+				<s2:header encodingStyle="uri" message="cagr:authorization" part="authorization" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:requestId" part="requestId" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:onbehalfof" part="onbehalfof" use="literal"/>
+			</s0:input>
+			<s0:output>
+				<s2:body parts="parameters" use="literal"/>
+			</s0:output>
+		</s0:operation>
+		<s0:operation name="getAccountInformation">
+			<s2:operation soapAction="urn:getAccountInformation" style="document"/>
+			<s0:input>
+				<s2:body parts="parameters" use="literal"/>
+				<s2:header encodingStyle="uri" message="cagr:authorization" part="authorization" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:requestId" part="requestId" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:onbehalfof" part="onbehalfof" use="literal"/>
+			</s0:input>
+			<s0:output>
+				<s2:body parts="parameters" use="literal"/>
+			</s0:output>
+		</s0:operation>
+		<s0:operation name="getSubscriptionInformation">
+			<s2:operation soapAction="urn:getSubscriptionInformation" style="document"/>
+			<s0:input>
+				<s2:body parts="parameters" use="literal"/>
+				<s2:header encodingStyle="uri" message="cagr:authorization" part="authorization" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:requestId" part="requestId" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:onbehalfof" part="onbehalfof" use="literal"/>
+			</s0:input>
+			<s0:output>
+				<s2:body parts="parameters" use="literal"/>
+			</s0:output>
+		</s0:operation>
+		<s0:operation name="getSubscriptionByCUOrder">
+			<s2:operation soapAction="urn:getSubscriptionByCUOrder" style="document"/>
+			<s0:input>
+				<s2:body parts="parameters" use="literal"/>
+				<s2:header encodingStyle="uri" message="cagr:authorization" part="authorization" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:requestId" part="requestId" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:onbehalfof" part="onbehalfof" use="literal"/>
+			</s0:input>
+			<s0:output>
+				<s2:body parts="parameters" use="literal"/>
+			</s0:output>
+		</s0:operation>
+		<s0:operation name="getStatus">
+			<s2:operation soapAction="urn:getStatus" style="document"/>
+			<s0:input>
+				<s2:body parts="parameters" use="literal"/>
+				<s2:header encodingStyle="uri" message="cagr:authorization" part="authorization" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:requestId" part="requestId" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:onbehalfof" part="onbehalfof" use="literal"/>
+			</s0:input>
+			<s0:output>
+				<s2:body parts="parameters" use="literal"/>
+			</s0:output>
+		</s0:operation>
+		<s0:operation name="migrateSubscription">
+			<s2:operation soapAction="urn:migrateSubscription" style="document"/>
+			<s0:input>
+				<s2:body parts="parameters" use="literal"/>
+				<s2:header encodingStyle="uri" message="cagr:authorization" part="authorization" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:requestId" part="requestId" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:onbehalfof" part="onbehalfof" use="literal"/>
+			</s0:input>
+			<s0:output>
+				<s2:body parts="parameters" use="literal"/>
+			</s0:output>
+		</s0:operation>
+		<s0:operation name="listAccounts">
+			<s2:operation soapAction="urn:listAccounts" style="document"/>
+			<s0:input>
+				<s2:body parts="parameters" use="literal"/>
+				<s2:header encodingStyle="uri" message="cagr:authorization" part="authorization" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:requestId" part="requestId" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:onbehalfof" part="onbehalfof" use="literal"/>
+			</s0:input>
+			<s0:output>
+				<s2:body parts="parameters" use="literal"/>
+			</s0:output>
+		</s0:operation>
+		<s0:operation name="getCprOrderNoCreationIfActive">
+			<s2:operation soapAction="urn:getCprOrderNoCreationIfActive" style="document"/>
+			<s0:input>
+				<s2:body parts="parameters" use="literal"/>
+				<s2:header encodingStyle="uri" message="cagr:authorization" part="authorization" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:requestId" part="requestId" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:onbehalfof" part="onbehalfof" use="literal"/>
+			</s0:input>
+			<s0:output>
+				<s2:body parts="parameters" use="literal"/>
+			</s0:output>
+		</s0:operation>
+		<s0:operation name="searchByAddress">
+			<s2:operation soapAction="urn:searchByAddress" style="document"/>
+			<s0:input>
+				<s2:body parts="parameters" use="literal"/>
+				<s2:header encodingStyle="uri" message="cagr:authorization" part="authorization" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:requestId" part="requestId" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:onbehalfof" part="onbehalfof" use="literal"/>
+			</s0:input>
+			<s0:output>
+				<s2:body parts="parameters" use="literal"/>
+			</s0:output>
+		</s0:operation>
+		<s0:operation name="getNabsParameters">
+			<s2:operation soapAction="urn:getNabsParameters" style="document"/>
+			<s0:input>
+				<s2:body parts="parameters" use="literal"/>
+				<s2:header encodingStyle="uri" message="cagr:authorization" part="authorization" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:requestId" part="requestId" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:onbehalfof" part="onbehalfof" use="literal"/>
+			</s0:input>
+			<s0:output>
+				<s2:body parts="parameters" use="literal"/>
+			</s0:output>
+		</s0:operation>
+		<s0:operation name="getAfsaetning">
+			<s2:operation soapAction="urn:getAfsaetning" style="document"/>
+			<s0:input>
+				<s2:body parts="parameters" use="literal"/>
+				<s2:header encodingStyle="uri" message="cagr:authorization" part="authorization" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:requestId" part="requestId" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:onbehalfof" part="onbehalfof" use="literal"/>
+			</s0:input>
+			<s0:output>
+				<s2:body parts="parameters" use="literal"/>
+			</s0:output>
+		</s0:operation>
+		<s0:operation name="getLids">
+			<s2:operation soapAction="urn:getLids" style="document"/>
+			<s0:input>
+				<s2:body parts="parameters" use="literal"/>
+				<s2:header encodingStyle="uri" message="cagr:authorization" part="authorization" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:requestId" part="requestId" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:onbehalfof" part="onbehalfof" use="literal"/>
+			</s0:input>
+			<s0:output>
+				<s2:body parts="parameters" use="literal"/>
+			</s0:output>
+		</s0:operation>
+		<s0:operation name="getNextBillingDate">
+			<s2:operation soapAction="urn:getNextBillingDate" style="document"/>
+			<s0:input>
+				<s2:body parts="parameters" use="literal"/>
+				<s2:header encodingStyle="uri" message="cagr:authorization" part="authorization" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:requestId" part="requestId" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:onbehalfof" part="onbehalfof" use="literal"/>
+			</s0:input>
+			<s0:output>
+				<s2:body parts="parameters" use="literal"/>
+			</s0:output>
+		</s0:operation>
+		<s0:operation name="findSubscriptionInKIS">
+			<s2:operation soapAction="urn:findSubscriptionInKIS" style="document"/>
+			<s0:input>
+				<s2:body parts="parameters" use="literal"/>
+				<s2:header encodingStyle="uri" message="cagr:authorization" part="authorization" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:requestId" part="requestId" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:onbehalfof" part="onbehalfof" use="literal"/>
+			</s0:input>
+			<s0:output>
+				<s2:body parts="parameters" use="literal"/>
+			</s0:output>
+		</s0:operation>
+		<s0:operation name="checkSuspensionStatus">
+			<s2:operation soapAction="urn:checkSuspensionStatus" style="document"/>
+			<s0:input>
+				<s2:body parts="parameters" use="literal"/>
+				<s2:header encodingStyle="uri" message="cagr:authorization" part="authorization" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:requestId" part="requestId" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:onbehalfof" part="onbehalfof" use="literal"/>
+			</s0:input>
+			<s0:output>
+				<s2:body parts="parameters" use="literal"/>
+			</s0:output>
+		</s0:operation>
+		<s0:operation name="searchVisitation">
+			<s2:operation soapAction="urn:searchVisitation" style="document"/>
+			<s0:input>
+				<s2:body parts="parameters" use="literal"/>
+				<s2:header encodingStyle="uri" message="cagr:authorization" part="authorization" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:requestId" part="requestId" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:onbehalfof" part="onbehalfof" use="literal"/>
+			</s0:input>
+			<s0:output>
+				<s2:body parts="parameters" use="literal"/>
+			</s0:output>
+		</s0:operation>
+		<s0:operation name="getProductOffering">
+			<s2:operation soapAction="urn:getProductOffering" style="document"/>
+			<s0:input>
+				<s2:body parts="parameters" use="literal"/>
+				<s2:header encodingStyle="uri" message="cagr:authorization" part="authorization" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:requestId" part="requestId" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:onbehalfof" part="onbehalfof" use="literal"/>
+			</s0:input>
+			<s0:output>
+				<s2:body parts="parameters" use="literal"/>
+			</s0:output>
+		</s0:operation>
+		<s0:operation name="getProductGroups">
+			<s2:operation soapAction="urn:getProductGroups" style="document"/>
+			<s0:input>
+				<s2:body parts="parameters" use="literal"/>
+				<s2:header encodingStyle="uri" message="cagr:authorization" part="authorization" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:requestId" part="requestId" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:onbehalfof" part="onbehalfof" use="literal"/>
+			</s0:input>
+			<s0:output>
+				<s2:body parts="parameters" use="literal"/>
+			</s0:output>
+		</s0:operation>
+		<s0:operation name="getBroadbandServices">
+			<s2:operation soapAction="urn:getBroadbandServices" style="document"/>
+			<s0:input>
+				<s2:body parts="parameters" use="literal"/>
+				<s2:header encodingStyle="uri" message="cagr:authorization" part="authorization" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:requestId" part="requestId" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:onbehalfof" part="onbehalfof" use="literal"/>
+			</s0:input>
+			<s0:output>
+				<s2:body parts="parameters" use="literal"/>
+			</s0:output>
+		</s0:operation>
+		<s0:operation name="getTrackAndTrace">
+			<s2:operation soapAction="urn:getTrackAndTrace" style="document"/>
+			<s0:input>
+				<s2:body parts="parameters" use="literal"/>
+				<s2:header encodingStyle="uri" message="cagr:authorization" part="authorization" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:requestId" part="requestId" use="literal"/>
+                <s2:header encodingStyle="uri" message="cagr:onbehalfof" part="onbehalfof" use="literal"/>
+			</s0:input>
+			<s0:output>
+				<s2:body parts="parameters" use="literal"/>
+			</s0:output>
+		</s0:operation>
+	</s0:binding>
+	<s0:service name="CustomerAgreementServices">
+		<s0:port binding="cagr:CustomerAgreementServicesSoapBindinghttp" name="GetAgreementPortTypeSoapPorthttp">
+			<s2:address location="http://itsb:1001/CustomerAgreement"/>
+		</s0:port>
+	</s0:service>
+</s0:definitions>

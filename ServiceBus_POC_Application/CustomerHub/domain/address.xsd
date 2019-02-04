@@ -1,0 +1,93 @@
+<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="http://service.chub.tdc.dk/domain/address" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.chub.tdc.dk/domain/address">
+
+    <xs:include schemaLocation="addressSimple.xsd"/>
+
+    <xs:complexType name="InstallPointKeyType">
+        <xs:sequence>
+            <xs:element ref="tns:HouseTableKey" minOccurs="1"/>
+            <xs:element ref="tns:Floor" minOccurs="0"/>
+            <xs:element ref="tns:Side" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="InstallPointKey" type="tns:InstallPointKeyType">
+        <xs:annotation>
+            <xs:documentation>Install point key</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="IndlandsAddressType">
+        <xs:sequence>
+            <xs:element ref="tns:MunicipalityCode" minOccurs="0"/>
+            <xs:element ref="tns:MunicipalityName" minOccurs="0"/>
+            <xs:element ref="tns:StreetName" minOccurs="0"/>
+            <xs:element ref="tns:StreetCode" minOccurs="0"/>
+            <xs:element ref="tns:HouseKey" minOccurs="0"/>
+            <xs:element ref="tns:Floor" minOccurs="0"/>
+            <xs:element ref="tns:Side" minOccurs="0"/>
+            <xs:element ref="tns:Zip" minOccurs="0"/>
+            <xs:element ref="tns:City" minOccurs="0"/>
+            <xs:element ref="tns:HouseLetter" minOccurs="0"/>
+            <xs:element ref="tns:Village" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="IndlandsAddress" type="tns:IndlandsAddressType">
+        <xs:annotation>
+            <xs:documentation>Danish address</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ForeignAddressType">
+        <xs:sequence>
+            <xs:element ref="tns:PrimaryLn" minOccurs="0"/>
+            <xs:element ref="tns:SecondaryLn" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ForeignAddress" type="tns:ForeignAddressType">
+        <xs:annotation>
+            <xs:documentation>Udlands adresse</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="AmsAdrNoType">
+        <xs:restriction base="xs:long"/>
+    </xs:simpleType>
+    <xs:element name="AmsAdrNo" type="tns:AmsAdrNoType">
+        <xs:annotation>
+            <xs:documentation>Ams address number</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="InstallationSequenceNumberType">
+        <xs:restriction base="xs:long"/>
+    </xs:simpleType>
+    <xs:element name="InstallationSequenceNumber" type="tns:InstallationSequenceNumberType">
+        <xs:annotation>
+            <xs:documentation>instal_seq_no</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="InstallPointType">
+        <xs:sequence>
+            <xs:element ref="tns:MunicipalityCode" minOccurs="0"/>
+            <xs:element ref="tns:MunicipalityName" minOccurs="0"/>
+            <xs:element ref="tns:StreetName" minOccurs="0"/>
+            <xs:element ref="tns:StreetCode" minOccurs="0"/>
+            <xs:element ref="tns:HouseKey" minOccurs="0"/>
+            <xs:element ref="tns:Floor" minOccurs="0"/>
+            <xs:element ref="tns:Side" minOccurs="0"/>
+            <xs:element ref="tns:Zip" minOccurs="0"/>
+            <xs:element ref="tns:City" minOccurs="0"/>
+            <xs:element ref="tns:Village" minOccurs="0"/>
+            <xs:element ref="tns:HouseLetter" minOccurs="0"/>
+            <xs:element ref="tns:AmsAdrNo" minOccurs="0"/>
+            <xs:element ref="tns:MadId" minOccurs="0"/>
+            <xs:element ref="tns:HouseTableKey" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="InstallPoint" type="tns:InstallPointType">
+        <xs:annotation>
+            <xs:documentation>Installation point</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+</xs:schema>

@@ -1,0 +1,886 @@
+<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="http://service.chub.tdc.dk" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.chub.tdc.dk" xmlns:adr="http://service.chub.tdc.dk/domain/address" xmlns:anl="http://service.chub.tdc.dk/domain/cableunit" xmlns:afs="http://service.chub.tdc.dk/domain/styretafsaetning" xmlns:ord="http://service.tdc.dk/chub/order/v1">
+
+    <xs:import namespace="http://service.chub.tdc.dk/domain/address" schemaLocation="address.xsd"/>
+    <xs:import namespace="http://service.chub.tdc.dk/domain/styretafsaetning" schemaLocation="styretafsaetning.xsd"/>
+    <xs:import namespace="http://service.chub.tdc.dk/domain/cableunit" schemaLocation="CableUnit.xsd"/>
+    <xs:import namespace="http://service.tdc.dk/chub/order/v1" schemaLocation="Order.xsd"/>
+
+    <xs:include schemaLocation="chubSimple.xsd"/>
+    <xs:include schemaLocation="common.xsd"/>
+
+    <xs:complexType name="CableUnitPropertiesType">
+        <xs:sequence>
+            <xs:element ref="anl:BbWithoutTv"/>
+            <xs:element ref="anl:DocsisType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CableUnitProperties" type="tns:CableUnitPropertiesType"/>
+
+    <xs:complexType name="ProductBaseType">
+        <xs:sequence>
+            <xs:element name="ProductCode" type="xs:string" minOccurs="0"/>
+            <xs:element name="ProductName" type="xs:string" minOccurs="0"/>
+            <xs:element name="ProductType" type="xs:string" minOccurs="0"/>
+            <xs:element ref="tns:ProductCount" minOccurs="0"/>
+            <xs:element name="RecurringChargeAmountWithoutVat" type="tns:Amount" minOccurs="0"/>
+            <xs:element name="RecurringChargeAmountVat" type="tns:Amount" minOccurs="0"/>
+            <xs:element name="CommitmentEndDate" type="tns:Date" minOccurs="0"/>
+            <xs:element name="BillingStartDate" type="tns:Date" minOccurs="0"/>
+            <xs:element name="Owner" type="xs:string" minOccurs="0"/>
+            <xs:element name="Payer" type="xs:string" minOccurs="0"/>
+            <xs:element name="User" type="xs:string" minOccurs="0"/>
+            <xs:element name="ProductCreatedOrder" type="ord:DetailedOrderType" minOccurs="0"/>
+            <xs:element name="FuturePriceChangeScheduledIndicator" type="xs:boolean" minOccurs="0"/>
+            <xs:element ref="tns:HUA" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="LegacyKundenrType">
+        <xs:sequence>
+            <xs:element ref="tns:LinkitSystemKortNavn" minOccurs="1" maxOccurs="1"/>
+            <xs:element ref="tns:LinkitLegacyKundenr" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="LegacyKundenrListType">
+        <xs:sequence>
+            <xs:element name="LegacyKundenr" type="tns:LegacyKundenrType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CUProductBaseType">
+        <xs:sequence>
+            <xs:element name="ProductCode" type="xs:string" minOccurs="0"/>
+            <xs:element name="ProductName" type="xs:string" minOccurs="0"/>
+            <xs:element name="ProductType" type="xs:string" minOccurs="0"/>
+            <xs:element ref="tns:ProductCount" minOccurs="0"/>
+            <xs:element name="RecurringChargeAmountWithoutVat" type="tns:Amount" minOccurs="0"/>
+            <xs:element name="RecurringChargeAmountVat" type="tns:Amount" minOccurs="0"/>
+            <xs:element name="CommitmentEndDate" type="tns:Date" minOccurs="0"/>
+            <xs:element name="BillingStartDate" type="tns:Date" minOccurs="0"/>
+            <xs:element name="Owner" type="xs:string" minOccurs="0"/>
+            <xs:element name="Payer" type="xs:string" minOccurs="0"/>
+            <xs:element name="User" type="xs:string" minOccurs="0"/>
+            <xs:element name="FuturePriceChangeScheduledIndicator" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="InstalledProduct">
+        <xs:complexContent>
+            <xs:extension base="tns:ProductBaseType">
+                <xs:sequence>
+                    <xs:element name="InstalledParameters" type="tns:InstalledParameter" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="AdditionalProducts" type="tns:InstalledProduct" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="CUInstalledProductType">
+        <xs:complexContent>
+            <xs:extension base="tns:CUProductBaseType">
+                <xs:sequence>
+                    <xs:element name="InstalledParameters" type="tns:InstalledParameter" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element ref="tns:CUInstalledProduct" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="CUInstalledProduct" type="tns:CUInstalledProductType">
+        <xs:annotation>
+            <xs:documentation>Product in CU format</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="SubscriptionProductType">
+        <xs:complexContent>
+            <xs:extension base="tns:ProductBaseType">
+                <xs:sequence>
+                    <xs:element name="VisibleIndicator" type="xs:boolean" minOccurs="0"/>
+                    <xs:element ref="tns:OmProductClass" minOccurs="0"/>
+                    <xs:element ref="tns:SubscriptionProductParameter" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="AdditionalProducts" type="tns:SubscriptionProductType" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element ref="tns:OrderInformation" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="CUSubscriptionProductType">
+        <xs:complexContent>
+            <xs:extension base="tns:CUProductBaseType">
+                <xs:sequence>
+                    <xs:element name="InstalledParameters" type="tns:InstalledParameter" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element ref="tns:CUSubscriptionProduct" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element ref="tns:OrderInformation" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="CUSubscriptionProduct" type="tns:CUSubscriptionProductType">
+        <xs:annotation>
+            <xs:documentation>Product in CU format</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+
+    <xs:complexType name="ProductOfferingProductType">
+        <xs:sequence>
+            <xs:element ref="tns:ProductCode" minOccurs="0"/>
+            <xs:element ref="tns:ProductName" minOccurs="0"/>
+            <xs:element ref="afs:ProductGroupCode"/>
+            <xs:element ref="afs:IsApproved"/>
+            <xs:element ref="tns:StartDate" minOccurs="0"/>
+            <xs:element ref="tns:EndDate" minOccurs="0"/>
+            <xs:element ref="afs:CustomerType"/>
+            <xs:element ref="tns:ProductRequired"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ProductOfferingProduct" type="tns:ProductOfferingProductType"/>
+
+    <xs:complexType name="ProductHierarkiType">
+        <xs:sequence>
+            <xs:element ref="tns:SPCProductCode"/>
+            <xs:element ref="tns:MinAntal"/>
+            <xs:element ref="tns:MaxAntal"/>
+            <xs:element ref="tns:Default" minOccurs="0"/>
+            <xs:element ref="tns:ProductHierarki" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ProductHierarki" type="tns:ProductHierarkiType"/>
+
+    <xs:complexType name="MigrateHierarkiType">
+        <xs:sequence>
+            <xs:element ref="tns:SPCProductCode"/>
+            <xs:element ref="tns:MigrateAction"/>
+            <xs:element ref="tns:MinAntal"/>
+            <xs:element ref="tns:MaxAntal"/>
+            <xs:element ref="tns:ProductCount" minOccurs="0"/>
+            <xs:element ref="tns:Default" minOccurs="0"/>
+            <xs:element name="InstalledParameters" type="tns:InstalledParameter" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="RecurringChargeAmountWithoutVat" type="tns:Amount" minOccurs="0"/>
+            <xs:element name="RecurringChargeAmountVat" type="tns:Amount" minOccurs="0"/>
+            <xs:element ref="tns:MigrateHierarki" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="MigrateHierarki" type="tns:MigrateHierarkiType"/>
+
+    <xs:complexType name="MigrateToProductType">
+        <xs:sequence>
+            <xs:element ref="tns:MigrateHierarki" minOccurs="1"/>
+            <xs:element ref="tns:SPCProduct" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="tns:Parameter" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="tns:ExcludeRule" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="tns:IncludeRule" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="tns:MigrateRule" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="tns:CountRule" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="MigrateToProduct" type="tns:MigrateToProductType"/>
+
+    <xs:complexType name="AfsaetningHierarchyType">
+        <xs:sequence>
+            <xs:element ref="tns:SPCProductCode"/>
+            <xs:element ref="tns:MigrateAction"/>
+            <xs:element ref="tns:MinAntal"/>
+            <xs:element ref="tns:MaxAntal"/>
+            <xs:element ref="tns:ProductCount" minOccurs="0"/>
+            <xs:element ref="tns:Default" minOccurs="0"/>
+            <xs:element name="InstalledParameters" type="tns:InstalledParameter" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="RecurringChargeAmountWithoutVat" type="tns:Amount" minOccurs="0"/>
+            <xs:element name="RecurringChargeAmountVat" type="tns:Amount" minOccurs="0"/>
+            <xs:element ref="tns:AfsaetningHierarchy" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="AfsaetningHierarchy" type="tns:AfsaetningHierarchyType"/>
+
+    <xs:complexType name="AfsaetningProductsType">
+        <xs:sequence>
+            <xs:element ref="tns:SPCProduct" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="tns:Parameter" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="tns:ExcludeRule" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="tns:IncludeRule" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="tns:MigrateRule" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="tns:CountRule" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="AfsaetningProducts" type="tns:AfsaetningProductsType"/>
+
+    <xs:complexType name="MigrateFromProductType">
+        <xs:sequence>
+            <xs:element name="Product" type="tns:InstalledProduct" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="MigrateFromProduct" type="tns:MigrateFromProductType"/>
+
+
+    <xs:complexType name="PagingInfoType">
+        <xs:sequence>
+            <xs:element name="From" type="xs:int" minOccurs="0"/>
+            <xs:element name="Count" type="xs:int" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="PagingInfo" type="tns:PagingInfoType">
+        <xs:annotation>
+            <xs:documentation>Used to specify a paged result, you need only a subset of the result from instance number
+                (From) and the number of instances Count
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="PagingResultInfoType">
+        <xs:sequence>
+            <xs:element name="More" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="StartPos" type="xs:int" minOccurs="0"/>
+            <xs:element name="EndPos" type="xs:int" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="PagingResultInfo" type="tns:PagingResultInfoType">
+        <xs:annotation>
+            <xs:documentation>When using paging, this info tells you the result info</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="SaldomaksType">
+        <xs:sequence>
+            <xs:element ref="tns:SaldomaksAdvis"/>
+            <xs:element ref="tns:SaldomaksKvartal" minOccurs="0"/>
+            <xs:element ref="tns:SaldomaksMaaned" minOccurs="0"/>
+            <xs:element ref="tns:SaldomaksMidlertidig" minOccurs="0"/>
+            <xs:element ref="tns:SaldomaksSpaerringVedOverskridelse"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="Saldomaks" type="tns:SaldomaksType">
+        <xs:annotation>
+            <xs:documentation>Oplysninger om saldomaks</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="CUOrdreLinieType">
+        <xs:sequence>
+            <xs:element ref="tns:TransaktionsType" minOccurs="0"/>
+            <xs:element ref="tns:CUProductID"/>
+            <xs:element ref="tns:ProduktAntal"/>
+            <xs:element ref="tns:KanalNummer" minOccurs="0"/>
+            <xs:element ref="tns:ServiceIdNo" minOccurs="0"/>
+            <xs:element ref="tns:TekstLovligTekst" minOccurs="0"/>
+            <xs:element ref="tns:ArbitraerEngangsPris" minOccurs="0"/>
+            <xs:element ref="tns:ArbitraerLoebendePris" minOccurs="0"/>
+            <xs:element ref="tns:AccountNo" minOccurs="0"/>
+            <xs:element ref="tns:Saldomaks" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="CUOrdreLinie" type="tns:CUOrdreLinieType">
+        <xs:annotation>
+            <xs:documentation>CU ordre linie</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="OrderProductType">
+        <xs:sequence>
+            <xs:element name="ProductCode" type="xs:string" minOccurs="0"/>
+            <xs:element name="ProductName" type="xs:string" minOccurs="0"/>
+            <xs:element name="ProductType" type="xs:string" minOccurs="0"/>
+            <xs:element name="ProductCountBefore" type="xs:int" minOccurs="0"/>
+            <xs:element name="ProductCountAfter" type="xs:int" minOccurs="0"/>
+            <xs:element ref="tns:ProductAction" minOccurs="0"/>
+            <xs:element name="RecurringChargeAmountWithoutVat" type="tns:Amount" minOccurs="0"/>
+            <xs:element name="RecurringChargeAmountVat" type="tns:Amount" minOccurs="0"/>
+            <xs:element name="OrderParameters" type="tns:InstalledParameter" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="CommitmentEndDate" type="tns:Date" minOccurs="0"/>
+            <xs:element name="Owner" type="xs:string" minOccurs="0"/>
+            <xs:element name="Payer" type="xs:string" minOccurs="0"/>
+            <xs:element name="User" type="xs:string" minOccurs="0"/>
+            <xs:element name="AdditionalProduct" type="tns:OrderProductType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="FuturePriceChangeScheduledIndicator" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="InstalledCUProductType">
+        <xs:sequence>
+            <xs:element ref="tns:CUProductID"/>
+            <xs:element name="Child" type="tns:CUProductIDType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="InstalledCUProduct" type="tns:InstalledCUProductType"/>
+
+    <xs:complexType name="InstalledParameter">
+        <xs:sequence>
+            <xs:element name="ParameterCode" type="xs:string" minOccurs="0"/>
+            <xs:element name="ParameterValue" type="xs:string" minOccurs="0"/>
+            <xs:element name="ParameterValueName" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SubscriptionProductParameterType">
+        <xs:sequence>
+            <xs:element name="ParameterCode" type="xs:string" minOccurs="0"/>
+            <xs:element name="ParameterName" type="xs:string" minOccurs="0"/>
+            <xs:element name="ParameterValue" type="xs:string" minOccurs="0"/>
+            <xs:element name="ParameterValueName" type="xs:string" minOccurs="0"/>
+            <xs:element name="VisibleIndicator" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="SubscriptionProductParameter" type="tns:SubscriptionProductParameterType"/>
+
+    <xs:complexType name="OrderInformationType">
+        <xs:sequence>
+            <xs:element ref="tns:ProductAction"/>
+            <xs:element ref="tns:CUOrderId"/>
+            <xs:element ref="tns:AppendDate" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="OrderInformation" type="tns:OrderInformationType"/>
+
+    <xs:complexType name="PermissionDetails">
+        <xs:sequence>
+            <xs:element name="PermissionInfoList" type="tns:PermissionInfo" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="PermissionItemList" type="tns:PermissionItem" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="PermissionInfo">
+        <xs:sequence>
+            <xs:element name="PermissionItemId" type="xs:string" minOccurs="0"/>
+            <xs:element name="PermissionParamValue" type="xs:string" minOccurs="0"/>
+            <xs:element name="PermissionValue" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="PermissionItem">
+        <xs:sequence>
+            <xs:element name="CorrectionInd" type="xs:boolean" nillable="false"/>
+            <xs:element name="DefaultValue" type="xs:string" minOccurs="0"/>
+            <xs:element name="DisplayInd" type="xs:boolean" nillable="false"/>
+            <xs:element name="DisplayLabel" type="xs:string" minOccurs="0"/>
+            <xs:element name="DisplaySeqNo" type="xs:int" nillable="false"/>
+            <xs:element name="ParamType" type="tns:PermissionParamType" minOccurs="0"/>
+            <xs:element name="PermissionGroup" type="xs:string" minOccurs="0"/>
+            <xs:element name="PermissionItemId" type="xs:string" minOccurs="0"/>
+            <xs:element name="PfCode" type="xs:string" minOccurs="0"/>
+            <xs:element name="PtCode" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="PermissionParamType">
+        <xs:sequence>
+            <xs:element name="DefaultDataCode" type="xs:string" minOccurs="0"/>
+            <xs:element name="InputDataType" type="xs:string" minOccurs="0"/>
+            <xs:element name="InputFieldSize" type="xs:int" nillable="false"/>
+            <xs:element name="InputRequiredInd" type="xs:boolean" nillable="false"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ERegistrationInfo">
+        <xs:sequence>
+            <xs:element name="InvoiceInfo" type="tns:InvoiceInfo" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Udfyldes ikke af CU</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="LetterInfo" type="tns:LetterInfo" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="NotificationParamInfo" type="tns:NotificationParamInfo" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="InvoiceInfo">
+        <xs:sequence>
+            <xs:element name="InvoiceType" type="xs:string" minOccurs="0"/>
+            <xs:element name="InvoiceFormat" type="xs:string" minOccurs="0"/>
+            <xs:element name="Email" type="tns:Email" minOccurs="0"/>
+            <xs:element name="PaperCopy" type="xs:string" minOccurs="0"/>
+            <xs:element name="DirectDebitInd" type="xs:string" minOccurs="0"/>
+            <xs:element name="EdiParamInfo" type="tns:EdiParamInfo" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="ChannelDescription" type="xs:string" minOccurs="0"/>
+            <xs:element name="MethodDescription" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="EdiParamInfo">
+        <xs:sequence>
+            <xs:element name="EanNumber" type="xs:string" minOccurs="0"/>
+            <xs:element name="EdiFormat" type="xs:string" minOccurs="0"/>
+            <xs:element name="Reference" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="LetterInfo">
+        <xs:sequence>
+            <xs:element name="Email" type="tns:Email" minOccurs="0"/>
+            <xs:element name="LetterType" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="NotificationParamInfo">
+        <xs:sequence>
+            <xs:element name="EmailNotifInd" type="xs:boolean" nillable="false"/>
+            <xs:element name="SmsNotifInd" type="xs:boolean" nillable="false"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="AccountInfo">
+        <xs:sequence>
+            <xs:element name="NameAddressRef" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>A.k.a. LinkType</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="LinktItId" type="xs:string" minOccurs="0"/>
+            <xs:element ref="tns:CustomerNumber" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Indeholder CU kundenr</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CustomerNoRef" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Indeholder CU kundenr for betaler</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CvrNumber" type="tns:CvrNr" minOccurs="0"/>
+            <xs:element name="CprEncrypted" type="xs:string" minOccurs="0"/>
+            <xs:element name="AccountType" type="xs:string" minOccurs="0"/>
+            <xs:element name="AccountNo" type="xs:int" minOccurs="0"/>
+            <xs:element name="AccountNoStatus" type="xs:string" minOccurs="0"/>
+            <xs:element name="ArBalance" type="xs:double" minOccurs="0"/>
+            <xs:element name="GroupID" type="xs:string" minOccurs="0"/>
+            <xs:element name="PaymentMethod" type="xs:string" minOccurs="0"/>
+            <xs:element name="BlProdFreq" type="xs:string" minOccurs="0"/>
+            <xs:element name="ERegistrationInfo" type="tns:ERegistrationInfo" minOccurs="0"/>
+            <xs:element name="PermissionDetails" type="tns:PermissionDetails" minOccurs="0"/>
+            <xs:element name="CustomerSegment" type="tns:CustomerSegment" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="ConsumerAssociation" type="tns:ConsumerAssociationType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="NameInfoType">
+        <xs:sequence>
+            <xs:element name="FirstName" type="xs:string" minOccurs="0"/>
+            <xs:element name="LastBusinessName" type="xs:string" minOccurs="0"/>
+            <xs:element name="NameTitle" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="NameInfo" type="tns:NameInfoType"/>
+
+    <xs:complexType name="Subscription">
+        <xs:sequence>
+            <xs:element name="SubStatus" type="xs:string" minOccurs="0"/>
+            <xs:element ref="tns:SubscriptionNo" maxOccurs="unbounded"/>
+            <xs:choice>
+                <xs:element name="Product" type="tns:InstalledProduct" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="CUProduct" type="tns:CUInstalledProductType" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:choice>
+            <xs:sequence>
+                <xs:element name="ActiveOrderInd" type="xs:boolean" minOccurs="0"/>
+                <xs:element name="ExpectedLastOrderCompleteDate" type="xs:dateTime" minOccurs="0"/>
+            </xs:sequence>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Product">
+        <xs:sequence>
+            <xs:element name="ProductDescription" type="xs:string" minOccurs="0"/>
+            <xs:element name="ProductId" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="StatusInfo">
+        <xs:sequence>
+            <xs:element name="CsmServiceCalled" type="xs:string" minOccurs="0"/>
+            <xs:element name="ErrorExplanation" type="xs:string" minOccurs="0"/>
+            <xs:element name="Status" type="xs:int" nillable="false"/>
+            <xs:element name="StatusCode" type="xs:int" nillable="false"/>
+            <xs:element name="StatusMsg" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="LinkitInfo">
+        <xs:sequence>
+            <xs:element name="LinktItId" type="xs:string"/>
+            <xs:element name="CvrNumber" type="tns:CvrNr" minOccurs="0"/>
+            <xs:element name="AccountNo" type="xs:int" minOccurs="0"/>
+            <xs:element name="Ban" type="xs:string" minOccurs="0"/>
+            <xs:element name="CustomerSegment" type="tns:CustomerSegment" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ConsumerAssociationType">
+        <xs:sequence>
+            <xs:element name="IsMember" type="xs:boolean"/>
+            <xs:element name="MemberNumber" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!--adding email information in subscirption-->
+    <xs:complexType name="SubscriptionListType">
+        <xs:sequence>
+            <xs:element ref="tns:SubscriptionNo"/>
+            <xs:element ref="tns:SubscriptionType" minOccurs="0"/>
+            <xs:element ref="tns:HiddenInCatalog" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="AccountNo" type="xs:int" minOccurs="0"/>
+            <xs:element name="Address" type="tns:NameAddressInfo" minOccurs="0"/>
+            <xs:element name="ERegistrationInfo" type="tns:ERegistrationInfo"/>
+            <xs:element name="ActiveOrderInd" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="ExpectedLastOrderCompleteDate" type="xs:dateTime" minOccurs="0"/>
+            <xs:element ref="adr:InstallationSequenceNumber" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="Subscriptions" type="tns:SubscriptionListType"/>
+
+    <xs:complexType name="CustomerSubscriptionProductsType">
+        <xs:sequence>
+            <xs:element ref="tns:CustomerNumber"/>
+            <xs:element ref="tns:SubscriptionNo"/>
+            <xs:element name="AccountNo" type="xs:int"/>
+            <xs:element name="ActiveOrderIndicator" type="xs:boolean"/>
+            <xs:element name="Address" type="tns:NameAddressInfo"/>
+            <xs:choice>
+                <xs:element name="Product" type="tns:SubscriptionProductType" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element ref="tns:CUSubscriptionProduct" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CustomerSubscriptionProducts" type="tns:CustomerSubscriptionProductsType"/>
+
+    <!--Adding Customer address + customer email-->
+    <xs:complexType name="CustomerSubscriptionType">
+        <xs:sequence>
+            <xs:element ref="tns:CustomerNumber"/>
+            <xs:element name="Address" type="tns:NameAddressInfo"/>
+            <xs:element name="ERegistrationInfo" type="tns:ERegistrationInfo" minOccurs="0"/>
+            <xs:element ref="tns:Subscriptions" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CustomerSubscription" type="tns:CustomerSubscriptionType"/>
+
+    <xs:complexType name="CustomerInformationType">
+        <xs:sequence>
+            <xs:element ref="tns:CustomerNumber"/>
+            <xs:element name="LinkItId" type="xs:string" minOccurs="0"/>
+            <xs:element name="CvrNumber" type="tns:CvrNr" minOccurs="0"/>
+            <xs:element name="CprEncrypted" type="tns:CprEncrypted" minOccurs="0"/>
+            <xs:element name="CustomerSegment" type="tns:CustomerSegment"/>
+            <xs:element name="Address" type="tns:NameAddressInfo"/>
+            <xs:element name="ERegistrationInfo" type="tns:ERegistrationInfo" minOccurs="0"/>
+            <xs:element name="PermissionDetails" type="tns:PermissionDetails" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CustomerInformation" type="tns:CustomerInformationType"/>
+
+    <xs:complexType name="CustomerInformationValidationType">
+        <xs:sequence>
+            <xs:element ref="tns:CustomerNumber"/>
+            <xs:element name="LinkItId" type="xs:string" minOccurs="0"/>
+            <xs:element name="CvrNumber" type="tns:CvrNr" minOccurs="0"/>
+            <xs:element name="CprEncrypted" type="tns:CprEncrypted" minOccurs="0"/>
+            <xs:element name="CustomerSegment" type="tns:CustomerSegment"/>
+            <xs:element name="Address" type="tns:NameAddressInfo"/>
+            <xs:element name="ERegistrationInfo" type="tns:ERegistrationInfo" minOccurs="0"/>
+            <xs:element name="PermissionDetails" type="tns:PermissionDetails" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CustomerInformationValidation" type="tns:CustomerInformationValidationType"/>
+
+    <xs:complexType name="IndividInformationType">
+        <xs:sequence>
+            <xs:element ref="tns:IndividService"/>
+            <xs:element ref="tns:Individ"/>
+            <xs:element ref="tns:IndividAdresse"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="IndividInformation" type="tns:IndividInformationType"/>
+
+    <xs:complexType name="IndividServiceType">
+        <xs:sequence>
+            <xs:element ref="anl:LidNumber"/>
+            <xs:element name="Teleselskab" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="IndividService" type="tns:IndividServiceType"/>
+
+    <xs:complexType name="IndividType">
+        <xs:sequence>
+            <xs:element name="IndividId" type="xs:string" minOccurs="1"/>
+            <xs:element name="Stilling" type="xs:string" minOccurs="0"/>
+            <xs:element name="Fornavn" type="xs:string" minOccurs="0"/>
+            <xs:element name="Efternavn" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="Individ" type="tns:IndividType"/>
+
+    <xs:complexType name="IndividAdresseType">
+        <xs:sequence>
+            <xs:element name="IndividAdresseId" type="xs:string" minOccurs="1"/>
+            <xs:element name="LandId" type="xs:string" minOccurs="0"/>
+            <xs:element name="Husnoegle" type="xs:string" minOccurs="0"/>
+            <xs:element name="Etage" type="xs:string" minOccurs="0"/>
+            <xs:element name="SideDoerNr" type="xs:string" minOccurs="0"/>
+            <xs:element name="Husnavn" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="IndividAdresse" type="tns:IndividAdresseType"/>
+
+    <xs:complexType name="ServiceInformationType">
+        <xs:sequence>
+            <xs:element ref="tns:LinkCustomer"/>
+            <xs:element ref="tns:Service" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ServiceInformation" type="tns:ServiceInformationType"/>
+
+    <xs:complexType name="ServiceType">
+        <xs:sequence>
+            <xs:element name="ServiceId" type="xs:string" minOccurs="1"/>
+            <xs:element name="lid" type="xs:string" minOccurs="1"/>
+            <xs:element name="BrugerNavn1" type="xs:string" minOccurs="0"/>
+            <xs:element name="BrugerNavn2" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="Service" type="tns:ServiceType"/>
+
+    <xs:complexType name="LinkCustomerType">
+        <xs:sequence>
+            <xs:element name="LinkKundeId" type="xs:string" minOccurs="1"/>
+            <xs:element name="Fornavn" type="xs:string" minOccurs="0"/>
+            <xs:element name="Efternavn" type="xs:string" minOccurs="0"/>
+            <xs:element name="BusinessNavn1" type="xs:string" minOccurs="0"/>
+            <xs:element name="BusinessNavn2" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="LinkCustomer" type="tns:LinkCustomerType"/>
+
+    <xs:complexType name="PermissionType">
+        <xs:sequence>
+            <xs:element name="LinkKontaktId" type="xs:string" minOccurs="1"/>
+            <xs:element name="TlfNr" type="xs:string" minOccurs="0"/>
+            <xs:element name="Email" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="Permission" type="tns:PermissionType"/>
+
+    <xs:complexType name="PermissionInformationType">
+        <xs:sequence>
+            <xs:element ref="tns:LinkCustomer"/>
+            <xs:element ref="tns:Permission" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="PermissionInformation" type="tns:PermissionInformationType"/>
+
+    <xs:complexType name="SubscriptionInformationType">
+        <xs:sequence>
+            <xs:element ref="tns:CustomerNo"/>
+            <xs:element name="AccountNo" type="xs:int"/>
+            <xs:element name="Address" type="tns:NameAddressInfo"/>
+            <xs:element ref="tns:SubscriptionNo" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="SubscriptionInformation" type="tns:SubscriptionInformationType"/>
+
+
+    <xs:complexType name="CustomerLIDInformationType">
+        <xs:sequence>
+            <xs:element ref="tns:CustomerNumber"/>
+            <xs:element name="LinkItId" type="xs:string" minOccurs="0"/>
+            <xs:element name="CvrNumber" type="tns:CvrNr" minOccurs="0"/>
+            <xs:element name="CprEncrypted" type="tns:CprEncrypted" minOccurs="0"/>
+            <xs:element name="CustomerSegment" type="tns:CustomerSegment"/>
+            <xs:element name="Address" type="tns:NameAddressInfo"/>
+            <xs:element ref="tns:SubscriptionNo" minOccurs="0"/>
+            <xs:choice>
+                <xs:element name="Product" type="tns:InstalledProduct" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element ref="tns:CUInstalledProduct" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CustomerLIDInformation" type="tns:CustomerLIDInformationType"/>
+
+    <xs:complexType name="DataUpdateInformationType">
+        <xs:sequence>
+            <xs:element name="LastUpdateTime" type="xs:dateTime"/>
+            <xs:element name="LastUpdateEnvironment" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CUDataUpdateInformation" type="tns:DataUpdateInformationType"/>
+    <xs:element name="SPCDataUpdateInformation" type="tns:DataUpdateInformationType"/>
+
+    <xs:complexType name="CustomerAtAddressType">
+        <xs:sequence>
+            <xs:element ref="tns:CustomerNo"/>
+            <xs:element ref="tns:NameInfo" minOccurs="0"/>
+            <xs:element ref="tns:SubscriptionNo" minOccurs="0"/>
+            <xs:element ref="adr:InstallationSequenceNumber" minOccurs="0"/>
+            <xs:element ref="tns:OssLid" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CustomerAtAddress" type="tns:CustomerAtAddressType"/>
+
+    <xs:complexType name="SearchVisitationProductType">
+        <xs:sequence>
+            <xs:element ref="tns:ProductCode" minOccurs="0"/>
+            <xs:element ref="tns:ProductName" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="SearchVisitationProduct" type="tns:SearchVisitationProductType"/>
+
+    <xs:complexType name="SearchVisitationLidType">
+        <xs:sequence>
+            <xs:element ref="tns:SubscriptionNo" minOccurs="0"/>
+            <xs:element ref="adr:InstallationSequenceNumber" minOccurs="0"/>
+            <xs:element ref="tns:SearchVisitationProduct" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="anl:CableUnitNumber" minOccurs="0"/>
+            <xs:element ref="tns:IsFormerLid"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="SearchVisitationLid" type="tns:SearchVisitationLidType"/>
+
+    <xs:complexType name="SearchVisitationCustomerType">
+        <xs:sequence>
+            <xs:element ref="tns:CustomerNo" minOccurs="0"/>
+            <xs:element ref="tns:SearchVisitationLid" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="SearchVisitationCustomer" type="tns:SearchVisitationCustomerType"/>
+
+    <xs:complexType name="AddressSearchType">
+        <xs:sequence>
+            <xs:element name="StreetName" type="xs:string"/>
+            <xs:element name="HouseKey" type="xs:int"/>
+            <xs:element name="Zip" type="xs:int"/>
+            <xs:element name="MunicipalityCode" type="xs:int" minOccurs="0"/>
+            <xs:element name="Floor" type="xs:string" minOccurs="0"/>
+            <xs:choice minOccurs="0">
+                <xs:element name="Side" type="xs:string"/>
+                <xs:element name="ApartmentNo" type="xs:string"/>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="AddressSearch" type="tns:AddressSearchType"/>
+
+    <xs:complexType name="AccountInformationDetailsType">
+        <xs:sequence>
+            <xs:element name="AccountNo" type="xs:int"/>
+            <xs:element name="AccountType" type="xs:string" minOccurs="0"/>
+            <xs:element name="BillingAgent" type="xs:string" minOccurs="0"/>
+            <xs:element ref="tns:CustomerNumber" minOccurs="0"/>
+            <xs:element name="Address" type="tns:NameAddressInfo" minOccurs="0"/>
+            <xs:element name="Addresses" type="tns:AddressesType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="Remarks" type="xs:string" minOccurs="0"/>
+            <xs:element name="BlProdFreq" type="xs:string" minOccurs="0"/>
+            <xs:element name="ERegistrationInfo" type="tns:ERegistrationInfo" minOccurs="0"/>
+            <xs:element name="PermissionDetails" type="tns:PermissionDetails" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="AccountInformationDetails" type="tns:AccountInformationDetailsType"/>
+
+    <xs:complexType name="NabsProductType">
+        <xs:sequence>
+            <xs:element ref="tns:SPCProductCode"/>
+            <xs:element name="InstalledParameters" type="tns:InstalledParameter" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="tns:NabsProduct" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="NabsProduct" type="tns:NabsProductType"/>
+
+    <xs:complexType name="NextBillingDateInfoType">
+        <xs:sequence>
+            <xs:element ref="tns:AccountNo"/>
+            <xs:element name="Date" type="xs:date"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="NextBillingDateInfo" type="tns:NextBillingDateInfoType"/>
+
+    <xs:complexType name="SuspendedLidType">
+        <xs:sequence>
+            <xs:element ref="tns:SubscriptionNo"/>
+            <xs:element name="Suspended" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="SuspendedLid" type="tns:SuspendedLidType"/>
+
+    <xs:complexType name="BroadbandServiceProductParameterType">
+        <xs:sequence>
+            <xs:element ref="anl:CableUnitNumber"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="BroadbandServiceProductParameter" type="tns:BroadbandServiceProductParameterType">
+        <xs:annotation>
+            <xs:documentation>Products related to broad band services</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="BroadbandServiceProductType">
+        <xs:sequence>
+            <xs:element ref="tns:TaysId"/>
+            <xs:element ref="tns:TaysModemId"/>
+            <xs:element ref="tns:TaysServiceItem"/>
+            <xs:element ref="tns:TaysSignal"/>
+            <xs:element ref="tns:BroadbandServiceProductParameter" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="BroadbandServiceProduct" type="tns:BroadbandServiceProductType">
+        <xs:annotation>
+            <xs:documentation>Products related to broad band services</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="BroadbandServiceType">
+        <xs:sequence>
+            <xs:element ref="tns:CustomerNumber" minOccurs="0"/>
+            <xs:element ref="tns:IspName" minOccurs="0"/>
+            <xs:element ref="tns:BroadbandServiceProduct" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="BroadbandService" type="tns:BroadbandServiceType">
+        <xs:annotation>
+            <xs:documentation>Products related to broad band services</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="DropstedAddressType">
+        <xs:sequence>
+            <xs:element ref="tns:DeliveryAddressName" minOccurs="0"/>
+            <xs:element ref="tns:DeliveryAddressAddress" minOccurs="0"/>
+            <xs:element ref="tns:DeliveryAddressZipCity" minOccurs="0"/>
+            <xs:element ref="tns:DeliveryAddressRemark" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="DropstedAddress" type="tns:DropstedAddressType">
+        <xs:annotation>
+            <xs:documentation>Products related to broad band services</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="PostAddressType">
+        <xs:sequence>
+            <xs:element ref="tns:NameInfo" minOccurs="0"/>
+            <xs:element ref="adr:HouseName" minOccurs="0"/>
+            <xs:element ref="adr:Building" minOccurs="0"/>
+            <xs:element ref="adr:Zip" minOccurs="0"/>
+            <xs:element ref="adr:StreetName" minOccurs="0"/>
+            <xs:element ref="adr:HouseKey" minOccurs="0"/>
+            <xs:element ref="adr:HouseLetter" minOccurs="0"/>
+            <xs:element ref="adr:Floor" minOccurs="0"/>
+            <xs:element ref="adr:Side" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="PostAddress" type="tns:PostAddressType">
+        <xs:annotation>
+            <xs:documentation>The address of the Iris post address</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="TrackAndTraceInfoType">
+        <xs:sequence>
+            <xs:element ref="tns:TrackAndTraceNr" minOccurs="0"/>
+            <xs:element ref="tns:ActualLevDate" minOccurs="0"/>
+            <xs:element ref="tns:IrisOrdreNr" minOccurs="0"/>
+            <xs:element ref="tns:ProduktGruppe" minOccurs="0"/>
+            <xs:element ref="tns:ProduktElement" minOccurs="0"/>
+            <xs:element ref="tns:ProduktFunktion" minOccurs="0"/>
+            <xs:choice>
+                <xs:element ref="tns:DropstedAddress" minOccurs="0"/>
+                <xs:element ref="tns:PostAddress" minOccurs="0"/>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="TrackAndTraceInfo" type="tns:TrackAndTraceInfoType">
+        <xs:annotation>
+            <xs:documentation>Products related to broad band services</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+</xs:schema>

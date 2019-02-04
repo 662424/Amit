@@ -1,0 +1,653 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://service.tdc.dk/chub/order/v1"
+           targetNamespace="http://service.tdc.dk/chub/order/v1"
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+    <xs:element name="UserId" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Userid</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="InvoiceSequence" type="xs:short">
+        <xs:annotation>
+            <xs:documentation>ANLAEGS_AFTALE.REGNINGS_SEKVENS</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="Organisation" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>ORDRE_H_POST.ORG_BETEGNELSE</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="CustomerCaseCode" type="xs:short">
+        <xs:annotation>
+            <xs:documentation>ORDRE_H_POST.KUNDESAGS_KODE</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="SpecialGroupMark" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>saergruppemrk</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="SpecificationType" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>saergruppemrk</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="ContactTextNumber" type="xs:int">
+        <xs:annotation>
+            <xs:documentation>henvtekstnr</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="TransactionCodeText" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Transaction code text</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="SequencePriority" type="xs:int">
+        <xs:annotation>
+            <xs:documentation>Sequence priority</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="DbCode" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Sequence priority</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="NumberOfMonth" type="xs:int">
+        <xs:annotation>
+            <xs:documentation>Number of months</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="CommitmentGroup" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Bindingsgruppe</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="Regards" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Regards</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="ConfirmationMark" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Confirmation mark</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="AplNr" type="xs:int">
+        <xs:annotation>
+            <xs:documentation>AplNr</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="NameAdressType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="USER"/>
+            <xs:enumeration value="PAYER"/>
+            <xs:enumeration value="OWNER"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="OrderSequenceType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="BEFORE"/>
+            <xs:enumeration value="AFTER"/>
+            <xs:enumeration value="SAME"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="UserName" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Name of user - not id</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="LinkitId" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Linkit id</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="CvrNumber" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Cvr number</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="CustomerNo" type="xs:long">
+        <xs:annotation>
+            <xs:documentation>Customer number ref</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="AccountNo" type="xs:long">
+        <xs:annotation>
+            <xs:documentation>Account number</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="SubscriptionNo" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Subscription number</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="SpecMrkType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+
+    <xs:element name="ProductText" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>product text</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="KundeText" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>
+                KundeTekst
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="TekstlovligTekst" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>TekstlovligTekst</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="HistoricalOrderStartDate" type="xs:date">
+        <xs:annotation>
+            <xs:documentation>Start date of historical orders</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="HistoricalOrderEndDate" type="xs:date">
+        <xs:annotation>
+            <xs:documentation>End date of historical orders</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+
+    <xs:element name="CategoryData" type="xs:boolean">
+        <xs:annotation>
+            <xs:documentation>Flag set in place to know if order categories should be return in the response
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+
+    <xs:simpleType name="OrderNumberType">
+        <xs:restriction base="xs:long"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="LetterType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="USER"/>
+            <xs:enumeration value="PAYER"/>
+            <xs:enumeration value="OWNER"/>
+            <xs:enumeration value="MANUALLY_CHANGED"/>
+            <xs:enumeration value="OTHER"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+    <xs:element name="OrderNumber" type="tns:OrderNumberType">
+        <xs:annotation>
+            <xs:documentation>CU order number</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="OrderLineNumberType">
+        <xs:restriction base="xs:int"/>
+    </xs:simpleType>
+
+    <xs:element name="ParentOrderLineNumber" type="tns:OrderLineNumberType">
+        <xs:annotation>
+            <xs:documentation>CU order line number</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="OrderLineNumber" type="tns:OrderLineNumberType">
+        <xs:annotation>
+            <xs:documentation>CU order line number</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="OSMOrderId" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>OSM Order id</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="OrderCreationDate" type="xs:date">
+        <xs:annotation>
+            <xs:documentation>Date order was created</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="OrderCuCreationDate" type="xs:dateTime">
+        <xs:annotation>
+            <xs:documentation>The date an order was created in Columbus</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="CalculationDate" type="xs:date">
+        <xs:annotation>
+            <xs:documentation>Calculation data is beregnDato</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="ConfirmationDate" type="xs:date">
+        <xs:annotation>
+            <xs:documentation>Date on confimation letter</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="OrderExecutionFromDate" type="xs:dateTime">
+        <xs:annotation>
+            <xs:documentation>Date order will or was executed, this is the from time</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="OrderExecutionToDate" type="xs:dateTime">
+        <xs:annotation>
+            <xs:documentation>Date order will or was executed this is the to time</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="OrderCreator" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>The user who created this order</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="SubOrder" type="xs:int">
+        <xs:annotation>
+            <xs:documentation>holds main order number if sub order</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="ContactNameType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+
+    <xs:element name="ContactNameInformation" type="tns:ContactNameType">
+        <xs:annotation>
+            <xs:documentation>Contact name information</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="ContactNumberInformationType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+
+    <xs:element name="ContactNumberInformation" type="tns:ContactNumberInformationType">
+        <xs:annotation>
+            <xs:documentation>Contact number information</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+
+    <xs:element name="OrderNameInformation" type="tns:ContactNameType">
+        <xs:annotation>
+            <xs:documentation>Ordering identity name info</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="TechnicianAtCustomer" type="xs:boolean">
+        <xs:annotation>
+            <xs:documentation>Will a technician visit the customer</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="OrderMarkedReadyDate" type="xs:dateTime">
+        <xs:annotation>
+            <xs:documentation>Klarmeld time</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="OrderExecutionDate" type="xs:dateTime">
+        <xs:annotation>
+            <xs:documentation>Time of execution</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="WorkTaskNumber" type="xs:int">
+        <xs:annotation>
+            <xs:documentation>Task number</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="WorkTaskText" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Textual name of task</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="PromiseStart" type="xs:dateTime">
+        <xs:annotation>
+            <xs:documentation>Start time of promise</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="PromiseEnd" type="xs:dateTime">
+        <xs:annotation>
+            <xs:documentation>End time for promise</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="ZipCode" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Code for zip</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="ZipName" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Description of zip code</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="Placename" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Optional place name</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="Roadname" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Name of road</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="HouseNumber" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Number og house on road</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="Opgang" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Opgang</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="Floor" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Floor in building</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="SideDoer" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Side or door name</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="HouseName" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Name og house</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="GraceStatus" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Status of grace on task</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="CustomerType" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>kunde type O(O-kunde) I(I/E kunde)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="OrderRemarkType" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Order remark type - e.g. An, B1, B2, LA, DØ, FL</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="MainSubMarkingType" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Head or sub order: H or U</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="OrderCategory" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Category of order</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="OrderRemarkText" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>The text of a specific order remark</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="TransactionCode" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Transaktions kode N, O, A, D ...</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="TransactionForm" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Transaktion form</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="RequestedExecutionDate" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Oenskes udf dato</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="OrderTypeCode" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Kundesag</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="OrderTypeString" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Kundesag string</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+
+    <xs:element name="ProductCount" type="xs:int">
+        <xs:annotation>
+            <xs:documentation>Antal produkter</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="ProductGroup" type="xs:int">
+        <xs:annotation>
+            <xs:documentation>Produkt gruppe</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="ProductElement" type="xs:int">
+        <xs:annotation>
+            <xs:documentation>Produkt element</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="ProductFunction" type="xs:int">
+        <xs:annotation>
+            <xs:documentation>Produkt funktion</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="Afsaetning" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Afsaetning kode</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <!--
+    Added for TilbudsModul April 18 Release - Start
+    -->
+    <xs:element name="BrandId" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>BrandId of the Product</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="MainSubBrandType" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>If the product is a Subbrand or Main Brand</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="ClosedBrand" type="xs:boolean">
+        <xs:annotation>
+            <xs:documentation>If the product is a Closed or Open Brand</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="MinimumPrice" type="xs:decimal">
+        <xs:annotation>
+            <xs:documentation>Minimum Price fro the order line</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="CampaignNumberOfMonths" type="xs:int">
+        <xs:annotation>
+            <xs:documentation>Number of months for the ongoing campaign (if the product is a campaign produkt
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="CampaignDiscountType" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Number of months for the ongoing campaign (if the product is a campaign produkt
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="CampaignDiscountPercentage" type="xs:decimal">
+        <xs:annotation>
+            <xs:documentation>Amount of discount in the campaign</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="PostCampaignPrice" type="xs:decimal">
+        <xs:annotation>
+            <xs:documentation>Number of months for the ongoing campaign (if the product is a campaign produkt
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="CommitmentNumberOfMonths" type="xs:int">
+        <xs:annotation>
+            <xs:documentation>Number of months for the ongoing campaign (if the product is a campaign produkt
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="OrderTypeType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Opsigelse"/>
+            <xs:enumeration value="Oprettelse"/>
+            <xs:enumeration value="Overtagelse"/>
+            <xs:enumeration value="Flytning"/>
+            <xs:enumeration value="Genopsætning"/>
+            <xs:enumeration value="Hvilende"/>
+            <xs:enumeration value="Samle aftaler"/>
+            <xs:enumeration value="Nummerændring"/>
+            <xs:enumeration value="Takstændring"/>
+            <xs:enumeration value="Ændring"/>
+            <xs:enumeration value="Kunde, bruger eller betalerrettelse"/>
+            <xs:enumeration value="Samleregning"/>
+            <xs:enumeration value="Specialmarkering"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+    <xs:element name="OrderType" type="tns:OrderTypeType">
+        <xs:annotation>
+            <xs:documentation>Type of order.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="OrderStatusType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Bestilt"/>
+            <xs:enumeration value="Udførtmeldt"/>
+            <xs:enumeration value="Annulleret / Opgivet"/>
+            <xs:enumeration value="Faktureret"/>
+            <xs:enumeration value="Igang"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="OrderStatus" type="tns:OrderStatusType">
+        <xs:annotation>
+            <xs:documentation>Status of the order.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <!--Added for the Maximus Onboarding Project . June 2018 Release: START-->
+
+    <xs:element name="OrderSagNr" type="xs:long">
+        <xs:annotation>
+            <xs:documentation>Case Number of the order.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="OrderSagType" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Case type of the order.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="OrderSagText" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Text related to the case attached to the order.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="CaseNumber" type="xs:long">
+        <xs:annotation>
+            <xs:documentation>Case Number of the order.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <!--Added for the Maximus Onboarding Project . June 2018 Release: END-->
+
+    <xs:simpleType name="InstalSeqNoType">
+        <xs:restriction base="xs:long"/>
+    </xs:simpleType>
+    <xs:element name="InstalSeqNo" type="tns:InstalSeqNoType">
+        <xs:annotation>
+            <xs:documentation>Installation sequence number</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="CableUnitNumberType">
+        <xs:restriction base="xs:long"/>
+    </xs:simpleType>
+    <xs:element name="CableUnitNumber" type="tns:CableUnitNumberType">
+        <xs:annotation>
+            <xs:documentation>Number on a cable unit</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+</xs:schema>

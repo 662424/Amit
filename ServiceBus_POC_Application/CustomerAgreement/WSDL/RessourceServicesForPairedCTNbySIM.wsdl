@@ -1,0 +1,526 @@
+<definitions targetNamespace="java:dk.tdc.apilink.logic.sessions.interfaces" xmlns:tns="java:dk.tdc.apilink.logic.sessions.interfaces" xmlns:wsr="http://www.openuri.org/2002/10/soap/reliability/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap12enc="http://www.w3.org/2003/05/soap-encoding" xmlns:conv="http://www.openuri.org/2002/04/wsdl/conversation/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/">
+ <types>
+  <xsd:schema elementFormDefault="qualified" attributeFormDefault="qualified" targetNamespace="java:dk.tdc.apilink.logic.datatypes" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:stns="java:dk.tdc.apilink.logic.datatypes">
+   <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/">
+   </xsd:import>
+   <xsd:complexType name="APILinkStandardReply" abstract="true">
+    <xsd:complexContent>
+     <xsd:extension base="stns:APILinkStandardType">
+      <xsd:sequence>
+       <xsd:element type="xsd:string" name="replyTimestamp" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="serverId" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:int" name="severityLevel" minOccurs="1" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:int" name="statusCode" minOccurs="1" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="statusMessage" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:long" name="transactionDuration" minOccurs="1" maxOccurs="1">
+       </xsd:element>
+      </xsd:sequence>
+     </xsd:extension>
+    </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="APILinkStandardRequest" abstract="true">
+    <xsd:complexContent>
+     <xsd:extension base="stns:APILinkStandardType">
+      <xsd:sequence>
+       <xsd:element type="xsd:string" name="applicationId" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="userId" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+      </xsd:sequence>
+     </xsd:extension>
+    </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="APILinkStandardType" abstract="true">
+   </xsd:complexType>
+   <xsd:complexType name="APILinkStandardUpdateRequest" abstract="true">
+    <xsd:complexContent>
+     <xsd:extension base="stns:APILinkStandardRequest">
+      <xsd:sequence>
+       <xsd:element type="xsd:string" name="dealerCode" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+      </xsd:sequence>
+     </xsd:extension>
+    </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfRessourceStatusTypeInfo">
+    <xsd:complexContent>
+     <xsd:restriction base="soapenc:Array">
+      <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="stns:RessourceStatusTypeInfo[]" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+      </xsd:attribute>
+     </xsd:restriction>
+    </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfSimCardInfo">
+    <xsd:complexContent>
+     <xsd:restriction base="soapenc:Array">
+      <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="stns:SimCardInfo[]" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+      </xsd:attribute>
+     </xsd:restriction>
+    </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="GetMsisdnRessourceStatusReply">
+    <xsd:complexContent>
+     <xsd:extension base="stns:APILinkStandardReply">
+      <xsd:sequence>
+       <xsd:element type="xsd:string" name="lastTrxDate" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="msisdn" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="msisdnDescription" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="msisdnStatus" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:boolean" name="portedNumberInd" minOccurs="1" maxOccurs="1">
+       </xsd:element>
+      </xsd:sequence>
+     </xsd:extension>
+    </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="GetMsisdnRessourceStatusRequest">
+    <xsd:complexContent>
+     <xsd:extension base="stns:APILinkStandardRequest">
+      <xsd:sequence>
+       <xsd:element type="xsd:string" name="msisdn" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="spId" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+      </xsd:sequence>
+     </xsd:extension>
+    </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="GetPairedCtnBySimReply">
+    <xsd:complexContent>
+     <xsd:extension base="stns:APILinkStandardReply">
+      <xsd:sequence>
+       <xsd:element type="xsd:string" name="imsi" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="primaryCtn" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="resourceStatus" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+      </xsd:sequence>
+     </xsd:extension>
+    </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="GetPairedCtnBySimRequest">
+    <xsd:complexContent>
+     <xsd:extension base="stns:APILinkStandardRequest">
+      <xsd:sequence>
+       <xsd:element type="xsd:string" name="serialNo" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+      </xsd:sequence>
+     </xsd:extension>
+    </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="GetResourceTransitionStatesReply">
+    <xsd:complexContent>
+     <xsd:extension base="stns:APILinkStandardReply">
+      <xsd:sequence>
+       <xsd:element type="xsd:string" name="resourceStatus" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="stns:ArrayOfRessourceStatusTypeInfo" name="ressourceStatusTypeInfos" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+      </xsd:sequence>
+     </xsd:extension>
+    </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="GetResourceTransitionStatesRequest">
+    <xsd:complexContent>
+     <xsd:extension base="stns:APILinkStandardRequest">
+      <xsd:sequence>
+       <xsd:element type="xsd:string" name="resourceStatus" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="resourceType" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+      </xsd:sequence>
+     </xsd:extension>
+    </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="GetSerialItemInvReply">
+    <xsd:complexContent>
+     <xsd:extension base="stns:APILinkStandardReply">
+      <xsd:sequence>
+       <xsd:element type="xsd:string" name="imsi" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="lastTrxDate" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="nl" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="primaryCtn" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="puk1" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="puk2" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="resourceStatus" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="serialNo" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="simDescription" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="simType" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+      </xsd:sequence>
+     </xsd:extension>
+    </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="GetSerialItemInvRequest">
+    <xsd:complexContent>
+     <xsd:extension base="stns:APILinkStandardRequest">
+      <xsd:sequence>
+       <xsd:element type="xsd:string" name="serialNumber" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="spId" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+      </xsd:sequence>
+     </xsd:extension>
+    </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="GetSimCardInfoReply">
+    <xsd:complexContent>
+     <xsd:extension base="stns:APILinkStandardReply">
+      <xsd:sequence>
+       <xsd:element type="stns:ArrayOfSimCardInfo" name="simCardInfos" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+      </xsd:sequence>
+     </xsd:extension>
+    </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="GetSimCardInfoRequest">
+    <xsd:complexContent>
+     <xsd:extension base="stns:APILinkStandardRequest">
+      <xsd:sequence>
+       <xsd:element type="xsd:string" name="subscriberNo" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+      </xsd:sequence>
+     </xsd:extension>
+    </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="RessourceStatusTypeInfo">
+    <xsd:sequence>
+     <xsd:element type="xsd:string" name="resourceStatus" minOccurs="1" nillable="true" maxOccurs="1">
+     </xsd:element>
+     <xsd:element type="xsd:string" name="resourceStatusDesc" minOccurs="1" nillable="true" maxOccurs="1">
+     </xsd:element>
+    </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="SimCardInfo">
+    <xsd:complexContent>
+     <xsd:extension base="stns:APILinkStandardType">
+      <xsd:sequence>
+       <xsd:element type="xsd:string" name="imsi" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="primaryCtn" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="puk1" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="puk2" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="resourceStatus" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="serialNo" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="serialType" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="simClass" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+      </xsd:sequence>
+     </xsd:extension>
+    </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="UpdateMsisdnRessourceStatusReply">
+    <xsd:complexContent>
+     <xsd:extension base="stns:APILinkStandardReply">
+     </xsd:extension>
+    </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="UpdateMsisdnRessourceStatusRequest">
+    <xsd:complexContent>
+     <xsd:extension base="stns:APILinkStandardRequest">
+      <xsd:sequence>
+       <xsd:element type="xsd:string" name="lastTrxDate" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="msisdn" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="requestedStatus" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="spId" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+      </xsd:sequence>
+     </xsd:extension>
+    </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="UpdateSIMResourceStatusReply">
+    <xsd:complexContent>
+     <xsd:extension base="stns:APILinkStandardReply">
+     </xsd:extension>
+    </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="UpdateSIMResourceStatusRequest">
+    <xsd:complexContent>
+     <xsd:extension base="stns:APILinkStandardUpdateRequest">
+      <xsd:sequence>
+       <xsd:element type="xsd:string" name="lastUpdateDate" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="requestedStatus" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="simNumber" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="spId" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+      </xsd:sequence>
+     </xsd:extension>
+    </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ValidateIccMsisdnReply">
+    <xsd:complexContent>
+     <xsd:extension base="stns:APILinkStandardReply">
+      <xsd:sequence>
+       <xsd:element type="xsd:string" name="dissallowanceReason" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:boolean" name="pairingAllowed" minOccurs="1" maxOccurs="1">
+       </xsd:element>
+      </xsd:sequence>
+     </xsd:extension>
+    </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ValidateIccMsisdnRequest">
+    <xsd:complexContent>
+     <xsd:extension base="stns:APILinkStandardRequest">
+      <xsd:sequence>
+       <xsd:element type="xsd:string" name="icc" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+       <xsd:element type="xsd:string" name="msisdn" minOccurs="1" nillable="true" maxOccurs="1">
+       </xsd:element>
+      </xsd:sequence>
+     </xsd:extension>
+    </xsd:complexContent>
+   </xsd:complexType>
+  </xsd:schema>
+ </types>
+ <message name="getMsisdnRessourceStatus">
+  <part type="partns:GetMsisdnRessourceStatusRequest" name="getMsisdnRessourceStatusRequest" xmlns:partns="java:dk.tdc.apilink.logic.datatypes">
+  </part>
+ </message>
+ <message name="getMsisdnRessourceStatusResponse">
+  <part type="partns:GetMsisdnRessourceStatusReply" name="result" xmlns:partns="java:dk.tdc.apilink.logic.datatypes">
+  </part>
+ </message>
+ <message name="getPairedCtnBySim">
+  <part type="partns:GetPairedCtnBySimRequest" name="getPairedCtnBySimRequest" xmlns:partns="java:dk.tdc.apilink.logic.datatypes">
+  </part>
+ </message>
+ <message name="getPairedCtnBySimResponse">
+  <part type="partns:GetPairedCtnBySimReply" name="result" xmlns:partns="java:dk.tdc.apilink.logic.datatypes">
+  </part>
+ </message>
+ <message name="getResourceTransitionStates">
+  <part type="partns:GetResourceTransitionStatesRequest" name="getResourceTransitionStatesRequest" xmlns:partns="java:dk.tdc.apilink.logic.datatypes">
+  </part>
+ </message>
+ <message name="getResourceTransitionStatesResponse">
+  <part type="partns:GetResourceTransitionStatesReply" name="result" xmlns:partns="java:dk.tdc.apilink.logic.datatypes">
+  </part>
+ </message>
+ <message name="getSerialItemInv">
+  <part type="partns:GetSerialItemInvRequest" name="getSerialItemInvRequest" xmlns:partns="java:dk.tdc.apilink.logic.datatypes">
+  </part>
+ </message>
+ <message name="getSerialItemInvResponse">
+  <part type="partns:GetSerialItemInvReply" name="result" xmlns:partns="java:dk.tdc.apilink.logic.datatypes">
+  </part>
+ </message>
+ <message name="getSimCardInfo">
+  <part type="partns:GetSimCardInfoRequest" name="getSimCardInfoRequest" xmlns:partns="java:dk.tdc.apilink.logic.datatypes">
+  </part>
+ </message>
+ <message name="getSimCardInfoResponse">
+  <part type="partns:GetSimCardInfoReply" name="result" xmlns:partns="java:dk.tdc.apilink.logic.datatypes">
+  </part>
+ </message>
+ <message name="updateMsisdnRessourceStatus">
+  <part type="partns:UpdateMsisdnRessourceStatusRequest" name="updateMsisdnRessourceStatusRequest" xmlns:partns="java:dk.tdc.apilink.logic.datatypes">
+  </part>
+ </message>
+ <message name="updateMsisdnRessourceStatusResponse">
+  <part type="partns:UpdateMsisdnRessourceStatusReply" name="result" xmlns:partns="java:dk.tdc.apilink.logic.datatypes">
+  </part>
+ </message>
+ <message name="updateSIMResourceStatus">
+  <part type="partns:UpdateSIMResourceStatusRequest" name="updateSIMResourceStatusRequest" xmlns:partns="java:dk.tdc.apilink.logic.datatypes">
+  </part>
+ </message>
+ <message name="updateSIMResourceStatusResponse">
+  <part type="partns:UpdateSIMResourceStatusReply" name="result" xmlns:partns="java:dk.tdc.apilink.logic.datatypes">
+  </part>
+ </message>
+ <message name="validateIccMsisdn">
+  <part type="partns:ValidateIccMsisdnRequest" name="validateIccMsisdnRequest" xmlns:partns="java:dk.tdc.apilink.logic.datatypes">
+  </part>
+ </message>
+ <message name="validateIccMsisdnResponse">
+  <part type="partns:ValidateIccMsisdnReply" name="result" xmlns:partns="java:dk.tdc.apilink.logic.datatypes">
+  </part>
+ </message>
+ <portType name="RessourceServicesPort">
+  <operation name="getMsisdnRessourceStatus">
+   <input message="tns:getMsisdnRessourceStatus">
+   </input>
+   <output message="tns:getMsisdnRessourceStatusResponse">
+   </output>
+  </operation>
+  <operation name="getPairedCtnBySim">
+   <input message="tns:getPairedCtnBySim">
+   </input>
+   <output message="tns:getPairedCtnBySimResponse">
+   </output>
+  </operation>
+  <operation name="getResourceTransitionStates">
+   <input message="tns:getResourceTransitionStates">
+   </input>
+   <output message="tns:getResourceTransitionStatesResponse">
+   </output>
+  </operation>
+  <operation name="getSerialItemInv">
+   <input message="tns:getSerialItemInv">
+   </input>
+   <output message="tns:getSerialItemInvResponse">
+   </output>
+  </operation>
+  <operation name="getSimCardInfo">
+   <input message="tns:getSimCardInfo">
+   </input>
+   <output message="tns:getSimCardInfoResponse">
+   </output>
+  </operation>
+  <operation name="updateMsisdnRessourceStatus">
+   <input message="tns:updateMsisdnRessourceStatus">
+   </input>
+   <output message="tns:updateMsisdnRessourceStatusResponse">
+   </output>
+  </operation>
+  <operation name="updateSIMResourceStatus">
+   <input message="tns:updateSIMResourceStatus">
+   </input>
+   <output message="tns:updateSIMResourceStatusResponse">
+   </output>
+  </operation>
+  <operation name="validateIccMsisdn">
+   <input message="tns:validateIccMsisdn">
+   </input>
+   <output message="tns:validateIccMsisdnResponse">
+   </output>
+  </operation>
+ </portType>
+ <binding type="tns:RessourceServicesPort" name="RessourceServicesPort">
+  <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http">
+  </soap:binding>
+  <operation name="getMsisdnRessourceStatus">
+   <soap:operation style="rpc" soapAction="">
+   </soap:operation>
+   <input>
+    <soap:body namespace="java:dk.tdc.apilink.logic.sessions.interfaces" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded">
+    </soap:body>
+   </input>
+   <output>
+    <soap:body namespace="java:dk.tdc.apilink.logic.sessions.interfaces" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded">
+    </soap:body>
+   </output>
+  </operation>
+  <operation name="getPairedCtnBySim">
+   <soap:operation style="rpc" soapAction="">
+   </soap:operation>
+   <input>
+    <soap:body namespace="java:dk.tdc.apilink.logic.sessions.interfaces" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded">
+    </soap:body>
+   </input>
+   <output>
+    <soap:body namespace="java:dk.tdc.apilink.logic.sessions.interfaces" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded">
+    </soap:body>
+   </output>
+  </operation>
+  <operation name="getResourceTransitionStates">
+   <soap:operation style="rpc" soapAction="">
+   </soap:operation>
+   <input>
+    <soap:body namespace="java:dk.tdc.apilink.logic.sessions.interfaces" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded">
+    </soap:body>
+   </input>
+   <output>
+    <soap:body namespace="java:dk.tdc.apilink.logic.sessions.interfaces" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded">
+    </soap:body>
+   </output>
+  </operation>
+  <operation name="getSerialItemInv">
+   <soap:operation style="rpc" soapAction="">
+   </soap:operation>
+   <input>
+    <soap:body namespace="java:dk.tdc.apilink.logic.sessions.interfaces" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded">
+    </soap:body>
+   </input>
+   <output>
+    <soap:body namespace="java:dk.tdc.apilink.logic.sessions.interfaces" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded">
+    </soap:body>
+   </output>
+  </operation>
+  <operation name="getSimCardInfo">
+   <soap:operation style="rpc" soapAction="">
+   </soap:operation>
+   <input>
+    <soap:body namespace="java:dk.tdc.apilink.logic.sessions.interfaces" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded">
+    </soap:body>
+   </input>
+   <output>
+    <soap:body namespace="java:dk.tdc.apilink.logic.sessions.interfaces" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded">
+    </soap:body>
+   </output>
+  </operation>
+  <operation name="updateMsisdnRessourceStatus">
+   <soap:operation style="rpc" soapAction="">
+   </soap:operation>
+   <input>
+    <soap:body namespace="java:dk.tdc.apilink.logic.sessions.interfaces" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded">
+    </soap:body>
+   </input>
+   <output>
+    <soap:body namespace="java:dk.tdc.apilink.logic.sessions.interfaces" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded">
+    </soap:body>
+   </output>
+  </operation>
+  <operation name="updateSIMResourceStatus">
+   <soap:operation style="rpc" soapAction="">
+   </soap:operation>
+   <input>
+    <soap:body namespace="java:dk.tdc.apilink.logic.sessions.interfaces" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded">
+    </soap:body>
+   </input>
+   <output>
+    <soap:body namespace="java:dk.tdc.apilink.logic.sessions.interfaces" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded">
+    </soap:body>
+   </output>
+  </operation>
+  <operation name="validateIccMsisdn">
+   <soap:operation style="rpc" soapAction="">
+   </soap:operation>
+   <input>
+    <soap:body namespace="java:dk.tdc.apilink.logic.sessions.interfaces" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded">
+    </soap:body>
+   </input>
+   <output>
+    <soap:body namespace="java:dk.tdc.apilink.logic.sessions.interfaces" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded">
+    </soap:body>
+   </output>
+  </operation>
+ </binding>
+ <service name="RessourceServices">
+  <port name="RessourceServicesPort" binding="tns:RessourceServicesPort">
+   <soap:address location="http://derry2:7046/APILink/RessourceServices">
+   </soap:address>
+  </port>
+ </service>
+</definitions>

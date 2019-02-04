@@ -1,0 +1,361 @@
+<xs:schema targetNamespace="http://service.tdc.dk/chub/order/v1" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:adr="http://service.tdc.dk/chub/order/address/v1" xmlns:tns="http://service.tdc.dk/chub/order/v1" xmlns:common="http://service.chub.tdc.dk">
+    <xs:import namespace="http://service.tdc.dk/chub/order/address/v1" schemaLocation="InstallationAddress.xsd"/>
+    <xs:import namespace="http://service.chub.tdc.dk" schemaLocation="common.xsd"/>
+
+    <xs:include schemaLocation="OrderSimple.xsd"/>
+
+    <xs:complexType name="OrderRemarkType">
+        <xs:sequence>
+            <xs:element ref="tns:OrderRemarkType"/>
+            <xs:element ref="tns:OrderRemarkText"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="OrderCategoriesType">
+        <xs:sequence>
+            <xs:element ref="tns:OrderCategory" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="OrderCategories" type="tns:OrderCategoriesType">
+        <xs:annotation>
+            <xs:documentation>List of order categories</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="OrderRemark" type="tns:OrderRemarkType">
+        <xs:annotation>
+            <xs:documentation>An order remark of a specific type</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="UserType">
+        <xs:sequence>
+            <xs:element ref="tns:UserId"/>
+            <xs:element ref="tns:UserName"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="OrderCreatedByUser" type="tns:UserType">
+        <xs:annotation>
+            <xs:documentation>The id and name of the user who has created a specific order</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="OrderType">
+        <xs:sequence>
+            <xs:element ref="tns:OrderNumber"/>
+            <xs:element ref="tns:AccountNo"/>
+            <xs:element ref="tns:CustomerNo"/>
+            <xs:element ref="tns:SubscriptionNo"/>
+            <xs:element ref="tns:LinkitId"/>
+            <xs:element ref="tns:OrderType"/>
+            <xs:element ref="tns:OrderCreationDate"/>
+            <xs:element ref="tns:OrderCuCreationDate" minOccurs="0"/>
+            <xs:element ref="tns:SubOrder" minOccurs="0"/>
+            <xs:element ref="tns:OrderStatus"/>
+            <xs:element ref="tns:OrderCategories" minOccurs="0" maxOccurs="1"/>
+            <xs:element ref="tns:OrderCreatedByUser" minOccurs="0"/>
+            <xs:element ref="tns:OrderRemark" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="tns:ContactNameInformation" minOccurs="0"/>
+            <xs:element ref="tns:ContactNumberInformation" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="Order" type="tns:OrderType">
+        <xs:annotation>
+            <xs:documentation>Get response.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="DetailedOrderType">
+        <xs:sequence>
+            <xs:element ref="tns:OrderNumber"/>
+            <xs:element ref="tns:AccountNo" minOccurs="0"/>
+            <xs:element ref="tns:CustomerNo" minOccurs="0"/>
+            <xs:element ref="tns:SubscriptionNo" minOccurs="0"/>
+            <xs:element ref="tns:LinkitId" minOccurs="0"/>
+            <xs:element ref="tns:OrderType"/>
+            <xs:element ref="tns:OrderCreationDate" minOccurs="0"/>
+            <xs:element ref="tns:OrderExecutionFromDate" minOccurs="0"/>
+            <xs:element ref="tns:OrderExecutionToDate" minOccurs="0"/>
+            <xs:element ref="tns:SubOrder" minOccurs="0"/>
+            <xs:element ref="tns:OrderStatus" minOccurs="0"/>
+            <xs:element ref="tns:OrderSagNr" minOccurs="0"/>
+            <xs:element ref="tns:OrderSagType" minOccurs="0"/>
+            <xs:element ref="tns:OrderSagText" minOccurs="0"/>
+            <xs:element ref="tns:OrderCreator" minOccurs="0"/>
+            <xs:element ref="adr:InstallationAddress" minOccurs="0"/>
+            <xs:element ref="tns:OrderNameInformation" minOccurs="0"/>
+            <xs:element ref="tns:ContactNameInformation" minOccurs="0"/>
+            <xs:element ref="tns:TechnicianAtCustomer" minOccurs="0"/>
+            <xs:element ref="tns:OSMOrderId" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="DetailedOrder" type="tns:DetailedOrderType">
+        <xs:annotation>
+            <xs:documentation>Detailed order type.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="OrderInfoType">
+        <xs:sequence>
+            <xs:element ref="tns:OrderNumber"/>
+            <xs:element ref="tns:CustomerCaseCode"/>
+            <xs:element name="CurrentLid" type="common:SubscriptionNumberType"/>
+            <xs:element name="CurrentSpecMrk" type="tns:SpecMrkType" minOccurs="0"/>
+            <xs:element name="NewLid" type="common:SubscriptionNumberType"/>
+            <xs:element name="NewSpecMrk" type="tns:SpecMrkType" minOccurs="0"/>
+            <xs:element ref="tns:Organisation"/>
+            <xs:element ref="tns:InvoiceSequence"/>
+            <xs:element ref="tns:UserId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="OrderInfo" type="tns:OrderInfoType">
+        <xs:annotation>
+            <xs:documentation>Order info type.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="OrderInfoLineType">
+        <xs:sequence>
+            <xs:element name="ParentOrderNumber" type="tns:OrderNumberType" minOccurs="0"/>
+            <xs:element ref="tns:OrderNumber"/>
+            <xs:element ref="tns:OrderLineNumber"/>
+            <xs:element ref="tns:TransactionForm"/>
+            <xs:element ref="tns:OrderProduct"/>
+
+            <xs:element ref="tns:MainSubMarkingType"/>
+            <xs:element ref="tns:ProductText"/>
+            <xs:element ref="tns:KundeText"/>
+            <xs:element ref="tns:TekstlovligTekst" minOccurs="0"/>
+
+            <xs:element name="OnetimePrice" type="common:Amount"/>
+            <xs:element name="OnetimeDiscount" type="common:Amount"/>
+            <xs:element name="PriceRecurringWithVat" type="common:Amount"/>
+            <xs:element name="PriceRecurringWithVatDiscount" type="common:Amount"/>
+            <xs:element name="Code777Price" type="common:Amount" minOccurs="0"/>
+
+            <!--added for the TilbudsModul project 09 03 18-->
+            <xs:element ref="tns:MinimumPrice" minOccurs="0"/>
+            <!--added for the TilbudsModul project 09 03 18 - end -->
+
+            <xs:element ref="common:PricePlan"/>
+
+            <!--added for the TilbudsModul project 09 03 18-->
+            <xs:element ref="tns:CampaignNumberOfMonths" minOccurs="0"/>
+            <xs:element ref="tns:CampaignDiscountPercentage" minOccurs="0"/>
+            <xs:element ref="tns:CampaignDiscountType" minOccurs="0"/>
+            <xs:element ref="tns:PostCampaignPrice" minOccurs="0"/>
+            <!--added for the TilbudsModul project 09 03 18 - end -->
+
+            <xs:element name="ExternAccountNumber" type="common:AccountNumberType"/>
+            <xs:element ref="tns:SpecialGroupMark" minOccurs="0"/>
+            <xs:element ref="tns:SpecificationType"/>
+            <xs:element ref="tns:ContactTextNumber" minOccurs="0"/>
+            <xs:element ref="tns:TransactionCodeText" minOccurs="0"/>
+            <xs:element ref="tns:SequencePriority" minOccurs="0"/>
+            <xs:element ref="tns:DbCode" minOccurs="0"/>
+
+            <!--added for the TilbudsModul project 09 03 18-->
+            <xs:element ref="tns:CommitmentNumberOfMonths" minOccurs="0"/>
+
+
+            <xs:element name="CommitmentEndDate" type="common:Date" minOccurs="0"/>
+            <!--            <xs:element ref="tns:NumberOfMonth" />-->
+            <xs:element name="OldSaldomaxInformation" type="tns:SaldomaxType" minOccurs="0"/>
+            <xs:element name="NewSaldomaxInformation" type="tns:SaldomaxType" minOccurs="0"/>
+            <!--added for the TilbudsModul project  - end -->
+
+            <xs:element ref="tns:CommitmentGroup"/>
+            <xs:element ref="tns:ConfirmationMark"/>
+            <xs:element ref="tns:AplNr"/>
+            <xs:element name="OldToAddress" type="common:NameAddressIDType"/>
+            <xs:element name="NewToAddress" type="common:NameAddressIDType"/>
+
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="OrderInfoLine" type="tns:OrderInfoLineType">
+        <xs:annotation>
+            <xs:documentation>Order info line type.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="SubOrderLineType">
+        <xs:sequence>
+            <xs:element ref="tns:OrderNumber"/>
+            <xs:element name="ParentOrderNumber" type="tns:OrderNumberType"/>
+            <xs:element ref="tns:ParentOrderLineNumber"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:element name="SubOrderLine" type="tns:SubOrderLineType">
+        <xs:annotation>
+            <xs:documentation>SubOrderLine</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <!--
+    Added for TilbudsModul April 18 Release - End
+    -->
+
+    <xs:complexType name="WorkTaskType">
+        <xs:sequence>
+            <xs:element ref="tns:OrderMarkedReadyDate" minOccurs="0"/>
+            <xs:element ref="tns:OrderExecutionDate" minOccurs="0"/>
+            <xs:element ref="tns:WorkTaskNumber" minOccurs="0"/>
+            <xs:element ref="tns:WorkTaskText" minOccurs="0"/>
+            <xs:element ref="tns:PromiseStart" minOccurs="0"/>
+            <xs:element ref="tns:PromiseEnd" minOccurs="0"/>
+            <xs:element ref="adr:IndlandsAdresse"/>
+            <xs:element ref="tns:GraceStatus" minOccurs="0"/>
+            <xs:element ref="tns:InstalSeqNo" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="WorkTask" type="tns:WorkTaskType">
+        <xs:annotation>
+            <xs:documentation>Definition of work task.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="OrderProductType">
+        <xs:sequence>
+            <xs:element ref="tns:TransactionCode"/>
+            <xs:element ref="tns:ProductCount"/>
+            <xs:element ref="tns:ProductGroup"/>
+            <xs:element ref="tns:ProductElement"/>
+            <xs:element ref="tns:ProductFunction"/>
+            <xs:element ref="tns:Afsaetning"/>
+            <xs:element ref="tns:BrandId" minOccurs="0"/>
+            <xs:element ref="tns:MainSubBrandType" minOccurs="0"/>
+            <xs:element ref="tns:ClosedBrand" minOccurs="0"/>
+            <xs:element ref="tns:CalculationDate" minOccurs="0"/>
+            <xs:element ref="tns:RequestedExecutionDate" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="OrderProduct" type="tns:OrderProductType">
+        <xs:annotation>
+            <xs:documentation>Information about order line.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="OrderProducts" type="tns:OrderProductsType">
+        <xs:annotation>
+            <xs:documentation>Order products type element</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="OrderProductsType">
+        <xs:sequence>
+            <xs:element ref="tns:OrderNumber"/>
+            <xs:element ref="tns:OrderCreationDate"/>
+            <xs:element ref="tns:CalculationDate" minOccurs="0"/>
+            <xs:element ref="tns:ConfirmationDate" minOccurs="0"/>
+            <xs:element ref="tns:OrderStatus"/>
+            <xs:element ref="tns:OrderProduct" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="CableUnitOrderType">
+        <xs:sequence>
+            <xs:element ref="tns:InstalSeqNo"/>
+            <xs:element ref="tns:OrderNumber"/>
+            <xs:element ref="tns:RequestedExecutionDate" minOccurs="0"/>
+            <xs:element ref="tns:OrderTypeCode" minOccurs="0"/>
+            <xs:element ref="tns:OrderTypeString" minOccurs="0"/>
+            <xs:element ref="tns:OrderStatus"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="CableUnitOrder" type="tns:CableUnitOrderType">
+        <xs:annotation>
+            <xs:documentation>Definition af an order on a cable unit</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="EmailStructurType">
+        <xs:sequence>
+            <xs:element name="Email" type="common:EmailType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="EmailStructur" type="tns:EmailStructurType">
+        <xs:annotation>
+            <xs:documentation>Customer emails</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="OrderInfoNameAdressType">
+        <xs:sequence>
+            <xs:element name="NameAdressType" type="tns:NameAdressType"/>
+            <xs:element name="OrderSequence" type="tns:OrderSequenceType"/>
+            <xs:element name="EmailList" type="tns:EmailStructurType" minOccurs="0"/>
+            <xs:element name="NameAddress" type="common:NameAddressInfo"/>
+            <xs:element name="CustomerSegment" type="common:CustomerSegment" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="OrderInfoNameAdress" type="tns:OrderInfoNameAdressType">
+        <xs:annotation>
+            <xs:documentation>Test request.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="SaldomaxType">
+        <xs:sequence>
+            <xs:element name="AddressType" type="common:AddressTypeType" minOccurs="0"/>
+            <xs:element ref="common:SaldomaxAmountQuarterly" minOccurs="0"/>
+            <xs:element ref="common:SaldomaxAmountMonthly" minOccurs="0"/>
+            <xs:element ref="common:SaldomaxAmountTemporary" minOccurs="0"/>
+            <xs:element ref="common:SaldomaxTemporaryDate" minOccurs="0"/>
+            <xs:element ref="common:SaldomaxCutOff" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TextListType">
+        <xs:sequence>
+            <xs:element name="Text" type="common:Text" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="TextList" type="tns:TextListType">
+        <xs:annotation>
+            <xs:documentation>List of texts</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="EmailListType">
+        <xs:sequence>
+            <xs:element name="Email" type="common:EmailType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="EmailList" type="tns:EmailListType">
+        <xs:annotation>
+            <xs:documentation>List of emails</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="LetterDestinationType">
+        <xs:sequence>
+            <xs:element name="LetterType" type="tns:LetterType"/>
+            <xs:element name="NameAddress" type="common:NameAddressInfo" minOccurs="0"/>
+            <xs:element name="ToEmailList" type="tns:EmailListType" minOccurs="0"/>
+            <xs:element name="CCEmailList" type="tns:EmailListType" minOccurs="0"/>
+            <xs:element name="StandardTextList" type="tns:TextListType"/>
+            <xs:element ref="tns:Regards" minOccurs="0"/>
+            <xs:element name="PayerAccountNumber" type="common:AccountNumberType"/>
+            <xs:element name="NoLetters" type="xs:boolean"/>
+            <xs:element name="CustomersRef" type="common:Text"/>
+            <xs:element name="LetterRemark" type="common:Text"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="LetterDestination" type="tns:LetterDestinationType">
+        <xs:annotation>
+            <xs:documentation>A destination for a letter.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+</xs:schema>

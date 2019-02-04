@@ -1,0 +1,1251 @@
+<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="http://service.chub.tdc.dk/domain/cableunit" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:common="http://service.chub.tdc.dk" xmlns:tns="http://service.chub.tdc.dk/domain/cableunit">
+
+    <xs:import namespace="http://service.chub.tdc.dk" schemaLocation="commonSimple.xsd"/>
+
+    <xs:simpleType name="CableUnitNameType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="CableUnitName" type="tns:CableUnitNameType">
+        <xs:annotation>
+            <xs:documentation>Name of the cableunit</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="SalesConceptType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="SalesConcept" type="tns:SalesConceptType">
+        <xs:annotation>
+            <xs:documentation>Name of the cableunit</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="OwnerType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="Owner" type="tns:OwnerType">
+        <xs:annotation>
+            <xs:documentation>Owner id</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="ServiceType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="Service" type="tns:ServiceType">
+        <xs:annotation>
+            <xs:documentation>Service id</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="SloejfeType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="Sloejfe" type="tns:SloejfeType">
+        <xs:annotation>
+            <xs:documentation>Sloeje</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="OphavsretType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="Ophavsret" type="tns:OphavsretType">
+        <xs:annotation>
+            <xs:documentation>Ophavsret</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="OphavsretYearType">
+        <xs:restriction base="xs:int"/>
+    </xs:simpleType>
+    <xs:element name="OphavsretYear" type="tns:OphavsretYearType">
+        <xs:annotation>
+            <xs:documentation>Ophavsret</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="InstalSeqNoType">
+        <xs:restriction base="xs:long"/>
+    </xs:simpleType>
+    <xs:element name="InstalSeqNo" type="tns:InstalSeqNoType">
+        <xs:annotation>
+            <xs:documentation>Installation sequence number</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="SorteringType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="Sortering" type="tns:SorteringType">
+        <xs:annotation>
+            <xs:documentation>Aktive, bestilt eller historisk data</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+
+    <xs:simpleType name="StateType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="State" type="tns:StateType">
+        <xs:annotation>
+            <xs:documentation>Installation sequence number</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="LocationType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="Location" type="tns:LocationType">
+        <xs:annotation>
+            <xs:documentation>Location</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="LiveDateType">
+        <xs:restriction base="xs:date"/>
+    </xs:simpleType>
+    <xs:element name="LiveDate" type="tns:LiveDateType">
+        <xs:annotation>
+            <xs:documentation>The day it starts (is activated)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="DeadlineDateType">
+        <xs:restriction base="xs:date"/>
+    </xs:simpleType>
+    <xs:element name="DeadlineDate" type="tns:DeadlineDateType">
+        <xs:annotation>
+            <xs:documentation>Skaeringsdato</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="EarlyLiveDateType">
+        <xs:restriction base="xs:date"/>
+    </xs:simpleType>
+    <xs:element name="EarlyLiveDate" type="tns:EarlyLiveDateType">
+        <xs:annotation>
+            <xs:documentation>Tidl Itaktst Dato</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="InactiveDateType">
+        <xs:restriction base="xs:date"/>
+    </xs:simpleType>
+    <xs:element name="InactiveDate" type="tns:InactiveDateType">
+        <xs:annotation>
+            <xs:documentation>Inaktiv dato</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="HasOrderType">
+        <xs:restriction base="xs:boolean"/>
+    </xs:simpleType>
+    <xs:element name="HasOrder" type="tns:HasOrderType">
+        <xs:annotation>
+            <xs:documentation>Does order exists</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="StartDateType">
+        <xs:restriction base="xs:date"/>
+    </xs:simpleType>
+    <xs:element name="StartDate" type="tns:StartDateType">
+        <xs:annotation>
+            <xs:documentation>The day it starts (is activated)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="EndDateType">
+        <xs:restriction base="xs:date"/>
+    </xs:simpleType>
+    <xs:element name="EndDate" type="tns:EndDateType">
+        <xs:annotation>
+            <xs:documentation>The day it ends (is deactivated)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="ExpectedEndDateType">
+        <xs:restriction base="xs:date"/>
+    </xs:simpleType>
+    <xs:element name="ExpectedEndDate" type="tns:ExpectedEndDateType">
+        <xs:annotation>
+            <xs:documentation>The day it is expected to end (is deactivated)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="CableUnitNumberType">
+        <xs:restriction base="xs:long"/>
+    </xs:simpleType>
+    <xs:element name="CableUnitNumber" type="tns:CableUnitNumberType">
+        <xs:annotation>
+            <xs:documentation>number of cable unit (anlaeg)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="IncludeRadioChannelsType">
+        <xs:restriction base="xs:boolean"/>
+    </xs:simpleType>
+    <xs:element name="IncludeRadioChannels" type="tns:IncludeRadioChannelsType">
+        <xs:annotation>
+            <xs:documentation>Whether radio channels should be included in the reply</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="WithoutHistoricChannelsType">
+        <xs:restriction base="xs:boolean"/>
+    </xs:simpleType>
+    <xs:element name="WithoutHistoricChannels" type="tns:WithoutHistoricChannelsType">
+        <xs:annotation>
+            <xs:documentation>If true only channels with a valid_to which is valid today is included</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="IsOrderType">
+        <xs:restriction base="xs:boolean"/>
+    </xs:simpleType>
+    <xs:element name="IsOrder" type="tns:IsOrderType">
+        <xs:annotation>
+            <xs:documentation>True if we should search for this in the order tables (has not been finally committed)
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="LidNumberType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="LidNumber" type="tns:LidNumberType">
+        <xs:annotation>
+            <xs:documentation>LID number as a string</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="CableUnitIdType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="CableUnitId" type="tns:CableUnitIdType">
+        <xs:annotation>
+            <xs:documentation>id for the cable unit (anlaeg)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="InstallationIdType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="InstallationId" type="tns:InstallationIdType">
+        <xs:annotation>
+            <xs:documentation>id for the group</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="FastlaastPrisType">
+        <xs:restriction base="xs:int"/>
+    </xs:simpleType>
+    <xs:element name="FastlaastPris" type="tns:FastlaastPrisType">
+        <xs:annotation>
+            <xs:documentation>Fastl��st pris</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="TopGruppeType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="TopGruppe" type="tns:TopGruppeType">
+        <xs:annotation>
+            <xs:documentation>Top gruppe (actually max 2 digits)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="KabelTypeType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="KabelType" type="tns:KabelTypeType">
+        <xs:annotation>
+            <xs:documentation>Kabel type (actually max 3 chars)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="YouseeMoreType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="YouseeMore" type="tns:YouseeMoreType">
+        <xs:annotation>
+            <xs:documentation>Yousee more</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="BbUrlType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="BbUrl" type="tns:BbUrlType">
+        <xs:annotation>
+            <xs:documentation>BB_URL</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="TvUrlType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="TvUrl" type="tns:TvUrlType">
+        <xs:annotation>
+            <xs:documentation>TV_URL</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="CollectiveOfferType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="CollectiveOffer" type="tns:CollectiveOfferType">
+        <xs:annotation>
+            <xs:documentation>COLLECTIVE_OFFER</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="PrisLaasType">
+        <xs:restriction base="xs:boolean"/>
+    </xs:simpleType>
+    <xs:element name="PrisLaas" type="tns:PrisLaasType">
+        <xs:annotation>
+            <xs:documentation>price calculation lock</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="PrisFastsatDatoType">
+        <xs:restriction base="xs:date"/>
+    </xs:simpleType>
+    <xs:element name="PrisFastsatDato" type="tns:PrisFastsatDatoType">
+        <xs:annotation>
+            <xs:documentation>Date for last price calculation</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="RettighedsLaasType">
+        <xs:restriction base="xs:boolean"/>
+    </xs:simpleType>
+    <xs:element name="RettighedsLaas" type="tns:RettighedsLaasType">
+        <xs:annotation>
+            <xs:documentation>intellectual right calculation lock</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="RettighedsDatoType">
+        <xs:restriction base="xs:date"/>
+    </xs:simpleType>
+    <xs:element name="RettighedsDato" type="tns:RettighedsDatoType">
+        <xs:annotation>
+            <xs:documentation>Date of last estimation of copyrights in relation to a service area</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="PrisGruppeNyType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="10"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="PrisGruppeNy" type="tns:PrisGruppeNyType">
+        <xs:annotation>
+            <xs:documentation>A price group to be used during re-adjustment. Prisharmonisering</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="HarmoniseringStatusType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="HarmoniseringStatus" type="tns:HarmoniseringStatusType">
+        <xs:annotation>
+            <xs:documentation>A code showing the status of harmonization.
+                Value:
+                0
+                1 Must be re-adjusted
+                2 Must not be re-adjusted
+                3 Has been re-adjusted
+                4 Must be harmonized
+                5 Must not be harmonized
+                6 Is partly harmonized
+                7 Has been harmonized
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="HarmoniseringDatoType">
+        <xs:restriction base="xs:date"/>
+    </xs:simpleType>
+    <xs:element name="HarmoniseringDato" type="tns:HarmoniseringDatoType">
+        <xs:annotation>
+            <xs:documentation>A date of the execution of re-adjustment.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="InstitutionType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="20"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="Institution" type="tns:InstitutionType">
+        <xs:annotation>
+            <xs:documentation>A code for institution in connection with program</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="RettighedsStyringType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="RettighedsStyring" type="tns:RettighedsStyringType">
+        <xs:annotation>
+            <xs:documentation>
+                Private anl��g ��� 1 => Adminstrator kode on cable units determines payer for koda-copydan rigths
+                Private anl��g ��� 2 => O-customer pays for GP, E customer pays for all other
+                Private anl��g ��� 3 => O-customer pays for GP, MP, LT. E-customer pays for all other
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="DTVUClearType">
+        <xs:restriction base="xs:boolean"/>
+    </xs:simpleType>
+    <xs:element name="DTVUClear" type="tns:DTVUClearType">
+        <xs:annotation>
+            <xs:documentation>Can digital TV be sold without Clear</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="BBUClearType">
+        <xs:restriction base="xs:boolean"/>
+    </xs:simpleType>
+    <xs:element name="BBUClear" type="tns:BBUClearType">
+        <xs:annotation>
+            <xs:documentation>Can Internet products be offered without basis products</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="BbWithoutTvType">
+        <xs:restriction base="xs:boolean"/>
+    </xs:simpleType>
+    <xs:element name="BbWithoutTv" type="tns:BbWithoutTvType">
+        <xs:annotation>
+            <xs:documentation>Tillad Bredb��nd u. TV (true/false)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="DocsisTypeType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="DocsisType" type="tns:DocsisTypeType">
+        <xs:annotation>
+            <xs:documentation>Docsis type</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="AllowIspType">
+        <xs:restriction base="xs:boolean"/>
+    </xs:simpleType>
+    <xs:element name="AllowIsp" type="tns:AllowIspType">
+        <xs:annotation>
+            <xs:documentation>Tillad ISP</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="ParcelEtageType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="ParcelEtage" type="tns:ParcelEtageType">
+        <xs:annotation>
+            <xs:documentation>Does this service area agreement concern house lot or floor. 0:Unknown 1:Parcel 2:Etage
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="AfleveringPunktType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="60"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="AfleveringPunkt" type="tns:AfleveringPunktType">
+        <xs:annotation>
+            <xs:documentation>Drop point</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="NoegleBoksType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="60"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="NoegleBoks" type="tns:NoegleBoksType">
+        <xs:annotation>
+            <xs:documentation>Description of where key is placed</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="ModulPlaceringType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="2000"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="ModulPlacering" type="tns:ModulPlaceringType">
+        <xs:annotation>
+            <xs:documentation>Where is module</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="CableUnitTextIdType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="CableUnitTextId" type="tns:CableUnitTextIdType">
+        <xs:annotation>
+            <xs:documentation>id for cable unit text</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="TextType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="2048"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="Text" type="tns:TextType">
+        <xs:annotation>
+            <xs:documentation>text</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="TextKindType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="TextKind" type="tns:TextKindType">
+        <xs:annotation>
+            <xs:documentation>text kind</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="CableUnitLockIdType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="CableUnitLockId" type="tns:CableUnitLockIdType">
+        <xs:annotation>
+            <xs:documentation>id for cable unit lock</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="AccountLockIdType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="AccountLockId" type="tns:AccountLockIdType">
+        <xs:annotation>
+            <xs:documentation>id for account lock</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="LockTextType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="2048"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="LockText" type="tns:LockTextType">
+        <xs:annotation>
+            <xs:documentation/>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="LockCodeIdType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="LockCodeId" type="tns:LockCodeIdType">
+        <xs:annotation>
+            <xs:documentation>id for lockCode</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="LockCodeType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="20"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="LockCode" type="tns:LockCodeType">
+        <xs:annotation>
+            <xs:documentation>lock id type</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="LockNameType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="60"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="LockName" type="tns:LockNameType">
+        <xs:annotation>
+            <xs:documentation>lock name</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="LockSourceType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="LockSource" type="tns:LockSourceType">
+        <xs:annotation>
+            <xs:documentation>A:Cable unit lock D:Debitor lock</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="LockFaktureringType">
+        <xs:restriction base="xs:boolean"/>
+    </xs:simpleType>
+    <xs:element name="LockFakturering" type="tns:LockFaktureringType">
+        <xs:annotation>
+            <xs:documentation>specific lock</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="LockOasisType">
+        <xs:restriction base="xs:boolean"/>
+    </xs:simpleType>
+    <xs:element name="LockOasis" type="tns:LockOasisType">
+        <xs:annotation>
+            <xs:documentation>specific lock</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="DropRekvKoerType">
+        <xs:restriction base="xs:boolean"/>
+    </xs:simpleType>
+    <xs:element name="DropRekvKoer" type="tns:DropRekvKoerType">
+        <xs:annotation>
+            <xs:documentation>koer rekv koer</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="LockSelvbetjeningType">
+        <xs:restriction base="xs:boolean"/>
+    </xs:simpleType>
+    <xs:element name="LockSelvbetjening" type="tns:LockSelvbetjeningType">
+        <xs:annotation>
+            <xs:documentation>specific lock</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="LockEksternType">
+        <xs:restriction base="xs:boolean"/>
+    </xs:simpleType>
+    <xs:element name="LockEkstern" type="tns:LockEksternType">
+        <xs:annotation>
+            <xs:documentation>specific lock</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="CableUnitNumberStringType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="CableUnitNumberString" type="tns:CableUnitNumberStringType">
+        <xs:annotation>
+            <xs:documentation>Cable unit id as a String(?)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="PackageIdType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="PackageId" type="tns:PackageIdType">
+        <xs:annotation>
+            <xs:documentation>package id</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="PackageNameType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="PackageName" type="tns:PackageNameType">
+        <xs:annotation>
+            <xs:documentation>package name</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="ProgramContentIdType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="ProgramContentId" type="tns:ProgramContentIdType">
+        <xs:annotation>
+            <xs:documentation>program content id</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="ProgramIdType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="ProgramId" type="tns:ProgramIdType">
+        <xs:annotation>
+            <xs:documentation>program id</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="ProgramNameType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="ProgramName" type="tns:ProgramNameType">
+        <xs:annotation>
+            <xs:documentation>program name</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="LockStatusType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="LockStatus" type="tns:LockStatusType">
+        <xs:annotation>
+            <xs:documentation>status of the lock</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="SignaltypeType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="Signaltype" type="tns:SignaltypeType">
+        <xs:annotation>
+            <xs:documentation>signaltype</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="VendorType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="Vendor" type="tns:VendorType">
+        <xs:annotation>
+            <xs:documentation>vendor</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="NodeIdType">
+        <xs:restriction base="xs:long"/>
+    </xs:simpleType>
+    <xs:element name="NodeId" type="tns:NodeIdType">
+        <xs:annotation>
+            <xs:documentation>node id</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="ProgramNrType">
+        <xs:restriction base="xs:int"/>
+    </xs:simpleType>
+    <xs:element name="ProgramNr" type="tns:ProgramNrType">
+        <xs:annotation>
+            <xs:documentation>program nr</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="SubnetIdType">
+        <xs:restriction base="xs:int"/>
+    </xs:simpleType>
+    <xs:element name="SubnetId" type="tns:SubnetIdType">
+        <xs:annotation>
+            <xs:documentation>subnet id</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="QamType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="Qam" type="tns:QamType">
+        <xs:annotation>
+            <xs:documentation>qam</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="FrequencyType">
+        <xs:restriction base="xs:int"/>
+    </xs:simpleType>
+    <xs:element name="Frequency" type="tns:FrequencyType">
+        <xs:annotation>
+            <xs:documentation>frequency</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="ChannelNrType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="ChannelNr" type="tns:ChannelNrType">
+        <xs:annotation>
+            <xs:documentation>channel number</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="ResponsibleLockType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="ResponsibleLock" type="tns:ResponsibleLockType">
+        <xs:annotation>
+            <xs:documentation>Responsible lock</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="CreatedByType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="CreatedBy" type="tns:CreatedByType">
+        <xs:annotation>
+            <xs:documentation>Responsible lock</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="DocumentTypeType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="DocumentType" type="tns:DocumentTypeType">
+        <xs:annotation>
+            <xs:documentation>The type of document</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="ElementName1Type">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="ElementName1" type="tns:ElementName1Type">
+        <xs:annotation>
+            <xs:documentation>Element name 1</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="ElementName2Type">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="ElementName2" type="tns:ElementName2Type">
+        <xs:annotation>
+            <xs:documentation>Element name 2</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="ElementName3Type">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="ElementName3" type="tns:ElementName3Type">
+        <xs:annotation>
+            <xs:documentation>Element name 3</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="CtiDocumentIxIdType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="CtiDocumentIxId" type="tns:CtiDocumentIxIdType">
+        <xs:annotation>
+            <xs:documentation>Cti Document IX ID</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="CtiDocumentLineIdType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="CtiDocumentLineId" type="tns:CtiDocumentLineIdType">
+        <xs:annotation>
+            <xs:documentation>Cti Document line ID</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="CtiDocumentIdType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="CtiDocumentId" type="tns:CtiDocumentIdType">
+        <xs:annotation>
+            <xs:documentation>Cti Document ID</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="CtiKeyFieldType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="CtiKeyField" type="tns:CtiKeyFieldType">
+        <xs:annotation>
+            <xs:documentation>Key (nummer)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="CtiKeyTypeType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="CtiKeyType" type="tns:CtiKeyTypeType">
+        <xs:annotation>
+            <xs:documentation>Key type</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="PgmNameType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="PgmName" type="tns:PgmNameType">
+        <xs:annotation>
+            <xs:documentation>Pgm Name</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="CtiDocStatusType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="CtiDocStatus" type="tns:CtiDocStatusType">
+        <xs:annotation>
+            <xs:documentation>Cti document status</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="DocumentGuidingTextType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="DocumentGuidingText" type="tns:DocumentGuidingTextType">
+        <xs:annotation>
+            <xs:documentation>Document guiding text</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="CtiDocuLineIdType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="CtiDocuLineId" type="tns:CtiDocuLineIdType">
+        <xs:annotation>
+            <xs:documentation>Cti Document Line IDt</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="DocumentLineNoType">
+        <xs:restriction base="xs:short"/>
+    </xs:simpleType>
+    <xs:element name="DocumentLineNo" type="tns:DocumentLineNoType">
+        <xs:annotation>
+            <xs:documentation>Document linie nr</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="ControlSignType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="ControlSign" type="tns:ControlSignType">
+        <xs:annotation>
+            <xs:documentation>Control sign</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="DocumentLineType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="DocumentLine" type="tns:DocumentLineType">
+        <xs:annotation>
+            <xs:documentation>Document line</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="DocumentLineLengthType">
+        <xs:restriction base="xs:short"/>
+    </xs:simpleType>
+    <xs:element name="DocumentLineLength" type="tns:DocumentLineLengthType">
+        <xs:annotation>
+            <xs:documentation>Document line length</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="DocumentLine1Type">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="DocumentLine1" type="tns:DocumentLine1Type">
+        <xs:annotation>
+            <xs:documentation>Document line 1</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="DocumentLine2Type">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="DocumentLine2" type="tns:DocumentLine2Type">
+        <xs:annotation>
+            <xs:documentation>Document line 2</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="DocumentLine3Type">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="DocumentLine3" type="tns:DocumentLine3Type">
+        <xs:annotation>
+            <xs:documentation>Document line 3</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="DocumentLine4Type">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="DocumentLine4" type="tns:DocumentLine4Type">
+        <xs:annotation>
+            <xs:documentation>Document line 4</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="OrderedOCustomerOrdersType">
+        <xs:restriction base="xs:boolean"/>
+    </xs:simpleType>
+    <xs:element name="NoOrderedOCustomerOrders" type="tns:OrderedOCustomerOrdersType">
+        <xs:annotation>
+            <xs:documentation>No ordered O customer is included</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="HistoricOCustomerOrdersType">
+        <xs:restriction base="xs:boolean"/>
+    </xs:simpleType>
+    <xs:element name="NoHistoricOCustomerOrders" type="tns:HistoricOCustomerOrdersType">
+        <xs:annotation>
+            <xs:documentation>No Historic O customer is included</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="OrderedICustomerOrdersType">
+        <xs:restriction base="xs:boolean"/>
+    </xs:simpleType>
+    <xs:element name="NoOrderedICustomerOrders" type="tns:OrderedICustomerOrdersType">
+        <xs:annotation>
+            <xs:documentation>No ordered I customer is included</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="HistoricICustomerOrdersType">
+        <xs:restriction base="xs:boolean"/>
+    </xs:simpleType>
+    <xs:element name="NoHistoricICustomerOrders" type="tns:HistoricICustomerOrdersType">
+        <xs:annotation>
+            <xs:documentation>No historic I customer is included</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="DrBeregningIdType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="DrBeregningId" type="tns:DrBeregningIdType">
+        <xs:annotation>
+            <xs:documentation>id for the dr beregning</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="CalculationDateType">
+        <xs:restriction base="xs:date"/>
+    </xs:simpleType>
+    <xs:element name="CalculationDate" type="tns:CalculationDateType">
+        <xs:annotation>
+            <xs:documentation>The day of the calculation</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="KodaGroupType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="12"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="KodaGroup" type="tns:KodaGroupType">
+        <xs:annotation>
+            <xs:documentation>Koda group</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="CopyrightType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="Copyright" type="tns:CopyrightType">
+        <xs:annotation>
+            <xs:documentation>What sort of copyright</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="CopyrightYearType">
+        <xs:restriction base="xs:short"/>
+    </xs:simpleType>
+    <xs:element name="CopyrightYear" type="tns:CopyrightYearType">
+        <xs:annotation>
+            <xs:documentation>Year of copyright</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="KodaPriceType">
+        <xs:restriction base="xs:decimal"/>
+    </xs:simpleType>
+    <xs:element name="KodaPrice" type="tns:KodaPriceType">
+        <xs:annotation>
+            <xs:documentation>Koda price</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="ListPriceType">
+        <xs:restriction base="xs:decimal"/>
+    </xs:simpleType>
+    <xs:element name="ListPrice" type="tns:ListPriceType">
+        <xs:annotation>
+            <xs:documentation>List price</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="CopydanPriceType">
+        <xs:restriction base="xs:decimal"/>
+    </xs:simpleType>
+    <xs:element name="CopydanPrice" type="tns:CopydanPriceType">
+        <xs:annotation>
+            <xs:documentation>Copydan price</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="RadioCodaPriceType">
+        <xs:restriction base="xs:decimal"/>
+    </xs:simpleType>
+    <xs:element name="RadioCodaPrice" type="tns:RadioCodaPriceType">
+        <xs:annotation>
+            <xs:documentation>Radio coda price</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="TransferRuleType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="TransferRule" type="tns:TransferRuleType">
+        <xs:annotation>
+            <xs:documentation>Transfer rule</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="TransferredDateType">
+        <xs:restriction base="xs:date"/>
+    </xs:simpleType>
+    <xs:element name="TransferredDate" type="tns:TransferredDateType">
+        <xs:annotation>
+            <xs:documentation>Transferred date</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="PriceAgreementId" type="common:TimestampType">
+        <xs:annotation>
+            <xs:documentation>id for the price agreement</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="PriceAgreementNo" type="xs:int">
+        <xs:annotation>
+            <xs:documentation>The price agreement number</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="CustomerAgreementNo" type="xs:int">
+        <xs:annotation>
+            <xs:documentation>The customer agreement number</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+
+    <xs:simpleType name="IsBBType">
+        <xs:restriction base="xs:boolean"/>
+    </xs:simpleType>
+    <xs:element name="IsBB" type="tns:IsBBType">
+        <xs:annotation>
+            <xs:documentation>Is broad band or not</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="IsClearType">
+        <xs:restriction base="xs:boolean"/>
+    </xs:simpleType>
+    <xs:element name="IsClear" type="tns:IsClearType">
+        <xs:annotation>
+            <xs:documentation>Is clear or not</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="IsDigitalType">
+        <xs:restriction base="xs:boolean"/>
+    </xs:simpleType>
+    <xs:element name="IsDigital" type="tns:IsDigitalType">
+        <xs:annotation>
+            <xs:documentation>Is digital or not</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="CableUnitCountType">
+        <xs:restriction base="xs:int"/>
+    </xs:simpleType>
+    <xs:element name="CableUnitCount" type="tns:CableUnitCountType">
+        <xs:annotation>
+            <xs:documentation>Number of cable units</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="MaxRows" type="xs:int">
+        <xs:annotation>
+            <xs:documentation>Max number of rows</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="PriceAgreementNameType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="PriceAgreementName" type="tns:PriceAgreementNameType">
+        <xs:annotation>
+            <xs:documentation>name for the price agreement</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="TVPackageCodeType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="TVPackageCode" type="tns:TVPackageCodeType">
+        <xs:annotation>
+            <xs:documentation>Code definening tv packet</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="GraceEndDateType">
+        <xs:restriction base="xs:date"/>
+    </xs:simpleType>
+    <xs:element name="GraceEndDate" type="tns:GraceEndDateType">
+        <xs:annotation>
+            <xs:documentation>Grace periode end date</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="GracePakkeType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="GracePakke" type="tns:GracePakkeType">
+        <xs:annotation>
+            <xs:documentation>Grace tv pakke</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="RemarkDateType">
+        <xs:restriction base="xs:date"/>
+    </xs:simpleType>
+    <xs:element name="RemarkDate" type="tns:RemarkDateType">
+        <xs:annotation>
+            <xs:documentation>A date for cable number remark.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="RemarkHeadType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="RemarkHead" type="tns:RemarkHeadType">
+        <xs:annotation>
+            <xs:documentation>A head for cable number remark.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="RemarkTextType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="RemarkText" type="tns:RemarkTextType">
+        <xs:annotation>
+            <xs:documentation>A cable number remark text.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+</xs:schema>

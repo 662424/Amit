@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://header.cu.tdc.dk"
+           elementFormDefault="qualified" attributeFormDefault="unqualified"
+           targetNamespace="http://header.cu.tdc.dk">
+
+    <xs:complexType name="AuthorizationType">
+        <xs:sequence>
+            <xs:element name="SessionID" type="xs:string" minOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="AuthenticationHeader" type="tns:AuthorizationType"/>
+
+    <xs:simpleType name="RequestIdType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="RequestId" type="tns:RequestIdType"/>
+
+    <xs:simpleType name="OnBehalfOfUserIdType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="OnBehalfOfUserId" type="tns:OnBehalfOfUserIdType"/>
+
+</xs:schema>
