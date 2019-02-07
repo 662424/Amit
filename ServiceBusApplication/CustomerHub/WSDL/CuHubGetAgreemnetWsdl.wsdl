@@ -1,0 +1,1229 @@
+<!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is JAX-WS RI 2.2.10 svn-revision#919b322c92f13ad085a933e8dd6dd35d4947364b. --><wsdl:definitions targetNamespace="http://service.chub.tdc.dk" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://service.chub.tdc.dk" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:header="http://header.cu.tdc.dk" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:types>
+        <xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:import namespace="http://service.chub.tdc.dk" schemaLocation="../service/chub.xsd"/>
+            <xs:import namespace="http://header.cu.tdc.dk" schemaLocation="../service/Header.xsd"/>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="getCustomerLegacyKundenrRequest">
+        <wsdl:part name="parameters" element="ns:getCustomerLegacyKundenrRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getCustomerLegacyKundenrResponse">
+        <wsdl:part name="parameters" element="ns:getCustomerLegacyKundenrResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getPermissionItemListRequest">
+        <wsdl:part name="parameters" element="ns:getPermissionItemListRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getPermissionItemListResponse">
+        <wsdl:part name="parameters" element="ns:getPermissionItemListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getAgreementRequest">
+        <wsdl:part name="parameters" element="ns:getAgreement"/>
+    </wsdl:message>
+    <wsdl:message name="getAgreementResponse">
+        <wsdl:part name="parameters" element="ns:getAgreementResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getLinkitInfoRequest">
+        <wsdl:part name="parameters" element="ns:getLinkitInfo"/>
+    </wsdl:message>
+    <wsdl:message name="getLinkitInfoResponse">
+        <wsdl:part name="parameters" element="ns:getLinkitInfoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getCprNameAddressRequest">
+        <wsdl:part name="parameters" element="ns:getCprNameAddress"/>
+    </wsdl:message>
+    <wsdl:message name="getCprNameAddressResponse">
+        <wsdl:part name="parameters" element="ns:getCprNameAddressResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getAccountInformationRequest">
+        <wsdl:part name="parameters" element="ns:getAccountInformationRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getAccountInformationResponse">
+        <wsdl:part name="parameters" element="ns:getAccountInformationResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getHistoryAccountInformationRequest">
+        <wsdl:part name="parameters" element="ns:getHistoryAccountInformationRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getHistoryAccountInformationResponse">
+        <wsdl:part name="parameters" element="ns:getHistoryAccountInformationResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getCustomerInformationRequest">
+        <wsdl:part name="parameters" element="ns:getCustomerInformationRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getCustomerInformationResponse">
+        <wsdl:part name="parameters" element="ns:getCustomerInformationResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getSubscriptionInformationRequest">
+        <wsdl:part name="parameters" element="ns:getSubscriptionInformationRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getSubscriptionInformationResponse">
+        <wsdl:part name="parameters" element="ns:getSubscriptionInformationResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getCustomerSubscriptionsRequest">
+        <wsdl:part name="parameters" element="ns:getCustomerSubscriptionsRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getCustomerSubscriptionsResponse">
+        <wsdl:part name="parameters" element="ns:getCustomerSubscriptionsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getCustomerSubscriptionsVKRequest">
+        <wsdl:part name="parameters" element="ns:getCustomerSubscriptionsVKRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getCustomerSubscriptionsVKResponse">
+        <wsdl:part name="parameters" element="ns:getCustomerSubscriptionsVKResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getCustomerLIDRequest">
+        <wsdl:part name="parameters" element="ns:getCustomerLIDRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getCustomerLIDResponse">
+        <wsdl:part name="parameters" element="ns:getCustomerLIDResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getSubscriptionByCUOrderRequest">
+        <wsdl:part name="parameters" element="ns:getSubscriptionByCUOrderRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getSubscriptionByCUOrderResponse">
+        <wsdl:part name="parameters" element="ns:getSubscriptionByCUOrderResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getCustomerSubscriptionProductsRequest">
+        <wsdl:part name="parameters" element="ns:getCustomerSubscriptionProductsRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getCustomerSubscriptionProductsResponse">
+        <wsdl:part name="parameters" element="ns:getCustomerSubscriptionProductsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getAfsaetningRequest">
+        <wsdl:part name="parameters" element="ns:getAfsaetningRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getAfsaetningResponse">
+        <wsdl:part name="parameters" element="ns:getAfsaetningResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getStatusRequest">
+        <wsdl:part name="parameters" element="ns:getStatusRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getStatusResponse">
+        <wsdl:part name="parameters" element="ns:getStatusResponse"/>
+    </wsdl:message>
+    <wsdl:message name="migrateSubscriptionRequest">
+        <wsdl:part name="parameters" element="ns:migrateSubscriptionRequest"/>
+    </wsdl:message>
+    <wsdl:message name="migrateSubscriptionResponse">
+        <wsdl:part name="parameters" element="ns:migrateSubscriptionResponse"/>
+    </wsdl:message>
+
+    <wsdl:message name="listAccountsRequest">
+        <wsdl:part name="parameters" element="ns:listAccountsRequest"/>
+    </wsdl:message>
+    <wsdl:message name="listAccountsResponse">
+        <wsdl:part name="parameters" element="ns:listAccountsResponse"/>
+    </wsdl:message>
+
+    <wsdl:message name="getCprOrderNoCreationIfActiveRequest">
+        <wsdl:part name="parameters" element="ns:getCprOrderNoCreationIfActiveRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getCprOrderNoCreationIfActiveResponse">
+        <wsdl:part name="parameters" element="ns:getCprOrderNoCreationIfActiveResponse"/>
+    </wsdl:message>
+
+    <wsdl:message name="searchByAddressRequest">
+        <wsdl:part name="parameters" element="ns:searchByAddressRequest"/>
+    </wsdl:message>
+    <wsdl:message name="searchByAddressResponse">
+        <wsdl:part name="parameters" element="ns:searchByAddressResponse"/>
+    </wsdl:message>
+
+
+    <wsdl:message name="searchHistoryByAddressRequest">
+        <wsdl:part name="parameters" element="ns:searchHistoryByAddressRequest"/>
+    </wsdl:message>
+    <wsdl:message name="searchHistoryByAddressResponse">
+        <wsdl:part name="parameters" element="ns:searchHistoryByAddressResponse"/>
+    </wsdl:message>
+
+    <wsdl:message name="getNabsParametersRequest">
+        <wsdl:part name="parameters" element="ns:getNabsParametersRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getNabsParametersResponse">
+        <wsdl:part name="parameters" element="ns:getNabsParametersResponse"/>
+    </wsdl:message>
+
+    <wsdl:message name="getLidsRequest">
+        <wsdl:part name="parameters" element="ns:getLidsRequest"/>
+    </wsdl:message>
+
+    <wsdl:message name="getLidsResponse">
+        <wsdl:part name="parameters" element="ns:getLidsResponse"/>
+    </wsdl:message>
+
+    <wsdl:message name="getNextBillingDateRequest">
+        <wsdl:part name="parameters" element="ns:getNextBillingDateRequest"/>
+    </wsdl:message>
+
+    <wsdl:message name="getNextBillingDateResponse">
+        <wsdl:part name="parameters" element="ns:getNextBillingDateResponse"/>
+    </wsdl:message>
+
+    <wsdl:message name="findSubscriptionInKISRequest">
+        <wsdl:part name="parameters" element="ns:findSubscriptionInKISRequest"/>
+    </wsdl:message>
+
+    <wsdl:message name="findSubscriptionInKISResponse">
+        <wsdl:part name="parameters" element="ns:findSubscriptionInKISResponse"/>
+    </wsdl:message>
+
+    <wsdl:message name="checkSuspensionStatusRequest">
+        <wsdl:part name="parameters" element="ns:checkSuspensionStatusRequest"/>
+    </wsdl:message>
+
+    <wsdl:message name="checkSuspensionStatusResponse">
+        <wsdl:part name="parameters" element="ns:checkSuspensionStatusResponse"/>
+    </wsdl:message>
+
+    <wsdl:message name="searchVisitationRequest">
+        <wsdl:part name="parameters" element="ns:searchVisitationRequest"/>
+    </wsdl:message>
+
+    <wsdl:message name="searchVisitationResponse">
+        <wsdl:part name="parameters" element="ns:searchVisitationResponse"/>
+    </wsdl:message>
+
+    <wsdl:message name="getProductOfferingRequest">
+        <wsdl:part name="parameters" element="ns:getProductOfferingRequest"/>
+    </wsdl:message>
+
+    <wsdl:message name="getProductOfferingResponse">
+        <wsdl:part name="parameters" element="ns:getProductOfferingResponse"/>
+    </wsdl:message>
+
+    <wsdl:message name="getProductGroupsRequest">
+        <wsdl:part name="parameters" element="ns:getProductGroupsRequest"/>
+    </wsdl:message>
+
+    <wsdl:message name="getProductGroupsResponse">
+        <wsdl:part name="parameters" element="ns:getProductGroupsResponse"/>
+    </wsdl:message>
+
+    <wsdl:message name="getBroadbandServicesRequest">
+        <wsdl:part name="parameters" element="ns:getBroadbandServicesRequest"/>
+    </wsdl:message>
+
+    <wsdl:message name="getBroadbandServicesResponse">
+        <wsdl:part name="parameters" element="ns:getBroadbandServicesResponse"/>
+    </wsdl:message>
+
+    <wsdl:message name="getTrackAndTraceRequest">
+        <wsdl:part name="parameters" element="ns:getTrackAndTraceRequest"/>
+    </wsdl:message>
+
+    <wsdl:message name="getTrackAndTraceResponse">
+        <wsdl:part name="parameters" element="ns:getTrackAndTraceResponse"/>
+    </wsdl:message>
+
+    <!--    Added for OCustomerProducts:-->
+    <wsdl:message name="getCableUnitOCustomerProductsRequest">
+        <wsdl:part name="parameters" element="ns:getCableUnitOCustomerProductsRequest"/>
+    </wsdl:message>
+
+    <wsdl:message name="getCableUnitOCustomerProductsResponse">
+        <wsdl:part name="parameters" element="ns:getCableUnitOCustomerProductsResponse"/>
+    </wsdl:message>
+
+    <wsdl:message name="notFoundFault">
+        <wsdl:part name="error" element="ns:notFound"/>
+    </wsdl:message>
+
+    <wsdl:message name="validationFault">
+        <wsdl:part name="error" element="ns:validationError"/>
+    </wsdl:message>
+
+    <wsdl:message name="authorization">
+        <wsdl:part name="authorization" element="header:AuthenticationHeader"/>
+    </wsdl:message>
+    <wsdl:message name="requestId">
+        <wsdl:part name="requestId" element="header:RequestId"/>
+    </wsdl:message>
+    <wsdl:message name="onbehalfof">
+        <wsdl:part name="onbehalfof" element="header:OnBehalfOfUserId"/>
+    </wsdl:message>
+
+    <wsdl:portType name="ChubInterfacePortType">
+        <wsdl:operation name="getCustomerInformation">
+            <wsdl:documentation>
+                Get information about a CU customer. If request param links to more CU customers, a list is returned
+                Information returned includes Segment, Name, Address and email information
+
+                The algorithm is that we first look up the beta_nr (key for the account). And then we search for
+                agreements which are associated with the account (both in anlaegs_aftale and in aftale_lid).
+
+                All customer informations associated with the agreements are then displayed.
+
+                This imply that when we request for information of 1 customer, we may get information of several
+                customers.
+            </wsdl:documentation>
+            <wsdl:input message="ns:getCustomerInformationRequest" wsaw:Action="urn:getCustomerInformation"/>
+            <wsdl:output message="ns:getCustomerInformationResponse" wsaw:Action="urn:getCustomerInformationResponse"/>
+            <wsdl:fault name="notFoundFault" message="ns:notFoundFault"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="getCustomerLegacyKundenr">
+            <wsdl:input message="ns:getCustomerLegacyKundenrRequest" wsaw:Action="urn:getCustomerLegacyKundenr"/>
+            <wsdl:output message="ns:getCustomerLegacyKundenrResponse" wsaw:Action="urn:getCustomerLegacyKundenrResponse"/>
+            <wsdl:fault name="notFoundFault" message="ns:notFoundFault"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="getPermissionItemList">
+            <wsdl:input message="ns:getPermissionItemListRequest" wsaw:Action="urn:getPermissionItemList"/>
+            <wsdl:output message="ns:getPermissionItemListResponse" wsaw:Action="urn:getPermissionItemListResponse"/>
+            <wsdl:fault name="notFoundFault" message="ns:notFoundFault"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="getCustomerSubscriptions">
+            <wsdl:input message="ns:getCustomerSubscriptionsRequest" wsaw:Action="urn:getCustomerSubscriptions"/>
+            <wsdl:output message="ns:getCustomerSubscriptionsResponse" wsaw:Action="urn:getCustomerSubscriptionsResponse"/>
+            <wsdl:fault name="notFoundFault" message="ns:notFoundFault"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="getCustomerSubscriptionsVK">
+            <wsdl:input message="ns:getCustomerSubscriptionsVKRequest" wsaw:Action="urn:getCustomerSubscriptionsVK"/>
+            <wsdl:output message="ns:getCustomerSubscriptionsVKResponse" wsaw:Action="urn:getCustomerSubscriptionsVKResponse"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="getCustomerSubscriptionProducts">
+            <wsdl:input message="ns:getCustomerSubscriptionProductsRequest" wsaw:Action="urn:getCustomerSubscriptionProducts"/>
+            <wsdl:output message="ns:getCustomerSubscriptionProductsResponse" wsaw:Action="urn:getCustomerSubscriptionProductsResponse"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="getCustomerLID">
+            <wsdl:input message="ns:getCustomerLIDRequest" wsaw:Action="urn:getCustomerLID"/>
+            <wsdl:output message="ns:getCustomerLIDResponse" wsaw:Action="urn:getCustomerLIDResponse"/>
+            <wsdl:fault name="notFoundFault" message="ns:notFoundFault"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="getAgreement">
+            <wsdl:documentation>
+                Get information for given input. This operation returns information like customer name and addresses
+                account information and products.
+
+                The algorithm is that we first look up the beta_nr (key for the account). And then we search for
+                agreements which are associated with the account (both in anlaegs_aftale and in aftale_lid).
+
+                All customer informations associated with the agreements are then displayed.
+
+                This imply that when we request for information of 1 customer, we may get information of several
+                customers.
+            </wsdl:documentation>
+            <wsdl:input message="ns:getAgreementRequest" wsaw:Action="urn:getAgreement"/>
+            <wsdl:output message="ns:getAgreementResponse" wsaw:Action="urn:getAgreementResponse"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="getLinkitInfo">
+            <wsdl:input message="ns:getLinkitInfoRequest"/>
+            <wsdl:output message="ns:getLinkitInfoResponse"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="getCprNameAddress">
+            <wsdl:input message="ns:getCprNameAddressRequest"/>
+            <wsdl:output message="ns:getCprNameAddressResponse"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="getAccountInformation">
+            <wsdl:input message="ns:getAccountInformationRequest"/>
+            <wsdl:output message="ns:getAccountInformationResponse"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+            <wsdl:fault name="notFoundFault" message="ns:notFoundFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="getHistoryAccountInformation">
+            <wsdl:input message="ns:getHistoryAccountInformationRequest"/>
+            <wsdl:output message="ns:getHistoryAccountInformationResponse"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+            <wsdl:fault name="notFoundFault" message="ns:notFoundFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="getSubscriptionInformation">
+            <wsdl:input message="ns:getSubscriptionInformationRequest" wsaw:Action="urn:getSubscriptionInformation"/>
+            <wsdl:output message="ns:getSubscriptionInformationResponse" wsaw:Action="urn:getSubscriptionInformationResponse"/>
+            <wsdl:fault name="notFoundFault" message="ns:notFoundFault"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="getSubscriptionByCUOrder">
+            <wsdl:input message="ns:getSubscriptionByCUOrderRequest"/>
+            <wsdl:output message="ns:getSubscriptionByCUOrderResponse"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="getStatus">
+            <wsdl:input message="ns:getStatusRequest"/>
+            <wsdl:output message="ns:getStatusResponse"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="migrateSubscription">
+            <wsdl:input message="ns:migrateSubscriptionRequest"/>
+            <wsdl:output message="ns:migrateSubscriptionResponse"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+            <wsdl:fault name="notFoundFault" message="ns:notFoundFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="listAccounts">
+            <wsdl:input message="ns:listAccountsRequest"/>
+            <wsdl:output message="ns:listAccountsResponse"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+            <wsdl:fault name="notFoundFault" message="ns:notFoundFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="getCprOrderNoCreationIfActive">
+            <wsdl:input message="ns:getCprOrderNoCreationIfActiveRequest"/>
+            <wsdl:output message="ns:getCprOrderNoCreationIfActiveResponse"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+            <wsdl:fault name="notFoundFault" message="ns:notFoundFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="searchByAddress">
+            <wsdl:input message="ns:searchByAddressRequest"/>
+            <wsdl:output message="ns:searchByAddressResponse"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+            <wsdl:fault name="notFoundFault" message="ns:notFoundFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="searchHistoryByAddress">
+            <wsdl:input message="ns:searchHistoryByAddressRequest"/>
+            <wsdl:output message="ns:searchHistoryByAddressResponse"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+            <wsdl:fault name="notFoundFault" message="ns:notFoundFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="getNabsParameters">
+            <wsdl:input message="ns:getNabsParametersRequest"/>
+            <wsdl:output message="ns:getNabsParametersResponse"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+            <wsdl:fault name="notFoundFault" message="ns:notFoundFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="getAfsaetning">
+            <wsdl:input message="ns:getAfsaetningRequest"/>
+            <wsdl:output message="ns:getAfsaetningResponse"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+            <wsdl:fault name="notFoundFault" message="ns:notFoundFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="getLids">
+            <wsdl:input message="ns:getLidsRequest"/>
+            <wsdl:output message="ns:getLidsResponse"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+            <wsdl:fault name="notFoundFault" message="ns:notFoundFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="getNextBillingDate">
+            <wsdl:input message="ns:getNextBillingDateRequest"/>
+            <wsdl:output message="ns:getNextBillingDateResponse"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+            <wsdl:fault name="notFoundFault" message="ns:notFoundFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="findSubscriptionInKIS">
+            <wsdl:input message="ns:findSubscriptionInKISRequest"/>
+            <wsdl:output message="ns:findSubscriptionInKISResponse"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+            <wsdl:fault name="notFoundFault" message="ns:notFoundFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="checkSuspensionStatus">
+            <wsdl:input message="ns:checkSuspensionStatusRequest"/>
+            <wsdl:output message="ns:checkSuspensionStatusResponse"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+            <wsdl:fault name="notFoundFault" message="ns:notFoundFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="searchVisitation">
+            <wsdl:input message="ns:searchVisitationRequest"/>
+            <wsdl:output message="ns:searchVisitationResponse"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+            <wsdl:fault name="notFoundFault" message="ns:notFoundFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="getProductOffering">
+            <wsdl:input message="ns:getProductOfferingRequest"/>
+            <wsdl:output message="ns:getProductOfferingResponse"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+            <wsdl:fault name="notFoundFault" message="ns:notFoundFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="getProductGroups">
+            <wsdl:input message="ns:getProductGroupsRequest"/>
+            <wsdl:output message="ns:getProductGroupsResponse"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+            <wsdl:fault name="notFoundFault" message="ns:notFoundFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="getBroadbandServices">
+            <wsdl:input message="ns:getBroadbandServicesRequest"/>
+            <wsdl:output message="ns:getBroadbandServicesResponse"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+            <wsdl:fault name="notFoundFault" message="ns:notFoundFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="getTrackAndTrace">
+            <wsdl:input message="ns:getTrackAndTraceRequest"/>
+            <wsdl:output message="ns:getTrackAndTraceResponse"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+            <wsdl:fault name="notFoundFault" message="ns:notFoundFault"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="getCableUnitOCustomerProducts">
+            <wsdl:input message="ns:getCableUnitOCustomerProductsRequest"/>
+            <wsdl:output message="ns:getCableUnitOCustomerProductsResponse"/>
+            <wsdl:fault name="notFoundFault" message="ns:notFoundFault"/>
+            <wsdl:fault name="validationFault" message="ns:validationFault"/>
+        </wsdl:operation>
+
+
+    </wsdl:portType>
+    <wsdl:binding name="ChubInterfaceSoapBinding" type="ns:ChubInterfacePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="getCustomerLegacyKundenr">
+            <wsdl:documentation>
+                Get info on a customer from legacy
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:getCustomerLegacyKundenr" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="notFoundFault">
+                <soap:fault name="notFoundFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="getPermissionItemList">
+            <wsdl:documentation>
+                Get static information about the current permission rules
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:getPermissionItemList" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="notFoundFault">
+                <soap:fault name="notFoundFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="getCustomerInformation">
+            <wsdl:documentation>
+                Get information about a CU customer. If request param links to more CU customers, a list is returned
+                Information returned includes Segment, Name, Address and email information
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:getCustomerInformation" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="notFoundFault">
+                <soap:fault name="notFoundFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="getCustomerSubscriptions">
+            <wsdl:documentation>
+                List subscriptions for the given input (customer, cvr, account, cpr or...)
+                The list will by default include the customerNumber, address, accountNumber, subscriptionNumber and
+                subscriptionType
+                It adresses or accounts are not used from this response, you could speed things up by setting
+                IncludeAddresses and/or
+                includeAccounts to false.
+                AppendOrders allows you to say if you would like to see subscriptions as they are today, or in the
+                future.
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:getCustomerSubscriptions" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="notFoundFault">
+                <soap:fault name="notFoundFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="getCustomerSubscriptionsVK">
+            <wsdl:documentation>
+                In priciple same as getCustommerSubscriptions, but used for getting information about scale solutions.
+                Will list subscriptions for a Scale solution including mobile subscriptions.
+                To speed thinks up, you can remove addresses from the result på setting IncludeAddresses to false,
+                If you does not wants Mobiles in the result, this can be removed as well.
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:getCustomerSubscriptionsVK" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="getCustomerLID">
+            <wsdl:documentation>
+                Get the customerLID (FO??????) for this customer.
+                If you need a list of Subscriptions for a customer, the use getCustomerSubscriptions.
+                getCustomer lid is a way to get the lid that holds customer data like data sharing products.
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:getCustomerLID" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="notFoundFault">
+                <soap:fault name="notFoundFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="getAgreement">
+            <wsdl:documentation>
+                Get information for given input. This operation returns information like customer name and addresses
+                account information and products.
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:getAgreement" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="getLinkitInfo">
+            <wsdl:documentation>
+                Get linkit customer for an account, cvr or Ban
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:getLinkitInfo" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="getCprNameAddress">
+            <wsdl:documentation>
+                Get name and address info for a cpr identification
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:getCprNameAddress" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="getAccountInformation">
+            <wsdl:documentation>
+                Get information about an account. Including name and address information
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:getAccountInformation" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="notFoundFault">
+                <soap:fault name="notFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="getHistoryAccountInformation">
+            <wsdl:documentation>
+                Get historic information about an account.
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:getHistoryAccountInformation" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="notFoundFault">
+                <soap:fault name="notFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="getSubscriptionInformation">
+            <wsdl:documentation>
+                Get information about a subscription
+                Information returned includes Name, Address
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:getSubscriptionInformation" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="notFoundFault">
+                <soap:fault name="notFoundFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="getSubscriptionByCUOrder">
+            <wsdl:documentation>
+                Gets a subscription in SPC format for a customer made up of a number of cu order lines
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:getSubscriptionByCUOrder" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="getCustomerSubscriptionProducts">
+            <wsdl:documentation>
+                Gets products for a customer subscription. Subscription could be a list of subscriptions found for the
+                input given
+                or the actual subscription number.
+                The products returned is a hieracy, if only the main product is required, additional products can be
+                avoided in the list.
+                AppendOrders parameter is used to signal if you need the products on the subscription as they appear now
+                or in future
+                this is important if you need to se ordered products. (Pending orders are appended).
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:getCustomerSubscriptionProducts" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="getStatus">
+            <wsdl:documentation>
+                Simple status for the service
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:getStatus" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="migrateSubscription">
+            <wsdl:documentation>
+                Migrate subscription is used to give a starting point for changing a customer subscription.
+                If a subscription is migrated to a new (main) product, the result will give you a list of available
+                products for the
+                new product, including information about products that can be transferred from the old to the new
+                product.
+                Append orders if you need to get the subscription as it looks after appending all pending orders.
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:migrateSubscription" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="notFoundFault">
+                <soap:fault name="notFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="listAccounts">
+            <wsdl:documentation>
+                As name indicates you could get a list of accounts for given input e.g. LinkidId or Cvr.
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:listAccounts" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="notFoundFault">
+                <soap:fault name="notFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="getCprOrderNoCreationIfActive">
+            <wsdl:documentation>
+                Execute a simple query against the CPR number and ordre status, and returns Ordrenummer, kundenummer,
+                and userID
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:getCprOrderNoCreationIfActive" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="notFoundFault">
+                <soap:fault name="notFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="searchByAddress">
+            <wsdl:documentation>
+                search for customer based on an address or KVHXKey (KVHXKey includes municipality code, housekey, ...)
+                the result will include the CU customer number and name address information.
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:searchByAddress" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="notFoundFault">
+                <soap:fault name="notFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="searchHistoryByAddress">
+            <wsdl:documentation>
+                Search all customer history based an address
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:searchHistoryByAddress" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="notFoundFault">
+                <soap:fault name="notFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="getNabsParameters">
+            <wsdl:documentation>
+                Get paramerters for a nabs Ctn.
+                as input you selects the SPC product to hold the parameters.
+                This operation will then find products withing the SPC product that defines parameters that can be found
+                at this Nabs Ctn.
+                Result will list the Additional products that holds parameters and the values of those parameters.
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:getNabsParameters" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="notFoundFault">
+                <soap:fault name="notFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="getAfsaetning">
+            <wsdl:documentation>
+                Get afsaetning will return sellable products using StyretAfsaetning ruleset.
+                This operation has several inputs, and the result differs a lot depending on the input.
+                SubscriptionNumber: if subscriptionNumber is given, result will include current installation for this
+                lid.
+                InstallationSeqNo or AmsAdrNo: result will include optional installation on this address. this is equal
+                to SubscriptionNumber.
+                but its better as subscriptionNumber requires an installation, where SequenceNumber or AmsNo
+                will return data even if their is no current Subscription on the address.
+                Catalog: is required, as it defines the SPC catalog to map, unless CU products are requested.
+                SPProductCode: if given, data returned will only be about this SP product and below. If no SP product is
+                given result will only be SP products.
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:getAfsaetning" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="notFoundFault">
+                <soap:fault name="notFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="getLids">
+            <wsdl:documentation>
+                Given Account number, we are listing all active LIDs under that Account Number
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:getLids" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="notFoundFault">
+                <soap:fault name="notFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="getNextBillingDate">
+            <wsdl:documentation>
+                Given Account number(s), we are returning the next billing date
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:getNextBillingDate" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="notFoundFault">
+                <soap:fault name="notFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="findSubscriptionInKIS">
+            <wsdl:documentation>
+                Given subscription number, find if subscription is part of the KIS hierachy and active
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:findSubscriptionInKIS" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="notFoundFault">
+                <soap:fault name="notFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="checkSuspensionStatus">
+            <wsdl:documentation>
+                Given subscription number, we are checking if number has been suspended
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:checkSuspensionStatus" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="notFoundFault">
+                <soap:fault name="notFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="searchVisitation">
+            <wsdl:documentation>
+                Returns LID in much the same fashion as searchByAddress, but with some additional information.
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:searchVisitation" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="notFoundFault">
+                <soap:fault name="notFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="getProductOffering">
+            <wsdl:documentation>
+                The service will contain product groups and proudcts for coax technology that MAY e offered for sale
+                through a special Cable Unit.
+                It will also inducate whether the product may be sold to an O- customer or and I-customer on the
+                specific Cable Unit.
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:getProductOffering" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="notFoundFault">
+                <soap:fault name="notFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="getProductGroups">
+            <wsdl:documentation>
+                The service will return list of products on coax technology and their details from the given input of
+                product groups.
+                The service will be ajusted to SPC format.
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:getProductGroups" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="notFoundFault">
+                <soap:fault name="notFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="getBroadbandServices">
+            <wsdl:documentation>
+                The service will return list of broadband services for a customer.
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:getBroadbandServices" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="notFoundFault">
+                <soap:fault name="notFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="getTrackAndTrace">
+            <wsdl:documentation>
+                Get track and trace information from Iris
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:getTrackAndTrace" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="notFoundFault">
+                <soap:fault name="notFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="getCableUnitOCustomerProducts">
+            <wsdl:documentation>
+                Lists the products for the O customers regarding one particular
+            </wsdl:documentation>
+            <soap:operation soapAction="urn:listCableUnitOCustomerProducts" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:authorization" part="authorization" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:requestId" part="requestId" use="literal"/>
+                <soap:header encodingStyle="uri" message="ns:onbehalfof" part="onbehalfof" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="notFoundFault">
+                <soap:fault name="notFoundFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="validationFault">
+                <soap:fault name="validationFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:service name="ChubInterface">
+        <wsdl:port name="ChubInterfaceHttpSoapEndpoint" binding="ns:ChubInterfaceSoapBinding">
+            <soap:address location="http://chub-test.tdk.dk:80/chub/services/ChubInterface"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

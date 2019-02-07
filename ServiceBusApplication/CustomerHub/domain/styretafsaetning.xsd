@@ -1,0 +1,221 @@
+<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="http://service.chub.tdc.dk/domain/styretafsaetning" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:common="http://service.chub.tdc.dk" xmlns:tns="http://service.chub.tdc.dk/domain/styretafsaetning" xmlns:anl="http://service.chub.tdc.dk/domain/cableunit">
+
+    <xs:import namespace="http://service.chub.tdc.dk" schemaLocation="common.xsd"/>
+    <xs:import namespace="http://service.chub.tdc.dk/domain/cableunit" schemaLocation="CableUnit.xsd"/>
+
+    <xs:include schemaLocation="styretafsaetningSimple.xsd"/>
+
+    <xs:complexType name="CableUnitType">
+        <xs:sequence>
+            <xs:element ref="anl:CableUnitId"/>
+            <xs:element ref="anl:CableUnitNumber"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CableUnit" type="tns:CableUnitType">
+        <xs:annotation>
+            <xs:documentation>The cable unit (anl��g)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="CableUnitOfferingType">
+        <xs:sequence>
+            <xs:element ref="tns:CableUnitOfferingId" minOccurs="0"/>
+            <xs:element ref="tns:ProductGroupId"/>
+            <xs:element ref="common:ProduktGruppe" minOccurs="0"/>
+            <xs:element ref="common:ProduktElement" minOccurs="0"/>
+            <xs:element ref="common:ProduktFunktion" minOccurs="0"/>
+            <xs:element ref="tns:Kriterium"/>
+            <xs:element ref="tns:CustomerType"/>
+            <xs:element ref="tns:StartDate"/>
+            <xs:element ref="tns:EndDate"/>
+            <xs:element ref="common:LastUpdateTimestamp" minOccurs="0"/>
+            <xs:element ref="common:LastUpdateUser" minOccurs="0"/>
+            <xs:element ref="common:CreatedTimestamp" minOccurs="0"/>
+            <xs:element ref="common:CreatedUser" minOccurs="0"/>
+            <xs:element ref="common:Aendringsstatus" minOccurs="0"/>
+            <xs:element ref="anl:CableUnitId"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CableUnitOffering" type="tns:CableUnitOfferingType">
+        <xs:annotation>
+            <xs:documentation>Offering attaced a cable unit (anlaeg)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="CableUnitOfferingInfoType">
+        <xs:sequence>
+            <xs:element ref="tns:CableUnitOfferingId" minOccurs="0"/>
+            <xs:element ref="tns:ProductGroupInfo"/>
+            <xs:element ref="common:ProduktGruppe" minOccurs="0"/>
+            <xs:element ref="common:ProduktElement" minOccurs="0"/>
+            <xs:element ref="common:ProduktFunktion" minOccurs="0"/>
+            <xs:element ref="tns:Kriterium"/>
+            <xs:element ref="tns:CustomerType"/>
+            <xs:element ref="tns:StartDate"/>
+            <xs:element ref="tns:EndDate"/>
+            <xs:element ref="common:LastUpdateTimestamp" minOccurs="0"/>
+            <xs:element ref="common:LastUpdateUser" minOccurs="0"/>
+            <xs:element ref="common:CreatedTimestamp" minOccurs="0"/>
+            <xs:element ref="common:CreatedUser" minOccurs="0"/>
+            <xs:element ref="common:Aendringsstatus" minOccurs="0"/>
+            <xs:element ref="anl:CableUnitId"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CableUnitOfferingInfo" type="tns:CableUnitOfferingInfoType">
+        <xs:annotation>
+            <xs:documentation>Offering attaced a cable unit (anlaeg)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ProductGroupType">
+        <xs:sequence>
+            <xs:element ref="tns:ProductGroupId" minOccurs="0"/>
+            <xs:element ref="tns:ProductGroupCode"/>
+            <xs:element ref="tns:ProductGroupName"/>
+            <xs:element ref="tns:StartDate" minOccurs="0"/>
+            <xs:element ref="tns:EndDate" minOccurs="0"/>
+            <xs:element ref="tns:BusinessLineId"/>
+            <xs:element ref="tns:SortCode" minOccurs="0"/>
+            <xs:element ref="common:LastUpdateTimestamp" minOccurs="0"/>
+            <xs:element ref="common:LastUpdateUser" minOccurs="0"/>
+            <xs:element ref="common:CreatedTimestamp" minOccurs="0"/>
+            <xs:element ref="common:CreatedUser" minOccurs="0"/>
+            <xs:element ref="common:Aendringsstatus" minOccurs="0"/>
+            <xs:element ref="tns:GroupRelation" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="tns:ProductRelation" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ProductGroup" type="tns:ProductGroupType">
+        <xs:annotation>
+            <xs:documentation>Product group, that can be used on cable units(anlaeg)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ProductOfferingProductGroupType">
+        <xs:sequence>
+            <xs:element ref="tns:ProductGroupCode"/>
+            <xs:element ref="tns:ProductGroupName"/>
+            <xs:element ref="common:StartDate" minOccurs="0"/>
+            <xs:element ref="common:EndDate" minOccurs="0"/>
+            <xs:element ref="tns:CustomerType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ProductOfferingProductGroup" type="tns:ProductOfferingProductGroupType">
+        <xs:annotation>
+            <xs:documentation>Product group, that can be used on cable units(anlaeg)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ProductGroupListType">
+        <xs:sequence>
+            <xs:element ref="tns:ProductGroupCode"/>
+            <xs:element ref="tns:ProductGroupName"/>
+            <xs:element ref="common:ProductGroupProductList" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ProductGroupList" type="tns:ProductGroupListType">
+        <xs:annotation>
+            <xs:documentation>Product group, that can be used on cable units(anlaeg)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ListProductGroupType">
+        <xs:sequence>
+            <xs:element ref="tns:ProductGroupId" minOccurs="0"/>
+            <xs:element ref="tns:ProductGroupCode"/>
+            <xs:element ref="tns:ProductGroupName"/>
+            <xs:element ref="tns:StartDate" minOccurs="0"/>
+            <xs:element ref="tns:EndDate" minOccurs="0"/>
+            <xs:element ref="tns:BusinessLineId"/>
+            <xs:element ref="tns:SortCode" minOccurs="0"/>
+            <xs:element ref="common:LastUpdateTimestamp" minOccurs="0"/>
+            <xs:element ref="common:LastUpdateUser" minOccurs="0"/>
+            <xs:element ref="common:CreatedTimestamp" minOccurs="0"/>
+            <xs:element ref="common:CreatedUser" minOccurs="0"/>
+            <xs:element ref="common:Aendringsstatus" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ListProductGroup" type="tns:ListProductGroupType">
+        <xs:annotation>
+            <xs:documentation>List of Product groups, that can be used on cable units(anlaeg)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ProductGroupInfoType">
+        <xs:sequence>
+            <xs:element ref="tns:ProductGroupId" minOccurs="0"/>
+            <xs:element ref="tns:ProductGroupCode"/>
+            <xs:element ref="tns:ProductGroupName"/>
+            <xs:element ref="tns:StartDate"/>
+            <xs:element ref="tns:EndDate" minOccurs="0"/>
+            <xs:element ref="tns:BusinessLineId"/>
+            <xs:element ref="tns:SortCode"/>
+            <xs:element ref="common:Aendringsstatus"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ProductGroupInfo" type="tns:ProductGroupInfoType">
+        <xs:annotation>
+            <xs:documentation>Basic info about product group</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="BusinessLineType">
+        <xs:sequence>
+            <xs:element ref="tns:BusinessLineId" minOccurs="0"/>
+            <xs:element ref="tns:BusinessLineCode"/>
+            <xs:element ref="tns:BusinessLineName"/>
+            <xs:element ref="common:LastUpdateTimestamp" minOccurs="0"/>
+            <xs:element ref="common:LastUpdateUser" minOccurs="0"/>
+            <xs:element ref="common:CreatedTimestamp" minOccurs="0"/>
+            <xs:element ref="common:CreatedUser" minOccurs="0"/>
+            <xs:element ref="common:Aendringsstatus" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="BusinessLine" type="tns:BusinessLineType">
+        <xs:annotation>
+            <xs:documentation>Forretningsomr��de</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ProductGroupGroupRelationType">
+        <xs:sequence>
+            <xs:element ref="tns:ProductGroupGroupRelationId" minOccurs="0"/>
+            <xs:element name="ProductGroup" type="tns:ProductGroupGroupRelationIdType"/>
+            <xs:element ref="tns:StartDate" minOccurs="0"/>
+            <xs:element ref="tns:EndDate" minOccurs="0"/>
+            <xs:element ref="common:LastUpdateTimestamp" minOccurs="0"/>
+            <xs:element ref="common:LastUpdateUser" minOccurs="0"/>
+            <xs:element ref="common:CreatedTimestamp" minOccurs="0"/>
+            <xs:element ref="common:CreatedUser" minOccurs="0"/>
+            <xs:element ref="common:Aendringsstatus" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="GroupRelation" type="tns:ProductGroupGroupRelationType">
+        <xs:annotation>
+            <xs:documentation>Product group, relation to another product group</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ProductGroupProductRelationType">
+        <xs:sequence>
+            <xs:element ref="tns:ProductGroupProductRelationId" minOccurs="0"/>
+            <xs:element ref="common:ProduktGruppe"/>
+            <xs:element ref="common:ProduktElement"/>
+            <xs:element ref="common:ProduktFunktion"/>
+            <xs:element ref="tns:GodkendtAfsaetning"/>
+            <xs:element ref="tns:StartDate" minOccurs="0"/>
+            <xs:element ref="tns:EndDate" minOccurs="0"/>
+            <xs:element ref="common:LastUpdateTimestamp" minOccurs="0"/>
+            <xs:element ref="common:LastUpdateUser" minOccurs="0"/>
+            <xs:element ref="common:CreatedTimestamp" minOccurs="0"/>
+            <xs:element ref="common:CreatedUser" minOccurs="0"/>
+            <xs:element ref="common:Aendringsstatus" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ProductRelation" type="tns:ProductGroupProductRelationType">
+        <xs:annotation>
+            <xs:documentation>Product group relation to product</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+</xs:schema>

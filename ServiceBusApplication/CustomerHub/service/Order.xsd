@@ -1,0 +1,290 @@
+<xs:schema targetNamespace="http://service.tdc.dk/chub/order/v1" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.tdc.dk/chub/order/v1" xmlns:common="http://service.chub.tdc.dk">
+
+    <xs:include schemaLocation="../domain/Order.xsd"/>
+
+    <xs:import namespace="http://service.chub.tdc.dk" schemaLocation="../domain/common.xsd"/>
+
+    <xs:complexType name="GetOrderRequestType">
+        <xs:sequence>
+            <xs:element ref="common:UserId" minOccurs="0"/>
+            <xs:element ref="tns:OrderNumber"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="GetOrderRequest" type="tns:GetOrderRequestType">
+        <xs:annotation>
+            <xs:documentation>Test request.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="GetOrderResponseType">
+        <xs:complexContent>
+            <xs:extension base="common:CommonStandardReply">
+                <xs:sequence>
+                    <xs:element ref="tns:DetailedOrder"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="GetOrderResponse" type="tns:GetOrderResponseType">
+        <xs:annotation>
+            <xs:documentation>Get order request.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="GetOrderInfoRequestType">
+        <xs:sequence>
+            <xs:element ref="common:UserId" minOccurs="0"/>
+            <xs:element ref="tns:OrderNumber"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="GetOrderInfoRequest" type="tns:GetOrderInfoRequestType">
+        <xs:annotation>
+            <xs:documentation>Test request.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="GetOrderInfoType">
+        <xs:sequence>
+            <xs:element ref="tns:OrderInfo" minOccurs="1"/>
+            <xs:element ref="tns:OrderInfoNameAdress" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="GetOrderInfo" type="tns:GetOrderInfoType">
+        <xs:annotation>
+            <xs:documentation>Get order info response.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="GetOrderInfoResponseType">
+        <xs:complexContent>
+            <xs:extension base="common:CommonStandardReply">
+                <xs:sequence>
+                    <xs:element ref="tns:GetOrderInfo" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="GetOrderInfoResponse" type="tns:GetOrderInfoResponseType">
+        <xs:annotation>
+            <xs:documentation>Get order info response.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ListOrderInfoLinesRequestType">
+        <xs:sequence>
+            <xs:element ref="common:UserId" minOccurs="0"/>
+            <xs:element ref="tns:OrderNumber"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="ListOrderInfoLinesRequest" type="tns:ListOrderInfoLinesRequestType">
+        <xs:annotation>
+            <xs:documentation>Test request.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ListOrderInfoLinesType">
+        <xs:sequence>
+            <xs:element ref="tns:OrderInfoNameAdress" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="tns:OrderInfoLine" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="tns:SubOrderLine" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="ListOrderInfoLines" type="tns:ListOrderInfoLinesType">
+        <xs:annotation>
+            <xs:documentation>Get order info response.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ListOrderInfoLinesResponseType">
+        <xs:complexContent>
+            <xs:extension base="common:CommonStandardReply">
+                <xs:sequence>
+                    <xs:element ref="tns:ListOrderInfoLines" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="ListOrderInfoLinesResponse" type="tns:ListOrderInfoLinesResponseType">
+        <xs:annotation>
+            <xs:documentation>Get order info response.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ListLetterDestinationsRequestType">
+        <xs:sequence>
+            <xs:element ref="common:UserId" minOccurs="0"/>
+            <xs:element ref="tns:OrderNumber"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ListLetterDestinationsRequest" type="tns:ListLetterDestinationsRequestType">
+        <xs:annotation>
+            <xs:documentation>Request for list destinations (OFOR data)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ListLetterDestinationsType">
+        <xs:sequence>
+            <xs:element ref="tns:LetterDestination" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ListLetterDestinations" type="tns:ListLetterDestinationsType">
+        <xs:annotation>
+            <xs:documentation>Get order info response.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ListLetterDestinationsResponseType">
+        <xs:complexContent>
+            <xs:extension base="common:CommonStandardReply">
+                <xs:sequence>
+                    <xs:element ref="tns:ListLetterDestinations" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="ListLetterDestinationsResponse" type="tns:ListLetterDestinationsResponseType">
+        <xs:annotation>
+            <xs:documentation>Response with OFOR data.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ListOrdersRequestType">
+        <xs:sequence>
+            <xs:element ref="tns:UserId" minOccurs="0"/>
+            <xs:choice>
+                <xs:element ref="tns:LinkitId"/>
+                <xs:element ref="tns:CvrNumber"/>
+                <xs:element ref="tns:CustomerNo"/>
+                <xs:element ref="tns:AccountNo"/>
+                <xs:element ref="tns:SubscriptionNo" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element ref="tns:CaseNumber" minOccurs="0"/>
+            </xs:choice>
+            <xs:element ref="tns:HistoricalOrderStartDate" minOccurs="0"/>
+            <xs:element ref="tns:HistoricalOrderEndDate" minOccurs="0"/>
+            <xs:element ref="tns:CategoryData" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ListOrdersRequest" type="tns:ListOrdersRequestType">
+        <xs:annotation>
+            <xs:documentation>List order request.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ListOrdersResponseType">
+        <xs:complexContent>
+            <xs:extension base="common:CommonStandardReply">
+                <xs:sequence>
+                    <xs:element ref="tns:Order" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="ListOrdersResponse" type="tns:ListOrdersResponseType">
+        <xs:annotation>
+            <xs:documentation>List order response.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="notFound">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="error" type="xs:string"/>
+                <xs:element name="key" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="ListWorkTasksRequestType">
+        <xs:sequence>
+            <xs:element ref="tns:OrderNumber"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ListWorkTasksRequest" type="tns:ListWorkTasksRequestType">
+        <xs:annotation>
+            <xs:documentation>List work tasks for order request.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ListWorkTasksResponseType">
+        <xs:complexContent>
+            <xs:extension base="common:CommonStandardReply">
+                <xs:sequence>
+                    <xs:element ref="tns:WorkTask" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="ListWorkTasksResponse" type="tns:ListWorkTasksResponseType">
+        <xs:annotation>
+            <xs:documentation>List work tasks for order response.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ListOrderProductsRequestType">
+        <xs:sequence>
+            <xs:element ref="common:UserId" minOccurs="0"/>
+            <xs:choice>
+                <xs:element ref="tns:OrderNumber"/>
+                <xs:element ref="tns:InstalSeqNo"/>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="ListOrderProductsRequest" type="tns:ListOrderProductsRequestType">
+        <xs:annotation>
+            <xs:documentation>List work tasks for order request.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ListOrderProductsResponseType">
+        <xs:complexContent>
+            <xs:extension base="common:CommonStandardReply">
+                <xs:sequence>
+                    <xs:element ref="tns:OrderProducts" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="ListOrderProductsResponse" type="tns:ListOrderProductsResponseType">
+        <xs:annotation>
+            <xs:documentation>List work tasks for order response.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ListCableUnitOrdersRequestType">
+        <xs:sequence>
+            <xs:element ref="common:UserId" minOccurs="0"/>
+            <xs:choice>
+                <xs:element ref="tns:CableUnitNumber"/>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="ListCableUnitOrdersRequest" type="tns:ListCableUnitOrdersRequestType">
+        <xs:annotation>
+            <xs:documentation>List orders on a cable unit request.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ListCableUnitOrdersResponseType">
+        <xs:complexContent>
+            <xs:extension base="common:CommonStandardReply">
+                <xs:sequence>
+                    <xs:element ref="tns:CableUnitOrder" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="ListCableUnitOrdersResponse" type="tns:ListCableUnitOrdersResponseType">
+        <xs:annotation>
+            <xs:documentation>List orders for cable unit response.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+</xs:schema>

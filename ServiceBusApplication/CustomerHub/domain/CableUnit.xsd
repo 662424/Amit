@@ -1,0 +1,585 @@
+<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="http://service.chub.tdc.dk/domain/cableunit" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:common="http://service.chub.tdc.dk" xmlns:tns="http://service.chub.tdc.dk/domain/cableunit" xmlns:domain="http://service.chub.tdc.dk/domain/cableunit" xmlns:adr="http://service.chub.tdc.dk/domain/address" xmlns:afs="http://service.chub.tdc.dk/domain/styretafsaetning">
+
+    <xs:import namespace="http://service.chub.tdc.dk" schemaLocation="common.xsd"/>
+    <xs:import namespace="http://service.chub.tdc.dk/domain/address" schemaLocation="address.xsd"/>
+    <xs:import namespace="http://service.chub.tdc.dk/domain/styretafsaetning" schemaLocation="styretafsaetning.xsd"/>
+    <xs:import namespace="http://service.chub.tdc.dk/cuproduct" schemaLocation="cuproduct.xsd"/>
+
+    <xs:include schemaLocation="CableUnitSimple.xsd"/>
+
+    <xs:complexType name="InstalSeqNoListType">
+        <xs:sequence>
+            <xs:element ref="tns:InstalSeqNo" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="InstalSeqNoList" type="tns:InstalSeqNoListType">
+        <xs:annotation>
+            <xs:documentation>A list of Installation sequence number</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="CableUnitChannelType">
+        <xs:sequence>
+            <xs:element ref="tns:CableUnitNumber"/>
+            <xs:element ref="tns:CableUnitNumberString"/>
+            <xs:element ref="tns:PackageId" minOccurs="0"/>
+            <xs:element ref="tns:PackageName" minOccurs="0"/>
+            <xs:element ref="tns:ProgramContentId"/>
+            <xs:element ref="tns:ProgramId" minOccurs="0"/>
+            <xs:element ref="tns:ProgramName" minOccurs="0"/>
+            <xs:element ref="tns:ProgramNr" minOccurs="0"/>
+            <xs:element ref="tns:SubnetId" minOccurs="0"/>
+            <xs:element ref="tns:Qam" minOccurs="0"/>
+            <xs:element ref="tns:Frequency" minOccurs="0"/>
+            <xs:element ref="tns:ChannelNr"/>
+            <xs:element ref="tns:StartDate"/>
+            <xs:element ref="tns:EndDate"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CableUnitChannel" type="tns:CableUnitChannelType">
+        <xs:annotation>
+            <xs:documentation>The cable unit Channel (ARY_DW.v_ary_cableunitprograms)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="CableUnitChannelV2Type">
+        <xs:sequence>
+            <xs:element ref="tns:ChannelNr"/>
+            <xs:element ref="tns:Frequency" minOccurs="0"/>
+            <xs:element ref="tns:ProgramId"/>
+            <xs:element ref="tns:ProgramName"/>
+            <xs:element ref="tns:LockStatus" minOccurs="0"/>
+            <xs:element ref="tns:StartDate" minOccurs="0"/>
+            <xs:element ref="tns:EndDate" minOccurs="0"/>
+            <xs:element ref="tns:Signaltype" minOccurs="0"/>
+            <xs:element ref="tns:Vendor" minOccurs="0"/>
+            <xs:element ref="tns:NodeId"/>
+            <xs:element ref="tns:PackageName" minOccurs="0"/>
+            <xs:element ref="tns:CableUnitNumber"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CableUnitChannelV2" type="tns:CableUnitChannelV2Type">
+        <xs:annotation>
+            <xs:documentation>The cable unit Channel V2 (V_KISS_PROGRAMHUDBUD)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="CableUnitType">
+        <xs:sequence>
+            <xs:element ref="tns:CableUnitId"/>
+            <xs:element ref="tns:CableUnitNumber"/>
+            <xs:element ref="tns:CableUnitName"/>
+            <xs:element ref="tns:SalesConcept"/>
+            <xs:element ref="tns:LiveDate"/>
+            <xs:element ref="tns:Owner"/>
+            <xs:element ref="tns:Service"/>
+            <xs:element ref="tns:Ophavsret"/>
+            <xs:element ref="tns:OphavsretYear"/>
+            <xs:element ref="tns:Sloejfe"/>
+            <xs:element ref="tns:DeadlineDate"/>
+            <xs:element ref="tns:EarlyLiveDate"/>
+            <xs:element ref="tns:InactiveDate"/>
+            <xs:element ref="tns:FastlaastPris"/>
+            <xs:element ref="tns:TopGruppe"/>
+            <xs:element ref="tns:KabelType"/>
+            <xs:element ref="tns:YouseeMore"/>
+            <xs:element ref="tns:BbUrl"/>
+            <xs:element ref="tns:TvUrl"/>
+            <xs:element ref="tns:CollectiveOffer"/>
+            <xs:element ref="tns:PrisLaas"/>
+            <xs:element ref="tns:PrisFastsatDato"/>
+            <xs:element ref="tns:RettighedsLaas"/>
+            <xs:element ref="tns:RettighedsDato"/>
+            <xs:element ref="tns:PrisGruppeNy"/>
+            <xs:element ref="tns:HarmoniseringStatus"/>
+            <xs:element ref="tns:HarmoniseringDato"/>
+            <xs:element ref="tns:Institution"/>
+            <xs:element ref="tns:RettighedsStyring"/>
+            <xs:element ref="tns:DTVUClear"/>
+            <xs:element ref="tns:BBUClear"/>
+            <xs:element ref="tns:BbWithoutTv"/>
+            <xs:element ref="tns:AllowIsp"/>
+            <xs:element ref="tns:ParcelEtage"/>
+            <xs:element ref="tns:AfleveringPunkt"/>
+            <xs:element ref="tns:NoegleBoks"/>
+            <xs:element ref="tns:ModulPlacering"/>
+            <xs:element ref="tns:DocsisType"/>
+            <xs:element ref="tns:NodeId" minOccurs="0"/>
+            <xs:element ref="common:LastUpdateTimestamp"/>
+            <xs:element ref="common:LastUpdateUser"/>
+
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CableUnit" type="tns:CableUnitType">
+        <xs:annotation>
+            <xs:documentation>The cable unit (anl��g)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="CableUnitStreetNameType">
+        <xs:sequence>
+            <xs:element ref="adr:StreetNameLabel"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CableUnitStreetName" type="tns:CableUnitStreetNameType">
+        <xs:annotation>
+            <xs:documentation>The street names for the cable unit (anl��g)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+
+    <xs:complexType name="CableUnitTextType">
+        <xs:sequence>
+            <xs:element ref="tns:CableUnitTextId"/>
+            <xs:element ref="tns:CableUnitId"/>
+            <xs:element ref="tns:TextKind"/>
+            <xs:element ref="tns:Text"/>
+            <xs:element ref="tns:StartDate"/>
+            <xs:element ref="tns:EndDate"/>
+            <xs:element ref="afs:BusinessLineId"/>
+            <xs:element ref="common:LastUpdateTimestamp"/>
+            <xs:element ref="common:LastUpdateUser"/>
+            <xs:element ref="common:CreatedUser"/>
+            <xs:element ref="common:Aendringsstatus"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CableUnitText" type="tns:CableUnitTextType">
+        <xs:annotation>
+            <xs:documentation>Text on a cable unit</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="CableUnitLockType">
+        <xs:sequence>
+            <xs:element ref="tns:CableUnitLockId"/>
+            <xs:element ref="tns:CableUnitId"/>
+            <xs:element ref="tns:StartDate"/>
+            <xs:element ref="tns:EndDate"/>
+            <xs:element ref="tns:ExpectedEndDate"/>
+            <xs:element ref="tns:LockText"/>
+            <xs:element ref="afs:BusinessLineId"/>
+            <xs:element ref="tns:LockCodeId"/>
+            <xs:element ref="tns:ResponsibleLock"/>
+            <xs:element ref="tns:DropRekvKoer"/>
+            <xs:element ref="tns:CreatedBy"/>
+            <xs:element ref="common:LastUpdateTimestamp"/>
+            <xs:element ref="common:LastUpdateUser"/>
+            <xs:element ref="common:CreatedUser"/>
+            <xs:element ref="common:Aendringsstatus"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CableUnitLock" type="tns:CableUnitLockType">
+        <xs:annotation>
+            <xs:documentation>Lock on a cable unit</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="AccountLockType">
+        <xs:sequence>
+            <xs:element ref="tns:AccountLockId"/>
+            <xs:element ref="common:AccountNumber"/>
+            <xs:element ref="tns:StartDate"/>
+            <xs:element ref="tns:EndDate"/>
+            <xs:element ref="tns:ExpectedEndDate"/>
+            <xs:element ref="tns:LockText"/>
+            <xs:element ref="afs:BusinessLineId"/>
+            <xs:element ref="tns:LockCodeId"/>
+            <xs:element ref="common:LastUpdateTimestamp"/>
+            <xs:element ref="common:LastUpdateUser"/>
+            <xs:element ref="common:CreatedUser"/>
+            <xs:element ref="tns:ResponsibleLock"/>
+            <xs:element ref="tns:DropRekvKoer"/>
+            <xs:element ref="common:Aendringsstatus"/>
+
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="AccountLock" type="tns:AccountLockType">
+        <xs:annotation>
+            <xs:documentation>Lock on an acccount (beta)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="AccountLockResponseType">
+        <xs:sequence>
+            <xs:element ref="tns:AccountLockId"/>
+            <xs:element ref="common:AccountNumber"/>
+            <xs:element ref="tns:StartDate"/>
+            <xs:element ref="tns:EndDate"/>
+            <xs:element ref="tns:ExpectedEndDate"/>
+            <xs:element ref="tns:LockText"/>
+            <xs:element ref="afs:BusinessLineId"/>
+            <xs:element ref="tns:LockCodeId"/>
+            <xs:element ref="tns:DropRekvKoer"/>
+            <xs:element ref="common:LastUpdateTimestamp"/>
+            <xs:element ref="common:LastUpdateUser"/>
+            <xs:element ref="common:CreatedUser"/>
+            <xs:element ref="tns:ResponsibleLock"/>
+            <xs:element ref="common:Aendringsstatus"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="AccountLockResponse" type="tns:AccountLockResponseType">
+        <xs:annotation>
+            <xs:documentation>Lock on an acccount (beta)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="LockType">
+        <xs:sequence>
+            <xs:element ref="tns:LockCodeId"/>
+            <xs:element ref="tns:LockCode"/>
+            <xs:element ref="tns:LockName"/>
+            <xs:element ref="tns:LockSource"/>
+            <xs:element ref="tns:LockFakturering"/>
+            <xs:element ref="tns:LockOasis"/>
+            <xs:element ref="tns:LockSelvbetjening"/>
+            <xs:element ref="tns:LockEkstern"/>
+            <xs:element ref="common:LastUpdateTimestamp"/>
+            <xs:element ref="common:LastUpdateUser"/>
+            <xs:element ref="common:CreatedUser"/>
+            <xs:element ref="common:Aendringsstatus"/>
+
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="Lock" type="tns:LockType">
+        <xs:annotation>
+            <xs:documentation>Lock types (laas)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="InstallationType">
+        <xs:sequence>
+            <xs:element ref="tns:InstallationId"/>
+            <xs:element ref="adr:IndlandsAddress"/>
+            <xs:element ref="tns:KabelType" minOccurs="0"/>
+            <xs:element ref="tns:InstalSeqNo" minOccurs="0"/>
+            <xs:element ref="adr:AmsAdrNo" minOccurs="0"/>
+            <xs:element ref="tns:State" minOccurs="0"/>
+            <xs:element ref="tns:Location" minOccurs="0"/>
+            <xs:element ref="tns:StartDate" minOccurs="0"/>
+            <xs:element ref="tns:EndDate" minOccurs="0"/>
+            <xs:element ref="tns:GraceEndDate" minOccurs="0"/>
+            <xs:element ref="tns:GracePakke" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="Installation" type="tns:InstallationType">
+        <xs:annotation>
+            <xs:documentation>The cable unit (anl��g)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="InstallationSubscriptionType">
+        <xs:sequence>
+            <xs:element ref="tns:Installation"/>
+            <xs:element name="Lid" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="InstallationSubscription" type="tns:InstallationSubscriptionType">
+        <xs:annotation>
+            <xs:documentation>The cable unit (anl��g)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ChangedCableUnitType">
+        <xs:sequence>
+            <xs:element ref="tns:CableUnitNumber"/>
+            <xs:element ref="tns:CableUnitName"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ChangedCableUnit" type="tns:ChangedCableUnitType">
+        <xs:annotation>
+            <xs:documentation>Information about a changed cable unit</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ChangedLidType">
+        <xs:sequence>
+            <xs:element ref="tns:LidNumber"/>
+            <xs:element ref="tns:CableUnitNumber"/>
+            <xs:element ref="tns:CableUnitName"/>
+            <xs:element ref="tns:InstalSeqNo" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ChangedLid" type="tns:ChangedLidType">
+        <xs:annotation>
+            <xs:documentation>Information about a changed lid</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ActiveProductType">
+        <xs:sequence>
+            <xs:element ref="common:ProduktAntal"/>
+            <xs:element ref="common:ProduktGruppe"/>
+            <xs:element ref="common:ProduktElement"/>
+            <xs:element ref="common:ProduktFunktion"/>
+            <xs:element ref="common:AfsaetningType"/>
+            <xs:element ref="common:CalculationDate" minOccurs="0"/>
+            <xs:element ref="afs:CustomerType" minOccurs="0"/>
+            <xs:element ref="tns:InstalSeqNo" minOccurs="0"/>
+            <xs:element ref="tns:HasOrder" minOccurs="0"/>
+            <xs:element ref="common:AccountNumber" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ActiveProduct" type="tns:ActiveProductType">
+        <xs:annotation>
+            <xs:documentation>Installed product</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="AccountType">
+        <xs:sequence>
+            <xs:element ref="common:AccountNumber"/>
+            <xs:element ref="common:CustomerNumber"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="Account" type="tns:AccountType">
+        <xs:annotation>
+            <xs:documentation>Konto oplysninger</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="CableUnitAddressCustomerOrderType">
+        <xs:sequence>
+            <xs:element ref="tns:StartDate" minOccurs="0"/>
+            <xs:element ref="tns:EndDate" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CableUnitAddressOrderCustomer" type="tns:CableUnitAddressCustomerOrderType">
+        <xs:annotation>
+            <xs:documentation>cable unit (anl��g) address customer order information</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="CableUnitAddressCustomerType">
+        <xs:sequence>
+            <xs:element ref="common:CustomerNo"/>
+            <xs:element ref="tns:StartDate" minOccurs="0"/>
+            <xs:element ref="common:SubscriptionNo" minOccurs="0"/>
+            <xs:element ref="tns:CableUnitAddressOrderCustomer" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CableUnitAddressCustomer" type="tns:CableUnitAddressCustomerType">
+        <xs:annotation>
+            <xs:documentation>cable unit (anl��g) address customer information</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="CableUnitAddressType">
+        <xs:sequence>
+            <xs:element ref="tns:InstallationId"/>
+            <xs:element ref="adr:IndlandsAddress"/>
+            <xs:element ref="tns:KabelType" minOccurs="0"/>
+            <xs:element ref="tns:InstalSeqNo" minOccurs="0"/>
+            <xs:element ref="adr:AmsAdrNo" minOccurs="0"/>
+            <xs:element ref="tns:State" minOccurs="0"/>
+            <xs:element ref="tns:Location" minOccurs="0"/>
+            <xs:element ref="tns:StartDate" minOccurs="0"/>
+            <xs:element ref="tns:EndDate" minOccurs="0"/>
+            <xs:element ref="tns:GraceEndDate" minOccurs="0"/>
+            <xs:element ref="tns:CableUnitAddressCustomer" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CableUnitAddress" type="tns:CableUnitAddressType">
+        <xs:annotation>
+            <xs:documentation>cable unit (anl��g) address information</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="InstalGraceType">
+        <xs:sequence>
+            <xs:element ref="tns:TVPackageCode"/>
+            <xs:element ref="tns:GraceEndDate"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="InstalGrace" type="tns:InstalGraceType">
+        <xs:annotation>
+            <xs:documentation>istal grace type</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+
+    <xs:complexType name="CableUnitRemarkType">
+        <xs:sequence>
+            <xs:element ref="tns:CableUnitNumber"/>
+            <xs:element ref="tns:RemarkHead"/>
+            <xs:element ref="tns:RemarkText"/>
+            <xs:element ref="tns:RemarkDate"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CableUnitRemark" type="tns:CableUnitRemarkType">
+        <xs:annotation>
+            <xs:documentation>Cable unit remarks</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="InstalChangesOrderLineType">
+        <xs:sequence>
+            <xs:element ref="common:TransaktionsType" minOccurs="0"/>
+            <xs:element ref="common:ProductCount" minOccurs="0"/>
+            <xs:element ref="common:AfsaetningType" minOccurs="0"/>
+            <xs:element name="ProductNumber" type="xs:string" minOccurs="0"/>
+            <xs:element name="BetalerAccountNumber" type="common:AccountNumberType" minOccurs="0"/>
+            <xs:element name="ProductCustomerTekst" type="xs:string" minOccurs="0"/>
+            <xs:element name="IdriftMrk" type="xs:string" minOccurs="0"/>
+            <xs:element name="OrderDato" type="xs:date" minOccurs="0"/>
+            <xs:element name="UdfoertDato" type="xs:date" minOccurs="0"/>
+            <xs:element name="FakturerDato" type="xs:date" minOccurs="0"/>
+            <xs:element name="BeregnDato" type="xs:date" minOccurs="0"/>
+            <xs:element name="StartDato" type="xs:date" minOccurs="0"/>
+            <xs:element ref="tns:Sortering" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="InstalChangesOrderLine" type="tns:InstalChangesOrderLineType"/>
+
+    <xs:complexType name="InstalChangesOrderType">
+        <xs:sequence>
+            <xs:element name="OrderNumber" type="xs:long" minOccurs="0"/>
+            <xs:element name="OrderStatus" type="xs:int" minOccurs="0"/>
+            <xs:element name="UpdateInit" type="xs:string" minOccurs="0"/>
+            <xs:element name="KundesagsKode" type="xs:string" minOccurs="0"/>
+            <xs:element name="JuridiskAccountNumber" type="common:AccountNumberType" minOccurs="0"/>
+            <xs:element ref="common:SubscriptionNo" minOccurs="0"/>
+            <xs:element ref="tns:InstalChangesOrderLine" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="InstalChangesOrder" type="tns:InstalChangesOrderType"/>
+
+    <xs:complexType name="InstalChangesAddressType">
+        <xs:sequence>
+            <xs:element ref="adr:StreetName" minOccurs="0"/>
+            <xs:element ref="adr:HouseKey" minOccurs="0"/>
+            <xs:element ref="adr:Floor" minOccurs="0"/>
+            <xs:element ref="adr:HouseLetter" minOccurs="0"/>
+            <xs:element ref="adr:Side" minOccurs="0"/>
+            <xs:element ref="adr:Zip" minOccurs="0"/>
+            <xs:element ref="adr:Village" minOccurs="0"/>
+            <xs:element ref="adr:City" minOccurs="0"/>
+            <xs:element name="Location" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="InstalChangesAddress" type="tns:InstalChangesAddressType"/>
+
+    <xs:complexType name="InstalChangesType">
+        <xs:sequence>
+            <xs:element ref="tns:InstalSeqNo" minOccurs="0"/>
+            <xs:element ref="tns:InstalChangesAddress" minOccurs="0"/>
+            <xs:element ref="tns:InstalChangesOrder" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="InstalChanges" type="tns:InstalChangesType"/>
+
+    <xs:complexType name="CableUnitDigitalProductsType">
+        <xs:sequence>
+            <xs:element ref="tns:IsBB"/>
+            <xs:element ref="tns:IsClear"/>
+            <xs:element ref="tns:IsDigital"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CableUnitDigitalProducts" type="tns:CableUnitDigitalProductsType"/>
+
+    <xs:complexType name="GetInstallationsProductsType">
+        <xs:sequence>
+            <xs:element ref="common:CustomerNo"/>
+            <xs:element ref="common:SubscriptionNo"/>
+            <xs:element ref="common:ProduktGruppe"/>
+            <xs:element ref="common:ProduktElement"/>
+            <xs:element ref="common:ProduktFunktion"/>
+            <xs:element ref="tns:StartDate" minOccurs="0"/>
+            <!--            <xs:element name="BetalerAccountNumber" type="common:AccountNumberType" minOccurs="0"/> -->
+            <xs:element name="JuridiskAccountNumber" type="common:AccountNumberType" minOccurs="0"/>
+            <xs:element ref="tns:InstalSeqNo" minOccurs="0"/>
+            <xs:element ref="tns:InstalChangesAddress"/>
+            <xs:element ref="afs:CustomerType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="GetInstallationsProducts" type="tns:GetInstallationsProductsType"/>
+
+    <xs:complexType name="GetCableUnitDigitalProductsType">
+        <xs:sequence>
+            <xs:element ref="tns:CustomerAgreementNo" minOccurs="0"/>
+            <xs:element ref="common:SubscriptionNo"/>
+            <xs:element ref="adr:IndlandsAddress"/>
+            <xs:element ref="tns:CableUnitDigitalProducts"/>
+            <xs:element name="JuridiskAccountNumber" type="common:AccountNumberType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="GetCableUnitDigitalProducts" type="tns:GetCableUnitDigitalProductsType"/>
+
+    <xs:complexType name="ListDocumentElementType">
+        <xs:sequence>
+            <xs:element ref="tns:CtiDocumentId"/>
+            <xs:element ref="tns:DocumentType"/>
+            <xs:element ref="tns:ElementName1"/>
+            <xs:element ref="tns:ElementName2"/>
+            <xs:element ref="tns:ElementName3"/>
+            <xs:element ref="tns:PgmName"/>
+            <xs:element ref="common:CreatedUser"/>
+            <xs:element ref="tns:CtiDocStatus"/>
+            <xs:element ref="tns:DocumentGuidingText"/>
+            <xs:element ref="common:CrapDokumentAendringsstatus"/>
+            <xs:element ref="common:LastUpdateTimestamp"/>
+            <xs:element ref="common:LastUpdateUser"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ListDocumentElement" type="tns:ListDocumentElementType"/>
+
+    <xs:complexType name="GetDocumentDetailType">
+        <xs:sequence>
+            <xs:element ref="tns:CtiDocuLineId"/>
+            <xs:element ref="tns:CtiDocumentId"/>
+            <xs:element ref="tns:DocumentLineNo"/>
+            <xs:element ref="tns:ControlSign"/>
+            <xs:element ref="tns:DocumentLine"/>
+            <xs:element ref="tns:DocumentLineLength"/>
+            <xs:element ref="common:CrapDokumentLineAendringsstatus"/>
+            <xs:element ref="common:LastUpdateTimestamp"/>
+            <xs:element ref="common:LastUpdateUser"/>
+            <xs:element ref="tns:DocumentLine1"/>
+            <xs:element ref="tns:DocumentLine2"/>
+            <xs:element ref="tns:DocumentLine3"/>
+            <xs:element ref="tns:DocumentLine4"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="GetDocumentDetail" type="tns:GetDocumentDetailType"/>
+
+    <xs:complexType name="ListDocumentLineType">
+        <xs:sequence>
+            <xs:element ref="tns:CtiDocumentIxId"/>
+            <xs:element ref="tns:CtiKeyType"/>
+            <xs:element ref="tns:CtiKeyField"/>
+            <xs:element ref="tns:CtiDocumentId"/>
+            <xs:element ref="tns:CtiDocumentLineId"/>
+            <xs:element ref="common:Afviklingsstatus"/>
+            <xs:element ref="common:LastUpdateTimestamp"/>
+            <xs:element ref="common:LastUpdateUser"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ListDocumentLine" type="tns:ListDocumentLineType"/>
+
+    <xs:complexType name="ListCableUnitOrderStatusType">
+        <xs:sequence>
+            <xs:element name="OrderNumber" type="xs:long" minOccurs="0"/>
+            <xs:element name="OrderStatus" type="xs:int" minOccurs="0"/>
+            <xs:element ref="afs:CustomerType" minOccurs="0"/>
+            <xs:element ref="tns:InstalSeqNo" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ListCableUnitOrderStatus" type="tns:ListCableUnitOrderStatusType"/>
+
+    <xs:complexType name="ListDocumentRequestElementsType">
+        <xs:sequence>
+            <xs:element ref="tns:DocumentType"/>
+            <xs:element ref="tns:ElementName1" minOccurs="0"/>
+            <xs:element ref="tns:ElementName2" minOccurs="0"/>
+            <xs:element ref="tns:ElementName3" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ListDocumentRequestElements" type="tns:ListDocumentRequestElementsType"/>
+
+    <xs:complexType name="ListCableUnitInCSVResponse">
+        <xs:sequence>
+            <xs:element name="Status" type="xs:boolean"/>
+            <xs:element name="Reply" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ListCableUnitInCSV" type="tns:ListCableUnitInCSVResponse"/>
+</xs:schema>

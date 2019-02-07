@@ -1,0 +1,38 @@
+<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="http://service.chub.tdc.dk/cuproduct" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.chub.tdc.dk/cuproduct" xmlns:common="http://service.chub.tdc.dk">
+
+    <xs:import namespace="http://service.chub.tdc.dk" schemaLocation="commonSimple.xsd"/>
+
+    <xs:include schemaLocation="cuproductSimple.xsd"/>
+
+    <xs:complexType name="ProductNumberType">
+        <xs:sequence>
+            <xs:element ref="common:ProduktGruppe"/>
+            <xs:element ref="common:ProduktElement"/>
+            <xs:element ref="common:ProduktFunktion"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ProductNumber" type="tns:ProductNumberType">
+        <xs:annotation>
+            <xs:documentation>Cu Product nummer type</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="ProductInformationType">
+        <xs:sequence>
+            <xs:element ref="tns:ProductNumber"/>
+            <xs:element ref="tns:Farve"/>
+            <xs:element ref="tns:KundeTekst"/>
+            <xs:element ref="tns:KombiTekst"/>
+            <xs:element ref="tns:KundeTekstFlere"/>
+            <xs:element ref="tns:Frigivet" minOccurs="0"/>
+            <xs:element ref="tns:IkraftDato" minOccurs="0"/>
+            <xs:element ref="tns:UdloebDato" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ProductInformation" type="tns:ProductInformationType">
+        <xs:annotation>
+            <xs:documentation>Information om produkt</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+</xs:schema>

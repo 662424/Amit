@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://service.chub.tdc.dk/domain/address"
+           elementFormDefault="qualified" attributeFormDefault="unqualified"
+           targetNamespace="http://service.chub.tdc.dk/domain/address">
+
+    <xs:simpleType name="MadIdType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="MadId" type="tns:MadIdType">
+        <xs:annotation>
+            <xs:documentation>ADDRESSSPECIFICID alternate addressId (not GKS)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+
+    <xs:simpleType name="HouseTableKeyType">
+        <xs:restriction base="xs:long"/>
+    </xs:simpleType>
+    <xs:element name="HouseTableKey" type="tns:HouseTableKeyType">
+        <xs:annotation>
+            <xs:documentation>Key to the 'hus' table</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="HouseNameType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="HouseName" type="tns:HouseNameType">
+        <xs:annotation>
+            <xs:documentation>House name</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="BuildingType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="Building" type="tns:BuildingType">
+        <xs:annotation>
+            <xs:documentation>The building</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="MunicipalityCodeType">
+        <xs:restriction base="xs:int"/>
+    </xs:simpleType>
+    <xs:element name="MunicipalityCode" type="tns:MunicipalityCodeType">
+        <xs:annotation>
+            <xs:documentation>Kommune nr</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="MunicipalityNameType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="MunicipalityName" type="tns:MunicipalityNameType">
+        <xs:annotation>
+            <xs:documentation>Kommune navn</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="StreetNameType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="StreetName" type="tns:StreetNameType">
+        <xs:annotation>
+            <xs:documentation>Vejnavn</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="StreetNameLabelType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="StreetNameLabel" type="tns:StreetNameLabelType">
+        <xs:annotation>
+            <xs:documentation>En tekststreng med vejnavn + evt ekstra info</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+
+    <xs:simpleType name="StreetCodeType">
+        <xs:restriction base="xs:int"/>
+    </xs:simpleType>
+    <xs:element name="StreetCode" type="tns:StreetCodeType">
+        <xs:annotation>
+            <xs:documentation>Vejkode</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="HouseLetterType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="HouseLetter" type="tns:HouseLetterType">
+        <xs:annotation>
+            <xs:documentation>Opgang</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="SideType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="Side" type="tns:SideType">
+        <xs:annotation>
+            <xs:documentation>Side doer</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="FloorType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="Floor" type="tns:FloorType">
+        <xs:annotation>
+            <xs:documentation>Etage</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="ZipType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="Zip" type="tns:ZipType">
+        <xs:annotation>
+            <xs:documentation>Postnr</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="CityType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="City" type="tns:CityType">
+        <xs:annotation>
+            <xs:documentation>Postdistrikt</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="VillageType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="Village" type="tns:VillageType">
+        <xs:annotation>
+            <xs:documentation>Stednavn</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="HouseKeyType">
+        <xs:restriction base="xs:int"/>
+    </xs:simpleType>
+    <xs:element name="HouseKey" type="tns:HouseKeyType">
+        <xs:annotation>
+            <xs:documentation>Husnr</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="PrimaryLnType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="PrimaryLn" type="tns:PrimaryLnType">
+        <xs:annotation>
+            <xs:documentation>Adr linie 1</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="SecondaryLnType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="SecondaryLn" type="tns:SecondaryLnType">
+        <xs:annotation>
+            <xs:documentation>Adr linie 2</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+</xs:schema>

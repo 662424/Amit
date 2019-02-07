@@ -1,0 +1,61 @@
+<xs:schema targetNamespace="http://service.tdc.dk/chub/order/address/v1" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.tdc.dk/chub/order/address/v1">
+
+    <xs:include schemaLocation="InstallationAddressSimple.xsd"/>
+
+    <xs:complexType name="IndlandsAdresseType">
+        <xs:sequence>
+            <xs:element ref="tns:AddrId"/>
+            <xs:element ref="tns:AddressType" minOccurs="0"/>
+            <xs:element ref="tns:Country" minOccurs="0"/>
+            <xs:element ref="tns:State" minOccurs="0"/>
+            <xs:element ref="tns:MunicipalityCode" minOccurs="0"/>
+            <xs:element ref="tns:Municipality" minOccurs="0"/>
+            <xs:element ref="tns:Zip" minOccurs="0"/>
+            <xs:element ref="tns:City" minOccurs="0"/>
+            <xs:element ref="tns:Village" minOccurs="0"/>
+            <xs:element ref="tns:StreetName" minOccurs="0"/>
+            <xs:element ref="tns:StreetCode" minOccurs="0"/>
+            <xs:element ref="tns:HouseKey" minOccurs="0"/>
+            <xs:element ref="tns:HouseLetter" minOccurs="0"/>
+            <xs:element ref="tns:Floor" minOccurs="0"/>
+            <xs:element ref="tns:Side" minOccurs="0"/>
+            <xs:element ref="tns:ApartmentNo" minOccurs="0"/>
+            <xs:element ref="tns:Location" minOccurs="0"/>
+            <xs:element ref="tns:SubNo" minOccurs="0"/>
+            <xs:element ref="tns:LocalValidation" minOccurs="0"/>
+            <xs:element ref="tns:AddrExpireDate" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="IndlandsAdresse" type="tns:IndlandsAdresseType">
+        <xs:annotation>
+            <xs:documentation>Dansk adresse</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="UdlandsAdresseType">
+        <xs:sequence>
+            <xs:element ref="tns:PrimaryLn" minOccurs="0"/>
+            <xs:element ref="tns:SecondaryLn" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="UdlandsAdresse" type="tns:UdlandsAdresseType">
+        <xs:annotation>
+            <xs:documentation>Udenlandsk adresse</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="InstallationAddressType">
+        <xs:sequence>
+            <xs:choice>
+                <xs:element ref="tns:IndlandsAdresse"/>
+                <xs:element ref="tns:UdlandsAdresse"/>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="InstallationAddress" type="tns:InstallationAddressType">
+        <xs:annotation>
+            <xs:documentation>Installation address.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+</xs:schema>

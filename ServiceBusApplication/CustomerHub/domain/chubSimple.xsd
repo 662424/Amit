@@ -1,0 +1,340 @@
+<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="http://service.chub.tdc.dk" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.chub.tdc.dk">
+
+    <xs:include schemaLocation="commonSimple.xsd"/>
+
+    <xs:element name="IncludeAddresses" type="xs:boolean">
+        <xs:annotation>
+            <xs:documentation>Include addresses in output</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="IncludeSplitOwner" type="xs:boolean">
+        <xs:annotation>
+            <xs:documentation>Include data related to split ownership in output</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="ProductRequired" type="xs:boolean">
+        <xs:annotation>
+            <xs:documentation>The customer has to buy this product</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="IncludeAccounts" type="xs:boolean">
+        <xs:annotation>
+            <xs:documentation>Include accounts in output</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="IncludeOrderIndicator" type="xs:boolean">
+        <xs:annotation>
+            <xs:documentation>Include activeOrderIndicator in response</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="HideAdditionalProducts" type="xs:boolean">
+        <xs:annotation>
+            <xs:documentation>Should products include only toplevel products or full product tree</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="ShowOwnerPayerUser" type="xs:boolean">
+        <xs:annotation>
+            <xs:documentation>Should products include information about the user, payer and owner of the product
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="TaysId" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>The given by Tays</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="TaysModemId" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>The modem ID given by Tays</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="TaysServiceItem" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>The modem ID given by Tays</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="TaysSignal" type="xs:boolean">
+        <xs:annotation>
+            <xs:documentation>The modem ID given by Tays</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="IspName" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>The name of the internet service provider</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="TrackAndTraceNr" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>The track and trace nr from Iris</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="HUA" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Hemmeligt Udeladt markering</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="ActualLevDateType">
+        <xs:restriction base="xs:date"/>
+    </xs:simpleType>
+    <xs:element name="ActualLevDate" type="tns:ActualLevDateType">
+        <xs:annotation>
+            <xs:documentation>Actual lev date</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="IrisOrdreNr" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>The IRIS ordre nr (MAT_KATALOG_NR)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="DeliveryAddressName" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>The name of the drop box</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="DeliveryAddressAddress" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>The actual adress of the drop box</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="DeliveryAddressZipCity" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>The zip and the city name of the drop box</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="DeliveryAddressRemark" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Remarks associated with the drop box</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+
+    <xs:simpleType name="OssLidType">
+        <xs:restriction base="xs:string">
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="OssLid" type="tns:OssLidType"/>
+
+
+    <xs:simpleType name="ProductAfsaetningStatusType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Option"/>
+            <xs:enumeration value="Installed"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="ProductAfsaetningStatus" type="tns:ProductAfsaetningStatusType"/>
+
+    <xs:simpleType name="ProductCatalogType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SPC"/>
+            <xs:enumeration value="CU"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="ProductCatalog" type="tns:ProductCatalogType">
+        <xs:annotation>
+            <xs:documentation>Type indicating product catalog, does only hold currently supported product catalogues
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="AddressSearchResultTypeType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Customer"/>
+            <xs:enumeration value="Subscription"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="AddressSearchResultType" type="tns:AddressSearchResultTypeType">
+        <xs:annotation>
+            <xs:documentation>Defines if search is for customers or subscriptions</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+
+    <xs:simpleType name="MigrateActionType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ADD"/>
+            <xs:enumeration value="KEEP"/>
+            <xs:enumeration value="DELETE"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="MigrateAction" type="tns:MigrateActionType">
+        <xs:annotation>
+            <xs:documentation>Migrate action, what happends to this product on migration</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="ProductActionType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ADD"/>
+            <xs:enumeration value="CHANGE"/>
+            <xs:enumeration value="DELETE"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="ProductAction" type="tns:ProductActionType">
+        <xs:annotation>
+            <xs:documentation>Product action, what happends to this product</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="AppendOrdersToDate" type="xs:dateTime">
+        <xs:annotation>
+            <xs:documentation>Append orders up until this dateTime</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="AppendOrdersToOrder" type="xs:int">
+        <xs:annotation>
+            <xs:documentation>Append orders up until this CU order</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="AppendOrders" type="xs:boolean">
+        <xs:annotation>
+            <xs:documentation>Append orders up until this CU order</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="ShowDetailedOrders" type="xs:boolean">
+        <xs:annotation>
+            <xs:documentation>Show orders with action REMOVE also</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="AppendDate" type="xs:dateTime">
+        <xs:annotation>
+            <xs:documentation>Date/time it is appended</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="AddPriceData" type="xs:boolean">
+        <xs:annotation>
+            <xs:documentation>Add price information to responser</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="KanalNummer" type="xs:int">
+        <xs:annotation>
+            <xs:documentation>Lid loebeID</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="ServiceIdNo" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>SIK</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="TekstLovligTekst" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Tekst lovlig tekst (feks. lid)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="ArbitraerEngangsPris" type="xs:double">
+        <xs:annotation>
+            <xs:documentation>Engangspris (arbitraer)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="CUOrderId" type="xs:int">
+        <xs:annotation>
+            <xs:documentation>Order id of CU orde</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+
+    <xs:element name="AccountNo" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Kontonr / betanr</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="KISId" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Kis id</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="ArbitraerLoebendePris" type="xs:double">
+        <xs:annotation>
+            <xs:documentation>Loebende pris(arbitraer)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="HiddenInCatalog" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Will be removed, eaten, hidden in catalog</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="ShowFormerLids" type="xs:boolean">
+        <xs:annotation>
+            <xs:documentation>containing former LID or not</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="IsFormerLid" type="xs:boolean">
+        <xs:annotation>
+            <xs:documentation>Is a former LID</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="SaldomaksAdvisType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Installation"/>
+            <xs:enumeration value="Betaler"/>
+            <xs:enumeration value="Kunde"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="SaldomaksSpaerringVedOverskridelse" type="xs:boolean">
+        <xs:annotation>
+            <xs:documentation>Loebende pris(arbitraer)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="SaldomaksGraenseType">
+        <xs:restriction base="xs:double"/>
+    </xs:simpleType>
+
+    <xs:element name="SaldomaksKvartal" type="tns:SaldomaksGraenseType">
+        <xs:annotation>
+            <xs:documentation>Kvartals graense</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="SaldomaksMaaned" type="tns:SaldomaksGraenseType">
+        <xs:annotation>
+            <xs:documentation>Maaneds graense</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="SaldomaksMidlertidig" type="tns:SaldomaksGraenseType">
+        <xs:annotation>
+            <xs:documentation>Midlertidig saldomaks graense</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="SaldomaksAdvis" type="tns:SaldomaksAdvisType">
+        <xs:annotation>
+            <xs:documentation>saldomaks advis type, hvem sendes advis til</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+
+</xs:schema>

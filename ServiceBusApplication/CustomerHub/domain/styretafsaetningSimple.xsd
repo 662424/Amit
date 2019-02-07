@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://service.chub.tdc.dk/domain/styretafsaetning"
+           elementFormDefault="qualified" attributeFormDefault="unqualified"
+           targetNamespace="http://service.chub.tdc.dk/domain/styretafsaetning">
+
+    <xs:simpleType name="KriteriumType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="N"/>
+            <xs:enumeration value="G"/>
+            <xs:enumeration value="K"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="Kriterium" type="tns:KriteriumType">
+        <xs:annotation>
+            <xs:documentation>kriterium is G(Godkendt= or N(Afsaetes ikke)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="CreateUpdateCableUnitOfferingResultType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="O"/>
+            <xs:enumeration value="R"/>
+            <xs:enumeration value="FS"/>
+            <xs:enumeration value="FI"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="CreateUpdateCableUnitOfferingResult" type="tns:CreateUpdateCableUnitOfferingResultType">
+        <xs:annotation>
+            <xs:documentation>CreateUpdateCableUnitOfferingResult is O(Oprettet) or R(Redigeret) or FS(Fejl svar) or
+                FI(Fejl input)
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="CustomerTypeType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="A"/>
+            <xs:enumeration value="O"/>
+            <xs:enumeration value="I"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="CustomerType" type="tns:CustomerTypeType">
+        <xs:annotation>
+            <xs:documentation>kunde type O(O-kunde) I(I/E kunde) A(Alle)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="ShowExistingProductsType">
+        <xs:restriction base="xs:boolean"/>
+    </xs:simpleType>
+    <xs:element name="ShowExistingProducts" type="tns:ShowExistingProductsType">
+        <xs:annotation>
+            <xs:documentation>Show existing products on the address (not relevant for new customers)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+
+    <xs:simpleType name="ProduktGrpNrConstraintType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="ProduktGrpNrConstraint" type="tns:ProduktGrpNrConstraintType">
+        <xs:annotation>
+            <xs:documentation>Constraint when searching with ProduktGrpNr - is a number, but may contain '*' instead of
+                number
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="ProduktElmNrConstraintType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="ProduktElmNrConstraint" type="tns:ProduktElmNrConstraintType">
+        <xs:annotation>
+            <xs:documentation>Constraint when searching with ProduktElmNr - is a number, but may contain '*' instead of
+                number
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="FunktionsNrConstraintType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="FunktionsNrConstraint" type="tns:FunktionsNrConstraintType">
+        <xs:annotation>
+            <xs:documentation>Constraint when searching with FunktionsNr - is a number, but may contain '*' instead of
+                number
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="ProductGroupCodeType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="12"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="ProductGroupCode" type="tns:ProductGroupCodeType">
+        <xs:annotation>
+            <xs:documentation>code indicating the product group</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="ProductGroupNameType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="40"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="ProductGroupName" type="tns:ProductGroupNameType">
+        <xs:annotation>
+            <xs:documentation>description name for the product group</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="BusinessLineCodeType">
+        <xs:restriction base="xs:int"/>
+    </xs:simpleType>
+    <xs:element name="BusinessLineCode" type="tns:BusinessLineCodeType">
+        <xs:annotation>
+            <xs:documentation>code indicating the business line</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="BusinessLineNameType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="40"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="BusinessLineName" type="tns:BusinessLineNameType">
+        <xs:annotation>
+            <xs:documentation>description name for the business line</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="SortCodeType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="9"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="SortCode" type="tns:SortCodeType">
+        <xs:annotation>
+            <xs:documentation>sorting af records, low is first high is last</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="StartDateType">
+        <xs:restriction base="xs:date"/>
+    </xs:simpleType>
+    <xs:element name="StartDate" type="tns:StartDateType">
+        <xs:annotation>
+            <xs:documentation>The day it starts (is activated)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="EndDateType">
+        <xs:restriction base="xs:date"/>
+    </xs:simpleType>
+    <xs:element name="EndDate" type="tns:EndDateType">
+        <xs:annotation>
+            <xs:documentation>The day it ends (is deactivated)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="GodkendtAfsaetningType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="J"/>
+            <xs:enumeration value="N"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="GodkendtAfsaetning" type="tns:GodkendtAfsaetningType">
+        <xs:annotation>
+            <xs:documentation>Approved afsaetning</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="IsApprovedType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="J"/>
+            <xs:enumeration value="N"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="IsApproved" type="tns:IsApprovedType">
+        <xs:annotation>
+            <xs:documentation>Approved afsaetning</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="BusinessLineIdType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="26"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="BusinessLineId" type="tns:BusinessLineIdType">
+        <xs:annotation>
+            <xs:documentation>id for business linie</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="CableUnitOfferingIdType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="26"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="CableUnitOfferingId" type="tns:CableUnitOfferingIdType">
+        <xs:annotation>
+            <xs:documentation>id for the group</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="ProductGroupIdType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="26"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="ProductGroupId" type="tns:ProductGroupIdType">
+        <xs:annotation>
+            <xs:documentation>id for the group</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="ProductGroupProductRelationIdType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="26"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="ProductGroupProductRelationId" type="tns:ProductGroupProductRelationIdType">
+        <xs:annotation>
+            <xs:documentation>id for the cable unit product group to product relation</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="ProductGroupGroupRelationIdType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="26"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="ProductGroupGroupRelationId" type="tns:ProductGroupGroupRelationIdType">
+        <xs:annotation>
+            <xs:documentation>id for the cable unit product group to another group relation</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+</xs:schema>

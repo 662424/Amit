@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://service.chub.tdc.dk/domain/cableunitbulk"
+           elementFormDefault="qualified" attributeFormDefault="unqualified"
+           targetNamespace="http://service.chub.tdc.dk/domain/cableunitbulk">
+
+
+    <xs:element name="OrderNumber" type="xs:long">
+        <xs:annotation>
+            <xs:documentation>CU order number</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <!--added by m41903/ the logic of the same is subjected to change -->
+
+    <xs:element name="ProductNumberForOCustomer" type="xs:long">
+        <xs:annotation>
+            <xs:appinfo>ProductNumberForOCustomer Note</xs:appinfo>
+            <xs:documentation>This is the the product which should be shown on current subscription depending on the customer type (O Cust)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="ProductNameForOCustomer" type="xs:string">
+        <xs:annotation>
+            <xs:appinfo>ProductNameForOCustomer Note</xs:appinfo>
+            <xs:documentation>This is the the kunde_tekst for product which should be shown on current subscription depending on the customer type (O Cust)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="ProductNumberForIEWCustomer" type="xs:long">
+        <xs:annotation>
+            <xs:appinfo>ProductNumberForIEWCustomer Note</xs:appinfo>
+            <xs:documentation>This is the the product which should be shown on current subscription depending on the customer type (Non O Cust) </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="ProductNameForIEWCustomer" type="xs:string">
+        <xs:annotation>
+            <xs:appinfo>ProductNameForIEWCustomer Note</xs:appinfo>
+            <xs:documentation>This is the the kunde_tekst for product which should be shown on the current subscription depending on the customer type (Non O Cust)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="NewprodOCust" type="xs:long">
+        <xs:annotation>
+            <xs:appinfo>NewprodOCust Note</xs:appinfo>
+            <xs:documentation>Product Number that is prioritized when the upcoming orders are fulfilled</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="NewprodOCustName" type="xs:string">
+        <xs:annotation>
+            <xs:appinfo>NewprodOCustName Note</xs:appinfo>
+            <xs:documentation>Product Name that is prioritized when the upcoming orders are fulfilled(O Cust)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="NewprodIEWCust" type="xs:long">
+        <xs:annotation>
+            <xs:appinfo>NewprodIEWCustName Note</xs:appinfo>
+            <xs:documentation>Product Number that is prioritized when the upcoming orders are fulfilled (Non O cust) </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="NewprodIEWCustName" type="xs:string">
+        <xs:annotation>
+            <xs:appinfo>NewprodIEWCustName Note</xs:appinfo>
+            <xs:documentation>Product Name that is prioritized when the upcoming orders are fulfilled (Non O cust) </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="StikType" type="xs:string">
+        <xs:annotation>
+            <xs:appinfo>ProductNumberBB Note</xs:appinfo>
+            <xs:documentation>CU order number for Broadband (Probably would not be there for the cases where TV is there)</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="PackageChoice" type="xs:string">
+        <xs:annotation>
+            <xs:appinfo>PackageChoice Note</xs:appinfo>
+            <xs:documentation>Package choice is yes if one or both of below fields in Anlaeg_Kontrakt is "J"
+                Dtvuclear
+                Bbuclear
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="ActiveFilterPos" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Filter Postion For Active Products
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="OrderFilterPos" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Filter Postion For Orders
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="PackageChoiceEndDate" type="xs:string">
+        <xs:annotation>
+            <xs:appinfo>PackageChoiceEndDate Note</xs:appinfo>
+            <xs:documentation>Skaerings_Dato in Anlaeg_Kontrakt. This is only relevant if packagechoice is "Y"</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <!--changes end m41903-->
+
+    <!--permission list:Start-->
+
+    <xs:complexType name="PermissionInfoListTypeType">
+        <xs:sequence>
+            <xs:element name="PermissionItemId" type="xs:string" nillable="true"/>
+            <xs:element name="PermissionParamValue" type="xs:string" nillable="true"/>
+            <xs:element name="PermissionValue" type="xs:string" nillable="true"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!--permission list:End-->
+
+    <xs:element name="OrderBookingDate" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Time of execution</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="FilterPosOrderTypeType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Tidligst"/>
+            <xs:enumeration value="Senest"/>
+            <xs:enumeration value="Pr��cis"/>
+            <xs:enumeration value="Lukket"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="CheckAnlaegType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="O-kunde BB_uden_TV=NEJ"/>
+            <xs:enumeration value="O-kunde BB_uden_TV=JA"/>
+            <xs:enumeration value="I-kunde BB_uden_TV=NEJ"/>
+            <xs:enumeration value="I-kunde BB_uden_TV=JA"/>
+            <xs:enumeration value="Agent anlaeg"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="FilterPosOrderType" type="tns:FilterPosOrderTypeType">
+        <xs:annotation>
+            <xs:documentation>Type of the grace period.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+</xs:schema>
